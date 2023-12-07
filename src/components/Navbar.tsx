@@ -1,7 +1,7 @@
 import { Search, CircleUserRound, ShoppingCart, Menu } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { Input } from '@/components/ui/input';
+import { Input, InputProps } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
 	Sheet,
@@ -12,6 +12,8 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 const categoriesProduct = [
 	'baju',
@@ -23,16 +25,63 @@ const categoriesProduct = [
 	'permainan',
 ];
 
-const Navbar = () => {
+type NavbarProps = {
+	className?: string;
+	stikyNavBar: boolean;
+};
+
+const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
+	const [term, setTerm] = useState('');
+
+	console.log(term);
+	const navigate = useNavigate();
+
+	const handleOnKeyDown = (
+		e: React.KeyboardEvent<HTMLInputElement> & {
+			target: EventTarget &
+				HTMLInputElement &
+				React.ForwardRefExoticComponent<
+					InputProps & React.RefAttributes<HTMLInputElement>
+				>;
+		}
+	) => {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+
+			if (e.target.value) {
+				const url = `/product?q=${e.target.value}`;
+				navigate(url);
+			}
+		}
+	};
+	const handleOnChange = (
+		e: React.ChangeEvent<HTMLInputElement> & {
+			target: React.ForwardRefExoticComponent<
+				InputProps & React.RefAttributes<HTMLInputElement>
+			>;
+		}
+	) => {
+		setTerm(() => e.target.value);
+	};
+	// const handleOnCLick = (e) => {
+	// 	e.preventDefault();
+	// 	navigate();
+	// };
 	return (
-		<header className="bg-white">
+		<header
+			className={cn(
+				'bg-white w-full top-0 fixed z-[100] ',
+				stikyNavBar && className
+			)}>
 			<div className="container mx-auto px-4 md:px-8 py-4  md:pt-8 flex items-center justify-between md:justify-start">
 				<div className="mr-auto w-48 flex-shrink-0 hidden md:flex ">
-					<img
-						className="h-10"
-						src="/images/online shop ecommerce logo app icon logo - Dibuat dengan PosterMyWall.png"
-						alt="logo"
-					/>
+					<Link to="/">
+						<img
+							className="h-10"
+							src="/images/online shop ecommerce logo app icon logo - Dibuat dengan PosterMyWall.png"
+							alt="logo"
+						/>
+					</Link>
 				</div>
 				<div className="w-full max-w-xs md:max-w-full 2xl:max-w-3xl rounded-md flex items-center focus-within:ring-2 focus-within:ring-amber-500 border border-input transition ease-in-out duration-200 ">
 					<select
@@ -42,6 +91,9 @@ const Navbar = () => {
 						<option>all categories</option>
 					</select>
 					<Input
+						value={term}
+						onChange={handleOnChange}
+						onKeyDown={handleOnKeyDown}
 						className="focus-visible:ring-0 border border-l-input border-r-0 border-y-0 focus-visible:ring-offset-0  md:rounded-none text-xs md:text-base "
 						type="text"
 						placeholder="Cari product disini..."

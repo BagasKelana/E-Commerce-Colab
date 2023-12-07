@@ -102,4 +102,8 @@ body,
 		-ms-overflow-style: none; /* IE and Edge */
 		scrollbar-width: none; /* Firefox */
 	}
+	.line-claps-with-ellipsis {
+		@apply line-clamp-2 text-ellipsis;
+	}
 }
+
