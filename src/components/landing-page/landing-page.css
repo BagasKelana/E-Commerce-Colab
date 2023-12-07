@@ -1,8 +1,8 @@
 .slick-list {
-	overflow: hidden;
-	border-radius: 14px;
+    overflow: hidden;
+    border-radius: 14px;
 }
 
 .dots-list > li {
-	@apply flex justify-center items-center m-0  md:mx-2;
+    @apply flex justify-center items-center m-0  md:mx-2;
 }

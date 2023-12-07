@@ -63,10 +63,7 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
     ) => {
         setTerm(() => e.target.value);
     };
-    // const handleOnCLick = (e) => {
-    // 	e.preventDefault();
-    // 	navigate();
-    // };
+
     return (
         <header
             className={cn(
