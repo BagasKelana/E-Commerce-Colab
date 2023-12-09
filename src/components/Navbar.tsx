@@ -1,5 +1,6 @@
 import { Search, CircleUserRound, ShoppingCart, Menu } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 
 import { Input, InputProps } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -13,7 +14,6 @@ import {
     SheetTrigger
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
 
 const categoriesProduct = [
     'baju',
@@ -55,6 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
             }
         }
     };
+
     const handleOnChange = (
         e: React.ChangeEvent<HTMLInputElement> & {
             target: React.ForwardRefExoticComponent<
@@ -72,7 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
                 stikyNavBar && className
             )}
         >
-            <div className="container mx-auto px-4 md:px-8 py-4  md:pt-8 flex items-center justify-between md:justify-start">
+            <div className="container mx-auto px-4 md:px-8 py-4 md:pt-8 flex items-center justify-between md:justify-start">
                 <div className="mr-auto w-48 flex-shrink-0 hidden md:flex ">
                     <Link to="/">
                         <img
@@ -84,7 +85,7 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
                 </div>
                 <div className="w-full max-w-xs md:max-w-full 2xl:max-w-3xl rounded-md flex items-center focus-within:ring-2 focus-within:ring-amber-500 border border-input transition ease-in-out duration-200 ">
                     <select
-                        className="bg-transparent  uppercase font-medium text-sm py-2 px-2 mr-2 hidden lg:block"
+                        className="bg-transparent uppercase font-medium text-sm py-2 px-2 mr-2 hidden lg:block"
                         name=""
                         id=""
                     >

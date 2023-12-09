@@ -1,68 +1,17 @@
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import Slider, { Settings } from 'react-slick';
+import Slider from 'react-slick';
 
 import CategoriesCard from '../Card/CategoriesCard';
-import { NextArrow, PrevArrow } from '../Carusel/Arrow';
+
 import { populerCategories } from '@/assets/populerCategories';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { settings } from '../Carousel/CarouselSettings';
 
 const PopulerCategories = () => {
-    const settings: Settings = {
-        draggable: false,
-        dots: false,
-        infinite: false,
-        slidesToShow: 6,
-        slidesToScroll: 6,
-        initialSlide: 0,
-        waitForAnimate: true,
-        cssEase: 'ease-in-out',
-        lazyLoad: 'anticipated',
-        useCSS: true,
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 2,
-                    initialSlide: 0,
-                    dots: false,
-                    draggable: true,
-                    speed: 500
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    initialSlide: 0,
-                    dots: false,
-                    draggable: true,
-                    speed: 500
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    initialSlide: 0,
-                    dots: false,
-                    draggable: true,
-                    speed: 500,
-                    swipe: true,
-                    cssEase: 'ease-in-out',
-                    touchThreshold: 10
-                }
-            }
-        ]
-    };
     return (
         <section className="w-full pl-4 md:px-20 my-6">
             <div className="w-full flex justify-between mb-4">

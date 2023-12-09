@@ -57,7 +57,7 @@ const CreateProduct = () => {
     const handleRemove = (index: number) => {
         setSelectedImages((current) => {
             if (current) {
-                return current.filter((file, i) => i !== index);
+                return current.filter((_, i) => i !== index);
             }
             return current;
         });
@@ -173,7 +173,7 @@ const CreateProduct = () => {
             <form onSubmit={handleOnSubmit} className="mt-4">
                 <div>
                     <h3>Images</h3>
-                    <Label className="select-none " htmlFor="uploadFile">
+                    <Label className="select-none" htmlFor="uploadFile">
                         <div className="rounded p-2 items-center justify-center flex bg-slate-200 w-fit cursor-pointer gap-2">
                             <ImagePlus /> Upload an Image
                         </div>

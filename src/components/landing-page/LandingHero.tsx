@@ -1,12 +1,13 @@
 import Slider, { Settings } from 'react-slick';
 import { useState } from 'react';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './landing-page.css';
 
 import { cn } from '@/lib/utils';
+import { NextArrow, PrevArrow } from '../Carousel/Arrow';
 
 const img = [
     '/images/6561a9a2627d81eb4c09c0e8.jpg',
@@ -93,27 +94,5 @@ const LandingHero = () => {
         </div>
     );
 };
-
-type CaroselArrowProps = {
-    onClick?: React.MouseEventHandler<SVGSVGElement>;
-};
-
-function NextArrow(props: CaroselArrowProps) {
-    const { onClick } = props;
-    return (
-        <div className="hidden absolute p-2 right-5 group-hover:-right-5 opacity-0 group-hover:opacity-100 z-[20] top-1/2 -translate-y-1/2 transform rounded-full bg-white hover:bg-white/50 cursor-pointer ease-in-out duration-300 md:block ">
-            <ChevronRight className="w-6 h-6 text-gray-600" onClick={onClick} />
-        </div>
-    );
-}
-
-function PrevArrow(props: CaroselArrowProps) {
-    const { onClick } = props;
-    return (
-        <div className="hidden absolute p-2 left-5 group-hover:-left-5 opacity-0 group-hover:opacity-100 z-[20] top-1/2 -translate-y-1/2 transform rounded-full bg-white hover:bg-white/50 cursor-pointer ease-in-out duration-300 md:block ">
-            <ChevronLeft className="w-6 h-6 text-gray-600 " onClick={onClick} />
-        </div>
-    );
-}
 
 export default LandingHero;
