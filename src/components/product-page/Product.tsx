@@ -61,6 +61,7 @@ const Product: React.FC = () => {
         null
     );
 
+    console.log(data);
 
     const renderComponents = () => {
         return Array.from({ length: 10 }, (_, index) => (
@@ -70,9 +71,6 @@ const Product: React.FC = () => {
 
     return (
         <div className="w-full">
-            <div className="flex justify-end mb-4">
-                <OrderBox order={filter.sf} />
-            </div>
             <div className="flex h-full w-full ">
                 <FilterComponent filter={filter} />
                 {error ? (
@@ -81,18 +79,25 @@ const Product: React.FC = () => {
                         Error Bos
                     </div>
                 ) : (
-                    <section className="grid grid-cols-5 gap-x-4 gap-y-5  place-items-stretch mb-4 w-5/6">
-                        {loading
-                            ? renderComponents()
-                            : data?.data.data?.map((product) => (
-                                  <ProductCard
-                                      key={product.id}
-                                      name={product.name}
-                                      src={product.product_image?.[0]?.image}
-                                      price={product.price}
-                                  />
-                              ))}
-                    </section>
+                    <div className="w-5/6 h-full flex flex-col">
+                        <div className="flex justify-end mb-4">
+                            <OrderBox />
+                        </div>
+                        <section className="grid grid-cols-5 gap-x-4 gap-y-5  place-items-stretch mb-4 w-full">
+                            {loading
+                                ? renderComponents()
+                                : data?.data.data?.map((product) => (
+                                      <ProductCard
+                                          key={product.id}
+                                          name={product.name}
+                                          src={
+                                              product.product_image?.[0]?.image
+                                          }
+                                          price={product.price}
+                                      />
+                                  ))}
+                        </section>
+                    </div>
                 )}
             </div>
         </div>

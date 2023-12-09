@@ -21,7 +21,9 @@ const ProductCard = ({ className, name, src, price }: ProductCardProps) => {
                             className="object-cover w-full"
                             height={512}
                             width={512}
-                            src={src}
+                            src={`${
+                                import.meta.env.VITE_DEVELOPE_API_IMG
+                            }${src}`}
                             alt="card-img"
                             loading="lazy"
                         />

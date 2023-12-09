@@ -6,6 +6,7 @@ import { ImagePlus, Replace } from 'lucide-react';
 import { Checkbox } from '../ui/checkbox';
 import CategoriesBox from './CategoriesBox';
 import { Textarea } from '../ui/textarea';
+import axios from 'axios';
 
 export interface formInputProps {
     name: string;
@@ -23,7 +24,7 @@ const CreateProduct = () => {
         name: '',
         description: '',
         price: 0,
-        isAvailable: 0,
+        isAvailable: 1,
         featured: 0,
         category_id: ''
     });
@@ -62,15 +63,64 @@ const CreateProduct = () => {
         });
     };
 
+    const handleOnChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const target = e.target;
+        const pattern = /^[0-9]*$/;
+        if (target) {
+            if (target.name === 'name' || target.name === 'description') {
+                setFormInput((current) => ({
+                    ...current,
+                    [target.name]: target.value
+                }));
+            } else {
+                if (pattern.test(target.value)) {
+                    setFormInput((current) => ({
+                        ...current,
+                        [target.name]: target.value
+                    }));
+                }
+            }
+        }
+    };
+
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        try {
+            const formData = new FormData();
+            if (
+                selectedImages?.length &&
+                formInput.name &&
+                formInput.description &&
+                formInput.price &&
+                formInput.category_id
+            ) {
+                formData.append('name', formInput.name);
+                formData.append('description', formInput.description);
+                formData.append('price', String(formInput.price));
+                formData.append('is_available', String(formInput.isAvailable));
+                formData.append('featured', String(formInput.featured));
+                formData.append('image[]', selectedImages[0]);
+                formData.append('category_id', formInput.category_id);
 
-        const formData = new FormData();
+                const response = axios(`${import.meta.env.VITE_ADMIN_API}`, {
+                    method: 'POST',
+                    data: formData,
+                    headers: {
+                        Authorization: `Bearer ${
+                            import.meta.env.VITE_ADMIN_TOKEN
+                        }`
+                    }
+                });
 
-        formData.append('name', formInput.name);
-        formData.append('description', formInput.description);
-        formData.append('price', String(formInput.price));
-        console.log(formInput);
+                console.log(response.data);
+            } else {
+                console.log('harus diisi');
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -138,18 +188,27 @@ const CreateProduct = () => {
                         <Label htmlFor="name">Name</Label>
                         <Input
                             id="name"
-                            onChange={handleUploadFiles}
+                            onChange={handleOnChange}
                             type="text"
                             name="name"
+                            value={formInput.name}
                         />
                         <Label htmlFor="price">Price</Label>
-                        <Input id="price" type="text" name="price" />
+                        <Input
+                            onChange={handleOnChange}
+                            id="price"
+                            type="text"
+                            name="price"
+                            value={formInput.price}
+                        />
                         <Label htmlFor="description">Description</Label>
                         <Textarea
+                            onChange={handleOnChange}
                             className="resize-none"
                             id="description"
                             rows={13}
                             name="description"
+                            value={formInput.description}
                         />
                         <CategoriesBox
                             InputForm={{ formInput, setFormInput }}
@@ -171,7 +230,7 @@ const CreateProduct = () => {
                         <div>
                             <Checkbox
                                 name="isAvailable"
-                                value={formInput.isAvailable}
+                                checked={Boolean(formInput.isAvailable)}
                                 onCheckedChange={() => {
                                     setFormInput((current) => ({
                                         ...current,
