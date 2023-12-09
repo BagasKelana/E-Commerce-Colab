@@ -6,7 +6,7 @@ import { ImagePlus, Replace } from 'lucide-react';
 import { Checkbox } from '../ui/checkbox';
 import CategoriesBox from './CategoriesBox';
 import { Textarea } from '../ui/textarea';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 export interface formInputProps {
     name: string;
@@ -100,19 +100,22 @@ const CreateProduct = () => {
                 formData.append('description', formInput.description);
                 formData.append('price', String(formInput.price));
                 formData.append('is_available', String(formInput.isAvailable));
-                formData.append('featured', String(formInput.featured));
+                formData.append('is_featured', String(formInput.featured));
                 formData.append('image[]', selectedImages[0]);
                 formData.append('category_id', formInput.category_id);
 
-                const response = axios(`${import.meta.env.VITE_ADMIN_API}`, {
-                    method: 'POST',
-                    data: formData,
-                    headers: {
-                        Authorization: `Bearer ${
-                            import.meta.env.VITE_ADMIN_TOKEN
-                        }`
+                const response = await axios<AxiosResponse>(
+                    `${import.meta.env.VITE_ADMIN_API}`,
+                    {
+                        method: 'POST',
+                        data: formData,
+                        headers: {
+                            Authorization: `Bearer ${
+                                import.meta.env.VITE_ADMIN_TOKEN
+                            }`
+                        }
                     }
-                });
+                );
 
                 console.log(response.data);
             } else {
