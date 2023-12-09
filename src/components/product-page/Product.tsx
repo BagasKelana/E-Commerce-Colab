@@ -8,6 +8,7 @@ import SkeletonCard from '../Card/SkeletonCard';
 import { cn } from '@/lib/utils';
 import { Input, InputProps } from '../ui/input';
 import { Button } from '../ui/button';
+import OrderBox from './OrderBox';
 
 type Filter = {
     term?: string | null;
@@ -15,6 +16,7 @@ type Filter = {
     page?: string | null;
     min?: string | null;
     max?: string | null;
+    sf?: string | null;
 };
 
 const Product: React.FC = () => {
@@ -25,7 +27,8 @@ const Product: React.FC = () => {
         category_id: queryParameters.get('category_id'),
         page: queryParameters.get('page'),
         min: queryParameters.get('min'),
-        max: queryParameters.get('max')
+        max: queryParameters.get('max'),
+        sf: queryParameters.get('sf')
     });
 
     useEffect(() => {
@@ -34,7 +37,8 @@ const Product: React.FC = () => {
             category_id: queryParameters.get('category_id'),
             page: queryParameters.get('page'),
             min: queryParameters.get('min'),
-            max: queryParameters.get('max')
+            max: queryParameters.get('max'),
+            sf: queryParameters.get('sf')
         };
         {
             setFilter((current) => ({
@@ -49,14 +53,14 @@ const Product: React.FC = () => {
             filter.category_id || ''
         }${filter.min ? `&min=${filter.min}` : ''}${
             filter.max ? `&max=${filter.max}` : ''
-        }`;
+        }${filter.sf ? `&sf=${filter.sf}` : ''}`;
     }, [filter]);
 
     const { data, error, loading } = useFetch<FetchAllProduct>(
         `${import.meta.env.VITE_DEVELOPE_API}/product${querySearch}`,
         null
     );
-    console.log(data);
+
 
     const renderComponents = () => {
         return Array.from({ length: 10 }, (_, index) => (
@@ -66,7 +70,10 @@ const Product: React.FC = () => {
 
     return (
         <div className="w-full">
-            <div className="flex h-full w-full  ">
+            <div className="flex justify-end mb-4">
+                <OrderBox order={filter.sf} />
+            </div>
+            <div className="flex h-full w-full ">
                 <FilterComponent filter={filter} />
                 {error ? (
                     <div className="w-5/6 min-h-[200px] flex items-center justify-center  text-3xl">

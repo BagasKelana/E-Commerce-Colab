@@ -1,5 +1,5 @@
 import { Search, CircleUserRound, ShoppingCart, Menu } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Input, InputProps } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -32,8 +32,8 @@ type NavbarProps = {
 
 const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
     const [term, setTerm] = useState('');
+    const [queryParameters] = useSearchParams();
 
-    console.log(term);
     const navigate = useNavigate();
 
     const handleOnKeyDown = (
@@ -49,7 +49,8 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
             e.preventDefault();
 
             if (e.target.value) {
-                const url = `/product?q=${e.target.value}`;
+                queryParameters.set('sf', '');
+                const url = `/product?q=${e.target.value}&sf=`;
                 navigate(url);
             }
         }
