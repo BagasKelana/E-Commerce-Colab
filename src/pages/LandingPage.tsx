@@ -1,5 +1,4 @@
 import LandingHero from '@/components/landing-page/LandingHero';
-
 import PopulerCategories from '@/components/landing-page/PopulerCategories';
 import { Button } from '@/components/ui/button';
 import ProductSection from '@/components/landing-page/ProductSection';

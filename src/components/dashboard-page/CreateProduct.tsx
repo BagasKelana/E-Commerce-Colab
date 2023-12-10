@@ -29,8 +29,6 @@ const CreateProduct = () => {
         category_id: ''
     });
 
-    console.log(formInput);
-
     const handleUploadFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         if (files) {
@@ -68,6 +66,7 @@ const CreateProduct = () => {
     ) => {
         const target = e.target;
         const pattern = /^[0-9]*$/;
+
         if (target) {
             if (target.name === 'name' || target.name === 'description') {
                 setFormInput((current) => ({
@@ -250,10 +249,9 @@ const CreateProduct = () => {
                         </div>
                     </div>
                 </div>
-
                 <Button type="submit"> Submit</Button>
             </form>
-            <div></div>
+           
         </div>
     );
 };
