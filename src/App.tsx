@@ -5,6 +5,8 @@ import DashboardPage from './pages/DashboardPage';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import ProductDetailsPage from './pages/ProductDetailsPage';
+import User from './pages/User';
+import UserSettings from './pages/UserSettings';
 
 export default function App() {
     return (
@@ -15,6 +17,8 @@ export default function App() {
             <Route path="/dashboard-admin" element={<DashboardPage />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/user/:id" element={<User />} />
+            <Route path="/user/:id/setting" element={<UserSettings />} />
 
             {/* <Route element={<AdminPrivateRoute />}>
 
@@ -32,8 +36,7 @@ export default function App() {
 
             {/* <Route element={<UserPrivateRoute />}>
 
-                <Route path="/user/:id" element={< />} />
-                <Route path="/user/:id/setting" element={< />} />
+               
                 
             </Route> */}
         </Routes>
