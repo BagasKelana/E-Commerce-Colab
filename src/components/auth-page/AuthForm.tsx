@@ -1,7 +1,7 @@
 import { Eye, EyeOff } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-
+import './form.css';
 interface AuthFormProps {
     handleSubmit: React.FormEventHandler<HTMLFormElement> | undefined;
     handleChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
@@ -9,7 +9,6 @@ interface AuthFormProps {
     setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
     title: string;
     loading?: boolean;
-    error?: unknown;
     children?: React.ReactNode;
     confirmPassword?: boolean;
 }
@@ -20,7 +19,6 @@ const AuthForm: React.FC<AuthFormProps> = ({
     showPassword,
     setShowPassword,
     loading,
-    error,
     children,
     title,
     confirmPassword = false
