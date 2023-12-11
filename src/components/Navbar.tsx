@@ -14,6 +14,9 @@ import {
     SheetTrigger
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 const categoriesProduct = [
     'baju',
@@ -33,7 +36,7 @@ type NavbarProps = {
 const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
     const [term, setTerm] = useState('');
     const [queryParameters] = useSearchParams();
-
+    const { currentUser } = useSelector((state: RootState) => state.user);
     const navigate = useNavigate();
 
     const handleOnKeyDown = (
@@ -106,16 +109,46 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
                 <nav className="contents">
                     <ul className="ml-4 xl:w-48 flex items-center justify-end">
                         <li className="ml-2 lg:ml-4 relative inline-block">
-                            <Link className="" to={'/'}>
-                                <CircleUserRound className="h-10 p-2 w-10 text-gray-500 hover:text-gray-600" />
-                            </Link>
-                        </li>
-                        <li className="ml-2 lg:ml-4 relative inline-block">
                             <Link to="">
                                 <div className="absolute -top-0 right-0 z-10 bg-orange-300 text-xs font-semibold p-0.5 rounded-full">
                                     20
                                 </div>
                                 <ShoppingCart className="w-10 h-10 p-2" />
+                            </Link>
+                        </li>
+                        <svg
+                            className="relative ml-2 lg:ml-4 md:inline-block hidden"
+                            height="20"
+                            width="1"
+                        >
+                            <line
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="20"
+                                style={{ stroke: 'black', strokeWidth: 1 }}
+                            />
+                        </svg>
+                        <li className="ml-2 lg:ml-4 relative md:inline-block hidden">
+                            <Link to={'/'}>
+                                {currentUser?.name ? (
+                                    <div className="flex items-center font-semibold ">
+                                        <Avatar className="h-8 w-8 mr-2">
+                                            <AvatarImage src="https://github.com/shadcn.png" />
+                                            <AvatarFallback>CN</AvatarFallback>
+                                        </Avatar>
+                                        {currentUser.name
+                                            .split('')
+                                            .map((value, index) =>
+                                                index === 0
+                                                    ? value.toUpperCase()
+                                                    : value
+                                            )
+                                            .join('')}
+                                    </div>
+                                ) : (
+                                    <CircleUserRound className="h-10 p-2 w-10 text-gray-500 hover:text-gray-600" />
+                                )}
                             </Link>
                         </li>
                         <HumburgerMenu />
