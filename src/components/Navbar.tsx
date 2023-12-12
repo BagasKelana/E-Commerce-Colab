@@ -1,22 +1,17 @@
-import { Search, CircleUserRound, ShoppingCart, Menu } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import { Search, CircleUserRound, ShoppingCart } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 
 import { Input, InputProps } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger
-} from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { RootState } from '@/redux/store';
 import { useSelector } from 'react-redux';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+
+import { RootState } from '@/redux/store';
+import { UserMenu } from './navbar/UserMenu';
+import HumburgerMenu from './navbar/HumburgerMenu';
 
 const categoriesProduct = [
     'baju',
@@ -72,7 +67,7 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
     return (
         <header
             className={cn(
-                'bg-white w-full top-0 fixed z-[100] ',
+                'bg-white min-w-full w-screen top-0 fixed z-[100]  ',
                 stikyNavBar && className
             )}
         >
@@ -132,11 +127,8 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
                         <li className="ml-2 lg:ml-4 relative md:inline-block hidden">
                             <Link to={'/'}>
                                 {currentUser?.name ? (
-                                    <div className="flex items-center font-semibold ">
-                                        <Avatar className="h-8 w-8 mr-2">
-                                            <AvatarImage src="https://github.com/shadcn.png" />
-                                            <AvatarFallback>CN</AvatarFallback>
-                                        </Avatar>
+                                    <div className="flex items-center font-semibold text-sm">
+                                        <UserMenu />
                                         {currentUser.name
                                             .split('')
                                             .map((value, index) =>
@@ -164,69 +156,5 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
         </header>
     );
 };
-
-export function HumburgerMenu() {
-    return (
-        <Sheet>
-            <SheetTrigger asChild>
-                <li className="ml-2 lg:ml-4 relative inline-block md:hidden">
-                    <Menu className="w-10 h-10 p-2" />
-                </li>
-            </SheetTrigger>
-            <SheetContent className="overflow-auto no-scrollbar">
-                <SheetHeader>
-                    <SheetTitle>Menu Utama</SheetTitle>
-                </SheetHeader>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <SheetFooter>
-                    <SheetClose asChild>
-                        <Button>Save changes</Button>
-                    </SheetClose>
-                </SheetFooter>
-            </SheetContent>
-        </Sheet>
-    );
-}
 
 export default Navbar;

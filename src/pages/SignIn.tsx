@@ -22,8 +22,10 @@ export default function SignIn() {
     });
     const { loading, error } = useSelector((state: RootState) => state.user);
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
+    const { loading, error } = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target) {
             setFormData({
@@ -32,6 +34,7 @@ export default function SignIn() {
             });
         }
     };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
