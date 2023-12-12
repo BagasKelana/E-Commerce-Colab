@@ -91,6 +91,7 @@ export default function SignUp() {
                 confirmPassword={true}
             >
                 <Input
+                    required
                     minLength={3}
                     type="text"
                     placeholder="name"

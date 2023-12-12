@@ -1,7 +1,7 @@
 import { Eye, EyeOff } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-
+import './form.css';
 interface AuthFormProps {
     handleSubmit: React.FormEventHandler<HTMLFormElement> | undefined;
     handleChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
@@ -9,7 +9,6 @@ interface AuthFormProps {
     setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
     title: string;
     loading?: boolean;
-    error?: unknown;
     children?: React.ReactNode;
     confirmPassword?: boolean;
 }
@@ -20,7 +19,6 @@ const AuthForm: React.FC<AuthFormProps> = ({
     showPassword,
     setShowPassword,
     loading,
-    error,
     children,
     title,
     confirmPassword = false
@@ -29,6 +27,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {children}
             <Input
+                required
                 minLength={10}
                 type="email"
                 placeholder="email"
@@ -38,6 +37,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
             />
             <div className="flex items-center justify-center border border-input rounded-md pr-4 select-none focus-within:ring-1 focus-within:ring-black">
                 <Input
+                    required
                     minLength={8}
                     type={!showPassword ? 'password' : 'text'}
                     placeholder="password"
@@ -57,6 +57,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
             {confirmPassword && (
                 <div className="flex items-center justify-center border border-input rounded-md pr-4 select-none focus-within:ring-1 focus-within:ring-black">
                     <Input
+                        required
                         minLength={8}
                         type={!showPassword ? 'password' : 'text'}
                         placeholder="confirm password"

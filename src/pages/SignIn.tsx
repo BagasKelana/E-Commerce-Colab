@@ -7,13 +7,24 @@ import {
     signInFailure
 } from '../redux/user/userSlice';
 import AuthForm from '@/components/auth-page/AuthForm';
+import axios, { AxiosResponse } from 'axios';
+import { RootState } from '@/redux/store';
+
+interface formDataProps {
+    email: string;
+    password: string;
+}
 
 export default function SignIn() {
-    const [formData, setFormData] = useState({});
-    const { loading, error } = useSelector((state) => state.user);
+    const [formData, setFormData] = useState<formDataProps>({
+        email: '',
+        password: ''
+    });
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
+    const { loading, error } = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target) {
             setFormData({
@@ -22,25 +33,36 @@ export default function SignIn() {
             });
         }
     };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             dispatch(signInStart());
-            const res = await fetch('/api/auth/signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await res.json();
-            console.log(data);
-            if (data.success === false) {
-                dispatch(signInFailure(data.message));
-                return;
+            if (formData.email && formData.password) {
+                const form = new FormData();
+                for (const property in formData) {
+                    form.append(
+                        property,
+                        formData[property as keyof formDataProps]
+                    );
+                }
+
+                const response: AxiosResponse = await axios(
+                    'https://roughy-loyal-daily.ngrok-free.app/api/login',
+                    {
+                        method: 'POST',
+                        data: form
+                    }
+                );
+                const data = await response.data;
+                console.log(data);
+                if (data.success === false) {
+                    dispatch(signInFailure(data.message));
+                    return;
+                }
+                dispatch(signInSuccess(data.data));
+                navigate('/');
             }
-            dispatch(signInSuccess(data));
-            navigate('/');
         } catch (error) {
             dispatch(signInFailure(error.message));
         }
@@ -55,7 +77,6 @@ export default function SignIn() {
                 showPassword={showPassword}
                 setShowPassword={setShowPassword}
                 loading={loading}
-
             />
             <div className="flex gap-2 mt-5">
                 <p>Dont have an account?</p>
