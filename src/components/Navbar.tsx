@@ -7,8 +7,8 @@ import { Input, InputProps } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 import { RootState } from '@/redux/store';
-import { UserMenu } from './UserMenu';
-import HumburgerMenu from './HumburgerMenu';
+import { UserMenu } from './navbar/UserMenu';
+import HumburgerMenu from './navbar/HumburgerMenu';
 
 const categoriesProduct = [
     'baju',

@@ -1,4 +1,4 @@
-import Navbar from '@/components/navbar/Navbar';
+import Navbar from '@/components/Navbar';
 import useNavScroll from '@/hook/useNavScroll';
 
 type LayoutProps = {
