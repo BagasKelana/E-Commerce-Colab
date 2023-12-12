@@ -20,6 +20,7 @@ export default function SignIn() {
         email: '',
         password: ''
     });
+    const { loading, error } = useSelector((state: RootState) => state.user);
     const [showPassword, setShowPassword] = useState(false);
     const { loading, error } = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
@@ -63,7 +64,7 @@ export default function SignIn() {
                 dispatch(signInSuccess(data.data));
                 navigate('/');
             }
-        } catch (error) {
+        } catch (error ) {
             dispatch(signInFailure(error.message));
         }
     };
@@ -81,10 +82,10 @@ export default function SignIn() {
             <div className="flex gap-2 mt-5">
                 <p>Dont have an account?</p>
                 <Link to={'/signup'}>
-                    <span className="text-blue-700">Sign up</span>
+                    <span className="text-blue-700">Sign Up</span>
                 </Link>
             </div>
-            {error && <p className="text-red-500 mt-5">{error}</p>}
+            {Boolean(error) && <p className="text-red-500 mt-5">{error}</p>}
         </div>
     );
 }

@@ -5,6 +5,9 @@ import { useState } from 'react';
 
 import { Input, InputProps } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 import { RootState } from '@/redux/store';
 import { UserMenu } from './navbar/UserMenu';
