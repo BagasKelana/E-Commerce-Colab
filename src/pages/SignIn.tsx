@@ -22,7 +22,6 @@ export default function SignIn() {
     });
     const { loading, error } = useSelector((state: RootState) => state.user);
     const [showPassword, setShowPassword] = useState(false);
-    const { loading, error } = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -64,7 +63,7 @@ export default function SignIn() {
                 dispatch(signInSuccess(data.data));
                 navigate('/');
             }
-        } catch (error ) {
+        } catch (error) {
             dispatch(signInFailure(error.message));
         }
     };
