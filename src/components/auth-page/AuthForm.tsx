@@ -1,7 +1,7 @@
 import { Eye, EyeOff } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import './form.css';
+
 interface AuthFormProps {
     handleSubmit: React.FormEventHandler<HTMLFormElement> | undefined;
     handleChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
@@ -24,7 +24,10 @@ const AuthForm: React.FC<AuthFormProps> = ({
     confirmPassword = false
 }) => {
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4 input-form"
+        >
             {children}
             <Input
                 required
