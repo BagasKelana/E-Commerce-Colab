@@ -36,7 +36,6 @@ export default function App() {
 
             {/* <Route element={<UserPrivateRoute />}>
 
-               
                 
             </Route> */}
         </Routes>
