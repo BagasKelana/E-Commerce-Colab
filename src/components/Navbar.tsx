@@ -1,19 +1,13 @@
-import { Search, CircleUserRound, ShoppingCart, Menu } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import { Search, CircleUserRound, ShoppingCart } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 
 import { Input, InputProps } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger
-} from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { RootState } from '@/redux/store';
+import { UserMenu } from './navbar/UserMenu';
+import HumburgerMenu from './navbar/HumburgerMenu';
 
 const categoriesProduct = [
     'baju',
@@ -33,7 +27,7 @@ type NavbarProps = {
 const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
     const [term, setTerm] = useState('');
     const [queryParameters] = useSearchParams();
-
+    const { currentUser } = useSelector((state: RootState) => state.user);
     const navigate = useNavigate();
 
     const handleOnKeyDown = (
@@ -69,7 +63,7 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
     return (
         <header
             className={cn(
-                'bg-white w-full top-0 fixed z-[100] ',
+                'bg-white min-w-full w-screen top-0 fixed z-[100]  ',
                 stikyNavBar && className
             )}
         >
@@ -106,16 +100,43 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
                 <nav className="contents">
                     <ul className="ml-4 xl:w-48 flex items-center justify-end">
                         <li className="ml-2 lg:ml-4 relative inline-block">
-                            <Link className="" to={'/'}>
-                                <CircleUserRound className="h-10 p-2 w-10 text-gray-500 hover:text-gray-600" />
-                            </Link>
-                        </li>
-                        <li className="ml-2 lg:ml-4 relative inline-block">
                             <Link to="">
                                 <div className="absolute -top-0 right-0 z-10 bg-orange-300 text-xs font-semibold p-0.5 rounded-full">
                                     20
                                 </div>
                                 <ShoppingCart className="w-10 h-10 p-2" />
+                            </Link>
+                        </li>
+                        <svg
+                            className="relative ml-2 lg:ml-4 md:inline-block hidden"
+                            height="20"
+                            width="1"
+                        >
+                            <line
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="20"
+                                style={{ stroke: 'black', strokeWidth: 1 }}
+                            />
+                        </svg>
+                        <li className="ml-2 lg:ml-4 relative md:inline-block hidden">
+                            <Link to={'/'}>
+                                {currentUser?.name ? (
+                                    <div className="flex items-center font-semibold text-sm">
+                                        <UserMenu />
+                                        {currentUser.name
+                                            .split('')
+                                            .map((value, index) =>
+                                                index === 0
+                                                    ? value.toUpperCase()
+                                                    : value
+                                            )
+                                            .join('')}
+                                    </div>
+                                ) : (
+                                    <CircleUserRound className="h-10 p-2 w-10 text-gray-500 hover:text-gray-600" />
+                                )}
                             </Link>
                         </li>
                         <HumburgerMenu />
@@ -131,69 +152,5 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
         </header>
     );
 };
-
-export function HumburgerMenu() {
-    return (
-        <Sheet>
-            <SheetTrigger asChild>
-                <li className="ml-2 lg:ml-4 relative inline-block md:hidden">
-                    <Menu className="w-10 h-10 p-2" />
-                </li>
-            </SheetTrigger>
-            <SheetContent className="overflow-auto no-scrollbar">
-                <SheetHeader>
-                    <SheetTitle>Menu Utama</SheetTitle>
-                </SheetHeader>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Esse nulla maxime adipisci, corporis ea error ducimus quos
-                    maiores fuga? Nobis ipsam nemo, earum odio officiis quasi
-                    animi aut pariatur consectetur!
-                </div>
-                <SheetFooter>
-                    <SheetClose asChild>
-                        <Button>Save changes</Button>
-                    </SheetClose>
-                </SheetFooter>
-            </SheetContent>
-        </Sheet>
-    );
-}
 
 export default Navbar;

@@ -9,7 +9,6 @@ interface AuthFormProps {
     setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
     title: string;
     loading?: boolean;
-    error?: unknown;
     children?: React.ReactNode;
     confirmPassword?: boolean;
 }
@@ -20,15 +19,18 @@ const AuthForm: React.FC<AuthFormProps> = ({
     showPassword,
     setShowPassword,
     loading,
-    error,
     children,
     title,
     confirmPassword = false
 }) => {
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4 input-form"
+        >
             {children}
             <Input
+                required
                 minLength={10}
                 type="email"
                 placeholder="email"
@@ -38,6 +40,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
             />
             <div className="flex items-center justify-center border border-input rounded-md pr-4 select-none focus-within:ring-1 focus-within:ring-black">
                 <Input
+                    required
                     minLength={8}
                     type={!showPassword ? 'password' : 'text'}
                     placeholder="password"
@@ -57,6 +60,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
             {confirmPassword && (
                 <div className="flex items-center justify-center border border-input rounded-md pr-4 select-none focus-within:ring-1 focus-within:ring-black">
                     <Input
+                        required
                         minLength={8}
                         type={!showPassword ? 'password' : 'text'}
                         placeholder="confirm password"
