@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 
 type CardProps = React.ComponentProps<typeof Card>;
@@ -12,10 +12,19 @@ type ProductCardProps = CardProps & {
 };
 
 const ProductCard = ({ className, name, src, price }: ProductCardProps) => {
+    const navigate = useNavigate();
+    const handleProductClick = () => {
+        const productData = {
+            name,
+            src,
+            price
+        };
+        navigate(`/product/${name}`, { state: { productData } });
+    };
     return (
         <div className={cn('inline-block w-full  ', className)}>
             <div className=" relative min-w-full">
-                <div className="h-full ">
+                <div className="h-full" onClick={handleProductClick}>
                     <Card className=" min-w-[100px] h-[257.844px]  rounded-md">
                         <img
                             className="object-cover w-full"
