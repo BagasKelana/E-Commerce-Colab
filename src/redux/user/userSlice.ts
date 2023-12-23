@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface initialStateProps {
 	currentUser: {
-		id: string;
-		userName: string;
-		email: string;
+		token: string;
+		name: string;
+		role: string;
 	} | null;
 	error: unknown;
 	loading: boolean;
