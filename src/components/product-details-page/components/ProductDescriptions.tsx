@@ -6,9 +6,14 @@ import {
     Share2,
     UserRoundPlus
 } from 'lucide-react';
+import {
+    AlertDialogAction,
+    AlertDialogFooter
+} from '@/components/ui/alert-dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Separator } from '../../ui/separator';
 
+import ShoppingCartModal from './ShoppingCartModal';
 import ToggleButton from '../template/ToggleButton';
 import OpenModalButton from '../template/OpenModalButton';
 import PopoverButton from '../template/PopoverButton';
@@ -28,7 +33,8 @@ const ProductDescriptions = () => {
             buttonClassName:
                 'flex flex-col items-center justify-center p-[.2rem]',
             iconClassName: 'w-4 h-4 sm:w-7 sm:h-7',
-            textClassName: 'text-xs sm:font-base sm:text-sm sm:font-semibold select-none'
+            textClassName:
+                'text-xs sm:font-base sm:text-sm sm:font-semibold select-none'
         },
         {
             textIcon: Heart,
@@ -36,7 +42,8 @@ const ProductDescriptions = () => {
             buttonClassName:
                 'flex flex-col items-center justify-center p-[.2rem]',
             iconClassName: 'w-4 h-4 sm:w-7 h-7',
-            textClassName: 'text-xs sm:font-base sm:text-sm sm:font-semibold select-none'
+            textClassName:
+                'text-xs sm:font-base sm:text-sm sm:font-semibold select-none'
         }
     ];
 
@@ -67,11 +74,23 @@ const ProductDescriptions = () => {
                         buttonClassName="flex flex-col items-center justify-center p-[.2rem]"
                         iconClassName="w-4 h-4 sm:w-7 sm:h-7"
                         textClassName="text-xs sm:font-base sm:text-sm sm:font-semibold select-none"
+                        // modalTitle="Hello World"
+                        modalDescription={<ShoppingCartModal />}
+                        modalButton={
+                            <AlertDialogFooter>
+                                <AlertDialogAction>
+                                    Add To Cart
+                                </AlertDialogAction>
+                                <AlertDialogAction>
+                                    Buy Now
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        }
                     />
 
                     <PopoverButton
                         textIcon={Share2}
-                        text="Cart"
+                        text="Share"
                         buttonClassName="flex flex-col items-center justify-center p-[.2rem]"
                         iconClassName="w-4 h-4 sm:w-7 sm:h-7"
                         textClassName="text-xs sm:font-base sm:text-sm sm:font-semibold select-none"
