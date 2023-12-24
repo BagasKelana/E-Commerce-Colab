@@ -17,7 +17,8 @@ const Product: React.FC = () => {
         page: queryParameters.get('page'),
         min: queryParameters.get('min'),
         max: queryParameters.get('max'),
-        sf: queryParameters.get('sf')
+        sf: queryParameters.get('sf'),
+        so: queryParameters.get('so'),
     });
 
     useEffect(() => {
@@ -27,7 +28,8 @@ const Product: React.FC = () => {
             page: queryParameters.get('page'),
             min: queryParameters.get('min'),
             max: queryParameters.get('max'),
-            sf: queryParameters.get('sf')
+            sf: queryParameters.get('sf'),
+            so: queryParameters.get('so'),
         };
         {
             setFilter((current) => ({
@@ -38,9 +40,14 @@ const Product: React.FC = () => {
     }, [queryParameters]);
 
     const querySearch = useMemo(() => {
-        const { term, category_id, min, max, sf } = filter;
+        const { term, category_id, min, max, sf, so } = filter;
         // prettier-ignore
-        const queryString = `?q=${term || ''}&category_id=${category_id || ''}${min ? `&min=${min}` : ''}${max ? `&max=${max}` : ''}${sf ? `&sf=${sf}` : ''}`;
+        const queryString = `?q=${term || ''}` +
+            `${category_id ? `&category_id=${category_id}` : ''}` +
+            `${min ? `&min=${min}` : ''}` +
+            `${max ? `&max=${max}` : ''}` +
+            `${sf ? `&sf=${sf}` : ''}` +
+            `${so ? `&so=${so}` : ''}`;
 
         return queryString;
     }, [filter]);
@@ -49,8 +56,6 @@ const Product: React.FC = () => {
         `${import.meta.env.VITE_DEVELOPE_API}/product${querySearch}`,
         null
     );
-
-    console.log(data);
 
     const renderSkeleton = () => {
         return Array.from({ length: 10 }, (_, index) => (

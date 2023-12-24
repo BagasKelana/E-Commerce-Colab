@@ -32,7 +32,7 @@ const ProductCard = ({ className, name, src, price }: ProductCardProps) => {
                             width={512}
                             src={`${
                                 import.meta.env.VITE_DEVELOPE_API_IMG
-                            }${src}`}
+                            }/${src}`}
                             alt="card-img"
                             loading="lazy"
                         />

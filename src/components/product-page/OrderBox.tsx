@@ -21,7 +21,7 @@ const orders = [
         label: 'Nama'
     },
     {
-        value: 'price_asc',
+        value: 'price',
         label: 'Harga Termurah'
     },
     {
@@ -34,31 +34,30 @@ const OrderBox = () => {
     const [open, setOpen] = useState(false);
     const [queryParameters, setQueryParameters] = useSearchParams();
     const [value, setValue] = useState('relevance');
-    const [isDesending, setIsDesending] = useState('');
-
-    useEffect(() => {
-        setValue(queryParameters.get('sf') || 'relevance');
-        setIsDesending(queryParameters.get('so') || '');
-    }, [queryParameters]);
 
     const handleOnSelect: ((value: string) => void) | undefined = (
         currentValue
     ) => {
         setOpen(false);
-        if (currentValue === value && currentValue !== 'relevance') {
-            queryParameters.delete('sf');
-            setQueryParameters(queryParameters);
-            return setValue('relevance');
-        } else if (currentValue && currentValue !== 'relevance') {
-            queryParameters.set('sf', currentValue);
+        if (currentValue && currentValue !== 'relevance') {
+            if(currentValue === 'price_desc') {
+                queryParameters.set('sf', 'price');
+                queryParameters.set('so', 'desc');
+
+            } else {
+                queryParameters.set('sf', currentValue);
+                queryParameters.delete('so');
+            }            
+
             setQueryParameters(queryParameters);
             
             return setValue(currentValue);
         } else {
-            if (queryParameters.get('sf')) {
-                queryParameters.delete('sf');
-                setQueryParameters(queryParameters);
-            }
+
+            queryParameters.delete('sf');
+            queryParameters.delete('so');
+            setQueryParameters(queryParameters);
+
             return setValue('relevance');
         }
     };
