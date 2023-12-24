@@ -1,18 +1,16 @@
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { ChevronDown, Filter } from "lucide-react";
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { ChevronDown, Filter } from 'lucide-react';
 
+import useFetch, { FetchAllCategory } from '@/hook/useFetch';
+import { FilterComponentProps } from './product-type';
 
-import useFetch, { FetchAllCategory } from "@/hook/useFetch";
-import { FilterComponentProps } from "./product-type";
-
-import { cn } from "@/lib/utils";
-import FilterList from "./FilterList";
-import { Input, InputProps } from "../ui/input";
-import { Button } from "../ui/button";
+import { cn } from '@/lib/utils';
+import FilterList from './FilterList';
+import { Input, InputProps } from '../ui/input';
 
 const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
-    const { data} = useFetch<FetchAllCategory>(
+    const { data } = useFetch<FetchAllCategory>(
         `${import.meta.env.VITE_DEVELOPE_API}/category`,
         null
     );
@@ -79,56 +77,79 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
         }
     };
 
-    const handleApplyPrice = () => {
-        if (price.min && price.max) {
-            if (price.min <= price.max) {
+    // const handleApplyPrice = () => {
+    //     if (price.min && price.max) {
+    //         if (price.min <= price.max) {
+    //             queryParameters.set('min', price.min);
+    //             queryParameters.set('max', price.max);
+    //             setPrice((current) => ({
+    //                 ...current,
+    //                 errorMessage: ''
+    //             }));
+    //             return setQueryParameters(queryParameters);
+    //         }
+    //         return setPrice((current) => ({
+    //             ...current,
+    //             errorMessage:
+    //                 'The minimum price must be less or equal to the maximum price'
+    //         }));
+    //     }
+    //     if (price.min || price.max) {
+    //         queryParameters.set('min', price.min);
+    //         queryParameters.set('max', price.max);
+    //         setPrice((current) => ({
+    //             ...current,
+    //             errorMessage: ''
+    //         }));
+    //         return setQueryParameters(queryParameters);
+    //     } else {
+    //         queryParameters.delete('min');
+    //         queryParameters.delete('max');
+    //         setPrice((current) => ({
+    //             ...current,
+    //             errorMessage: ''
+    //         }));
+    //         return setQueryParameters(queryParameters);
+    //     }
+    // };
+
+    const handleInputMin = (e: React.FocusEvent<HTMLInputElement>) => {
+        if (e.target.value) {
+            if (filter.min !== e.target.value) {
                 queryParameters.set('min', price.min);
-                queryParameters.set('max', price.max);
-                setPrice((current) => ({
-                    ...current,
-                    errorMessage: ''
-                }));
-                return setQueryParameters(queryParameters);
+                setQueryParameters(queryParameters);
             }
-            return setPrice((current) => ({
-                ...current,
-                errorMessage:
-                    'The minimum price must be less or equal to the maximum price'
-            }));
-        }
-        if (price.min || price.max) {
-            queryParameters.set('min', price.min);
-            queryParameters.set('max', price.max);
-            setPrice((current) => ({
-                ...current,
-                errorMessage: ''
-            }));
-            return setQueryParameters(queryParameters);
         } else {
             queryParameters.delete('min');
+            setQueryParameters(queryParameters);
+        }
+    };
+    const handleInputMax = (e: React.FocusEvent<HTMLInputElement>) => {
+        if (e.target.value) {
+            if (filter.max !== e.target.value) {
+                queryParameters.set('max', price.max);
+                setQueryParameters(queryParameters);
+            }
+        } else {
             queryParameters.delete('max');
-            setPrice((current) => ({
-                ...current,
-                errorMessage: ''
-            }));
-            return setQueryParameters(queryParameters);
+            setQueryParameters(queryParameters);
         }
     };
 
     return (
-        <div className=" hidden h-full w-1/6 flex-col gap-4 p-4  xl:flex ">
+        <div className="hidden h-full w-1/5 flex-col gap-4 p-4 xl:flex ">
             <div className="whitespace-nowrap flex items-center ">
                 <Filter className="w-4 h-4 mr-2" />
                 <h3 className="font-semibold">FILTER</h3>
             </div>
-            <div className="h-full w-full shadow shadow-black">
-                <div className="flex w-full flex-col ">
+            <div className="h-full w-full border border-input">
+                <div className="flex w-full flex-col">
                     <div>
                         <button
                             onClick={handleShowCategoris}
-                            className="flex cursor-pointer items-center justify-between p-2 shadow shadow-black w-full "
+                            className="flex cursor-pointer items-center justify-between p-2 w-full"
                         >
-                            <div>Categories</div>
+                            <div className="font-semibold">Categories</div>
                             <span
                                 className={cn(
                                     'transition-all duration-150 ease-in-out -rotate-180',
@@ -140,9 +161,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                         </button>
                         <ul
                             className={cn(
-                                'ml-5 flex origin-top flex-col overflow-auto text-sm transition-all duration-200 ease-in-out max-h-[180px] scale-y-100',
+                                'ml-5 flex origin-top flex-col text-sm transition-all duration-200 ease-in-out max-h-[180px] scale-y-100 ',
                                 !showFilter.categories &&
-                                    ' max-h-[0px] scale-y-0'
+                                    'max-h-[0px] scale-y-0'
                             )}
                         >
                             {data?.data?.map((category, index) => {
@@ -171,9 +192,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                     <div>
                         <button
                             onClick={handleShowPrice}
-                            className="flex cursor-pointer items-center justify-between p-2 shadow shadow-black w-full "
+                            className="flex cursor-pointer items-center justify-between p-2 w-full"
                         >
-                            <div>Price</div>
+                            <div className="font-semibold">Price</div>
                             <span
                                 className={cn(
                                     'transition-all duration-150 ease-in-out -rotate-180',
@@ -192,6 +213,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                         >
                             <div className="w-full flex flex-col gap-2 py-2 px-2">
                                 <Input
+                                    onBlur={handleInputMin}
                                     onChange={handleChangePrice}
                                     className="p-2"
                                     id="min"
@@ -202,6 +224,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                                     value={price.min}
                                 />
                                 <Input
+                                    onBlur={handleInputMax}
                                     onChange={handleChangePrice}
                                     id="max"
                                     name="max"
@@ -215,10 +238,6 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                                         {price.errorMessage}
                                     </span>
                                 )}
-
-                                <Button onClick={handleApplyPrice}>
-                                    APPLY
-                                </Button>
                             </div>
                         </div>
                     </div>

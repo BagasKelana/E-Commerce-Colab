@@ -50,6 +50,8 @@ const Product: React.FC = () => {
         null
     );
 
+    console.log(data);
+
     const renderSkeleton = () => {
         return Array.from({ length: 10 }, (_, index) => (
             <SkeletonCard key={index} />
@@ -66,14 +68,14 @@ const Product: React.FC = () => {
                         Error Bos
                     </div>
                 ) : (
-                    <div className="w-5/6 h-full flex flex-col">
+                    <div className="w-4/5 h-full flex flex-col">
                         <div className="flex justify-end mb-4">
                             <OrderBox />
                         </div>
                         <section className="grid grid-cols-5 gap-x-4 gap-y-5  place-items-stretch mb-4 w-full">
                             {loading
                                 ? renderSkeleton()
-                                : data?.data.data?.map((product) => (
+                                : data?.data?.data?.map((product) => (
                                       <ProductCard
                                           key={product.id}
                                           name={product.name}
