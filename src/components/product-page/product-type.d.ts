@@ -12,6 +12,7 @@ export type Filter = {
     min?: string | null;
     max?: string | null;
     sf?: string | null;
+    so?: string | null;
 };
 
 export type FilterComponentProps = {
