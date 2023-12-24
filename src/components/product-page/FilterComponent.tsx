@@ -26,6 +26,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
         errorMessage: ''
     });
 
+
     const handleShowCategoris = () => {
         setShowFilter((value) => {
             return { ...value, categories: !value.categories };
@@ -57,10 +58,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
             >;
         }
     ) => {
-        
         const value = convertToNumber(e.target.value);
 
-        if(value > 0){
+        if (value > 0) {
             if (e.target.id === 'min') {
                 const formattedValue = formatCurrency(value);
 
@@ -69,7 +69,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                     min: formattedValue
                 }));
             }
-    
+
             if (e.target.id === 'max') {
                 const formattedValue = formatCurrency(value);
 
@@ -78,16 +78,15 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                     max: formattedValue
                 }));
             }
-
         } else {
-            if(e.target.id === 'min') {
+            if (e.target.id === 'min') {
                 return setPrice((current) => ({
                     ...current,
                     min: ''
                 }));
             }
-            
-            if(e.target.id === 'max') {
+
+            if (e.target.id === 'max') {
                 return setPrice((current) => ({
                     ...current,
                     max: ''
@@ -96,12 +95,12 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
         }
     };
 
-    const formatCurrency = (value) => {
+    const formatCurrency = (value: number) => {
         const formatter = new Intl.NumberFormat('id-ID');
         return formatter.format(value);
     };
 
-    function convertToNumber(input) {
+    function convertToNumber(input: string) {
         const cleanedInput = input.replace(/\./g, '');
         const sanitizedInput = cleanedInput.replace(',', '.');
         const result = parseFloat(sanitizedInput);
@@ -112,7 +111,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
     const handleInputMin = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             if (filter.min !== e.target.value) {
-                queryParameters.set('min', convertToNumber(price.min));
+                queryParameters.set('min', String(convertToNumber(price.min)));
                 setQueryParameters(queryParameters);
             }
         } else {
@@ -123,7 +122,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
     const handleInputMax = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             if (filter.max !== e.target.value) {
-                queryParameters.set('max', convertToNumber(price.max));
+                queryParameters.set('max', String(convertToNumber(price.max)));
                 setQueryParameters(queryParameters);
             }
         } else {
