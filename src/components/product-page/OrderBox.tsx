@@ -18,11 +18,15 @@ const orders = [
     },
     {
         value: 'name',
-        label: 'Name'
+        label: 'Nama'
     },
     {
-        value: 'price',
-        label: 'Harga Terendah'
+        value: 'price_asc',
+        label: 'Harga Termurah'
+    },
+    {
+        value: 'price_desc',
+        label: 'Harga Termahal'
     }
 ];
 

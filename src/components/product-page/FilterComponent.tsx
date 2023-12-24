@@ -57,66 +57,62 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
             >;
         }
     ) => {
-        const pattern = /^[0-9]*$/;
-        if (e.target.id === 'min') {
-            if (pattern.test(e.target.value)) {
+        
+        const value = convertToNumber(e.target.value);
+
+        if(value > 0){
+            if (e.target.id === 'min') {
+                const formattedValue = formatCurrency(value);
+
                 return setPrice((current) => ({
                     ...current,
-                    min: e.target.value
+                    min: formattedValue
                 }));
             }
-        }
+    
+            if (e.target.id === 'max') {
+                const formattedValue = formatCurrency(value);
 
-        if (e.target.id === 'max') {
-            if (pattern.test(e.target.value)) {
                 return setPrice((current) => ({
                     ...current,
-                    max: e.target.value
+                    max: formattedValue
+                }));
+            }
+
+        } else {
+            if(e.target.id === 'min') {
+                return setPrice((current) => ({
+                    ...current,
+                    min: ''
+                }));
+            }
+            
+            if(e.target.id === 'max') {
+                return setPrice((current) => ({
+                    ...current,
+                    max: ''
                 }));
             }
         }
     };
 
-    // const handleApplyPrice = () => {
-    //     if (price.min && price.max) {
-    //         if (price.min <= price.max) {
-    //             queryParameters.set('min', price.min);
-    //             queryParameters.set('max', price.max);
-    //             setPrice((current) => ({
-    //                 ...current,
-    //                 errorMessage: ''
-    //             }));
-    //             return setQueryParameters(queryParameters);
-    //         }
-    //         return setPrice((current) => ({
-    //             ...current,
-    //             errorMessage:
-    //                 'The minimum price must be less or equal to the maximum price'
-    //         }));
-    //     }
-    //     if (price.min || price.max) {
-    //         queryParameters.set('min', price.min);
-    //         queryParameters.set('max', price.max);
-    //         setPrice((current) => ({
-    //             ...current,
-    //             errorMessage: ''
-    //         }));
-    //         return setQueryParameters(queryParameters);
-    //     } else {
-    //         queryParameters.delete('min');
-    //         queryParameters.delete('max');
-    //         setPrice((current) => ({
-    //             ...current,
-    //             errorMessage: ''
-    //         }));
-    //         return setQueryParameters(queryParameters);
-    //     }
-    // };
+    const formatCurrency = (value) => {
+        const formatter = new Intl.NumberFormat('id-ID');
+        return formatter.format(value);
+    };
+
+    function convertToNumber(input) {
+        const cleanedInput = input.replace(/\./g, '');
+        const sanitizedInput = cleanedInput.replace(',', '.');
+        const result = parseFloat(sanitizedInput);
+
+        return isNaN(result) ? 0 : result;
+    }
 
     const handleInputMin = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             if (filter.min !== e.target.value) {
-                queryParameters.set('min', price.min);
+                queryParameters.set('min', convertToNumber(price.min));
                 setQueryParameters(queryParameters);
             }
         } else {
@@ -127,7 +123,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
     const handleInputMax = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             if (filter.max !== e.target.value) {
-                queryParameters.set('max', price.max);
+                queryParameters.set('max', convertToNumber(price.max));
                 setQueryParameters(queryParameters);
             }
         } else {

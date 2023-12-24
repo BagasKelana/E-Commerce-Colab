@@ -65,7 +65,7 @@ const Product: React.FC = () => {
                 {error ? (
                     <div className="w-5/6 min-h-[200px] flex items-center justify-center  text-3xl">
                         {' '}
-                        Error Bos
+                        Terjadi Error, Silahkan Coba Lagi
                     </div>
                 ) : (
                     <div className="w-4/5 h-full flex flex-col">
