@@ -22,21 +22,42 @@ const orders = [
     },
     {
         value: 'price',
-        label: 'Price'
+        label: 'Harga Terendah'
     }
 ];
 
 const OrderBox = () => {
     const [open, setOpen] = useState(false);
-
     const [queryParameters, setQueryParameters] = useSearchParams();
     const [value, setValue] = useState('relevance');
-
-    console.log(value);
+    const [isDesending, setIsDesending] = useState('');
 
     useEffect(() => {
         setValue(queryParameters.get('sf') || 'relevance');
+        setIsDesending(queryParameters.get('so') || '');
     }, [queryParameters]);
+
+    const handleOnSelect: ((value: string) => void) | undefined = (
+        currentValue
+    ) => {
+        setOpen(false);
+        if (currentValue === value && currentValue !== 'relevance') {
+            queryParameters.delete('sf');
+            setQueryParameters(queryParameters);
+            return setValue('relevance');
+        } else if (currentValue && currentValue !== 'relevance') {
+            queryParameters.set('sf', currentValue);
+            setQueryParameters(queryParameters);
+            
+            return setValue(currentValue);
+        } else {
+            if (queryParameters.get('sf')) {
+                queryParameters.delete('sf');
+                setQueryParameters(queryParameters);
+            }
+            return setValue('relevance');
+        }
+    };
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -59,29 +80,8 @@ const OrderBox = () => {
                         {orders.map((order) => (
                             <CommandItem
                                 key={order.value}
-                                value={order.value}
-                                onSelect={(currentValue) => {
-                                    setValue(
-                                        currentValue === value
-                                            ? ''
-                                            : currentValue
-                                    );
-                                    setOpen(false);
-                                    if (
-                                        currentValue === '' ||
-                                        currentValue === 'relevance'
-                                    ) {
-                                        queryParameters.delete('sf');
-                                        return setQueryParameters(
-                                            queryParameters
-                                        );
-                                    } else {
-                                        queryParameters.set('sf', currentValue);
-                                        return setQueryParameters(
-                                            queryParameters
-                                        );
-                                    }
-                                }}
+                                value={order.value || 'relevance'}
+                                onSelect={handleOnSelect}
                             >
                                 <Check
                                     className={cn(
