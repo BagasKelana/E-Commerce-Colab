@@ -8,23 +8,21 @@ import ProductSection from './ProductSection';
 
 const Product = () => {
     const [queryParameters] = useSearchParams();
+    const [url, setUrl] = useState('');
 
     const [filter, setFilter] = useState<Filter>({
-        term: queryParameters.get('q'),
-        category_id: queryParameters.get('category_id'),
-        page: queryParameters.get('page'),
-        min: queryParameters.get('min'),
-        max: queryParameters.get('max'),
-        sf: queryParameters.get('sf'),
-        so: queryParameters.get('so'),
-        page: queryParameters.get('page')
+        category_id: '',
+        min: '',
+        max: '',
+        sf: '',
+        so: '',
+        page: ''
     });
 
     useEffect(() => {
+        const urlParams = new URLSearchParams(location.search);
         const initialFilterState = {
-            term: queryParameters.get('q'),
             category_id: queryParameters.get('category_id'),
-            page: queryParameters.get('page'),
             min: queryParameters.get('min'),
             max: queryParameters.get('max'),
             sf: queryParameters.get('sf'),
@@ -37,12 +35,15 @@ const Product = () => {
                 ...initialFilterState
             }));
         }
+
+        const searchQuery = urlParams.toString();
+        setUrl(() => searchQuery);
     }, [queryParameters]);
 
     return (
         <div className="h-full w-full flex">
             <FilterComponent filter={filter} />
-            <ProductSection filter={filter}>
+            <ProductSection url={url}>
                 <div className="font-bold xl:hidden">Filter</div>
                 <OrderBox />
             </ProductSection>
