@@ -16,7 +16,8 @@ const Product = () => {
         min: queryParameters.get('min'),
         max: queryParameters.get('max'),
         sf: queryParameters.get('sf'),
-        so: queryParameters.get('so')
+        so: queryParameters.get('so'),
+        page: queryParameters.get('page')
     });
 
     useEffect(() => {
@@ -27,7 +28,8 @@ const Product = () => {
             min: queryParameters.get('min'),
             max: queryParameters.get('max'),
             sf: queryParameters.get('sf'),
-            so: queryParameters.get('so')
+            so: queryParameters.get('so'),
+            page: queryParameters.get('page')
         };
         {
             setFilter((current) => ({
