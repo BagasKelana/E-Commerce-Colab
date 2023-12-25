@@ -1,7 +1,6 @@
 import Slider, { Settings } from 'react-slick';
 import { useState } from 'react';
 
-
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './landing-page.css';
@@ -83,6 +82,7 @@ const LandingHero = () => {
                 <Slider {...settings}>
                     {img.map((img) => (
                         <img
+                            key={img}
                             height={300}
                             width={1200}
                             className="object-cover h-[200px] md:h-[300px] w-full  "
