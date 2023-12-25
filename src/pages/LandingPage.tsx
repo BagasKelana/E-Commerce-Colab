@@ -82,7 +82,6 @@ const LandingPage = () => {
             <PopulerCategories />
             <hr />
             <ProductSection />
-            <Footer />
         </Layout>
     );
 };

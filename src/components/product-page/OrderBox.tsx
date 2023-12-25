@@ -8,7 +8,7 @@ import {
     PopoverContent,
     PopoverTrigger
 } from '@/components/ui/popover';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 const orders = [
@@ -40,20 +40,18 @@ const OrderBox = () => {
     ) => {
         setOpen(false);
         if (currentValue && currentValue !== 'relevance') {
-            if(currentValue === 'price_desc') {
+            if (currentValue === 'price_desc') {
                 queryParameters.set('sf', 'price');
                 queryParameters.set('so', 'desc');
-
             } else {
                 queryParameters.set('sf', currentValue);
                 queryParameters.delete('so');
-            }            
+            }
 
             setQueryParameters(queryParameters);
-            
+
             return setValue(currentValue);
         } else {
-
             queryParameters.delete('sf');
             queryParameters.delete('so');
             setQueryParameters(queryParameters);

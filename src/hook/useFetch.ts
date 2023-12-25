@@ -54,7 +54,7 @@ type ProductImage = {
     product_id: number;
 };
 
-type Link = {
+export type Link = {
     url?: string;
     label: string;
     active: boolean;

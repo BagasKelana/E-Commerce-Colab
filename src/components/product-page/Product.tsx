@@ -1,14 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import ProductCard from '../Card/ProductCard';
-import SkeletonCard from '../Card/SkeletonCard';
 import OrderBox from './OrderBox';
 import { Filter } from './product-type';
 import FilterComponent from './FilterComponent';
-import useFetch, { FetchAllProduct } from '@/hook/useFetch';
+import ProductSection from './ProductSection';
 
-const Product: React.FC = () => {
+const Product = () => {
     const [queryParameters] = useSearchParams();
 
     const [filter, setFilter] = useState<Filter>({
@@ -18,7 +16,7 @@ const Product: React.FC = () => {
         min: queryParameters.get('min'),
         max: queryParameters.get('max'),
         sf: queryParameters.get('sf'),
-        so: queryParameters.get('so'),
+        so: queryParameters.get('so')
     });
 
     useEffect(() => {
@@ -29,7 +27,7 @@ const Product: React.FC = () => {
             min: queryParameters.get('min'),
             max: queryParameters.get('max'),
             sf: queryParameters.get('sf'),
-            so: queryParameters.get('so'),
+            so: queryParameters.get('so')
         };
         {
             setFilter((current) => ({
@@ -39,61 +37,13 @@ const Product: React.FC = () => {
         }
     }, [queryParameters]);
 
-    const querySearch = useMemo(() => {
-        const { term, category_id, min, max, sf, so } = filter;
-        // prettier-ignore
-        const queryString = `?q=${term || ''}` +
-            `${category_id ? `&category_id=${category_id}` : ''}` +
-            `${min ? `&min=${min}` : ''}` +
-            `${max ? `&max=${max}` : ''}` +
-            `${sf ? `&sf=${sf}` : ''}` +
-            `${so ? `&so=${so}` : ''}`;
-
-        return queryString;
-    }, [filter]);
-
-    const { data, error, loading } = useFetch<FetchAllProduct>(
-        `${import.meta.env.VITE_DEVELOPE_API}/product${querySearch}`,
-        null
-    );
-
-    const renderSkeleton = () => {
-        return Array.from({ length: 10 }, (_, index) => (
-            <SkeletonCard key={index} />
-        ));
-    };
-
     return (
-        <div className="w-full">
-            <div className="flex h-full w-full ">
-                <FilterComponent filter={filter} />
-                {error ? (
-                    <div className="w-5/6 min-h-[200px] flex items-center justify-center  text-3xl">
-                        {' '}
-                        Terjadi Error, Silahkan Coba Lagi
-                    </div>
-                ) : (
-                    <div className="w-4/5 h-full flex flex-col">
-                        <div className="flex justify-end mb-4">
-                            <OrderBox />
-                        </div>
-                        <section className="grid grid-cols-5 gap-x-4 gap-y-5  place-items-stretch mb-4 w-full">
-                            {loading
-                                ? renderSkeleton()
-                                : data?.data?.data?.map((product) => (
-                                      <ProductCard
-                                          key={product.id}
-                                          name={product.name}
-                                          src={
-                                              product.product_image?.[0]?.image
-                                          }
-                                          price={product.price}
-                                      />
-                                  ))}
-                        </section>
-                    </div>
-                )}
-            </div>
+        <div className="h-full w-full flex">
+            <FilterComponent filter={filter} />
+            <ProductSection filter={filter}>
+                <div className="font-bold xl:hidden">Filter</div>
+                <OrderBox />
+            </ProductSection>
         </div>
     );
 };
