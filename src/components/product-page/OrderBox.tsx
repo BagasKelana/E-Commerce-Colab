@@ -33,7 +33,7 @@ const orders = [
 const OrderBox = () => {
     const [open, setOpen] = useState(false);
     const [queryParameters, setQueryParameters] = useSearchParams();
-    const [value, setValue] = useState('relevance');
+    const [value, setValue] = useState(queryParameters.get('sf') === 'price' && queryParameters.get('so') === 'desc' ? 'price_desc' : queryParameters.get('sf') || 'relevance');
 
     const handleOnSelect: ((value: string) => void) | undefined = (
         currentValue
@@ -48,14 +48,16 @@ const OrderBox = () => {
                 queryParameters.delete('so');
             }
 
+            queryParameters.delete('page');
             setQueryParameters(queryParameters);
-
+                        
             return setValue(currentValue);
         } else {
             queryParameters.delete('sf');
             queryParameters.delete('so');
+            queryParameters.delete('page');
             setQueryParameters(queryParameters);
-
+            
             return setValue('relevance');
         }
     };

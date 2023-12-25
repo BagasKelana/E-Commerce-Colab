@@ -16,10 +16,11 @@ const ProductSection: React.FC<ProductSectionProps & FilterComponentProps> = ({
     children
 }) => {
     const querySearch = useMemo(() => {
-        const { term, category_id, min, max, sf, so } = filter;
+        const { term, category_id, min, max, sf, so, page } = filter;
 
         const queryString =
             `?q=${term || ''}` +
+            `${page ? `&page=${page}` : ''}` +
             `${category_id ? `&category_id=${category_id}` : ''}` +
             `${min ? `&min=${min}` : ''}` +
             `${max ? `&max=${max}` : ''}` +
@@ -40,7 +41,6 @@ const ProductSection: React.FC<ProductSectionProps & FilterComponentProps> = ({
         ));
     };
 
-    console.log(data);
     return (
         <ErrorHandling error={error}>
             <div className="flex justify-between xl:justify-end items-center mb-4">
@@ -59,7 +59,7 @@ const ProductSection: React.FC<ProductSectionProps & FilterComponentProps> = ({
                       ))}
             </section>
             <div className="w-full flex justify-center py-4">
-                <Pagination links={data?.data?.links} />
+                {data?.data?.data?.length > 0 && <Pagination url={'/product'} links={data?.data?.links} querySearch={querySearch} />}
             </div>
         </ErrorHandling>
     );

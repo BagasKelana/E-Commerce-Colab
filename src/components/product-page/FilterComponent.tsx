@@ -21,8 +21,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
         price: true
     });
     const [price, setPrice] = useState({
-        min: queryParameters.get('min') || '',
-        max: queryParameters.get('max') || '',
+        min: filter.min ? new Intl.NumberFormat("id-ID").format(filter.min) : '',
+        max: filter.max ? new Intl.NumberFormat("id-ID").format(filter.max) : '',
         errorMessage: ''
     });
 
@@ -46,6 +46,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
             queryParameters.delete('category_id');
             return setQueryParameters(queryParameters);
         }
+        queryParameters.delete('page');
         queryParameters.set('category_id', event.target.id);
         return setQueryParameters(queryParameters);
     };
@@ -110,6 +111,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
             queryParameters.delete('min');
             setQueryParameters(queryParameters);
         }
+
+        queryParameters.delete('page');
     };
     const handleInputMax = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
@@ -121,6 +124,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
             queryParameters.delete('max');
             setQueryParameters(queryParameters);
         }
+
+        queryParameters.delete('page');
     };
 
     return (

@@ -13,6 +13,7 @@ export type Filter = {
     max?: string | null;
     sf?: string | null;
     so?: string | null;
+    page?: string | null;
 };
 
 export type FilterComponentProps = {
