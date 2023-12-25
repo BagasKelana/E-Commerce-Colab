@@ -9,8 +9,9 @@ const ProductSection = () => {
                 <h2 className="text-white text-center">RECOMMENDATION</h2>
             </div>
             <section className="grid grid-cols-6 gap-x-4 gap-y-5  place-items-stretch mb-4">
-                {products.map((product) => (
+                {products.map((product, index) => (
                     <ProductCard
+                        key={index}
                         name={product.name}
                         price={product.price}
                         src={product.img}
