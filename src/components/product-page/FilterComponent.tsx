@@ -26,7 +26,6 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
         errorMessage: ''
     });
 
-
     const handleShowCategoris = () => {
         setShowFilter((value) => {
             return { ...value, categories: !value.categories };
@@ -61,23 +60,18 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
         const value = convertToNumber(e.target.value);
 
         if (value > 0) {
+            const formattedValue = formatCurrency(value);
             if (e.target.id === 'min') {
-                const formattedValue = formatCurrency(value);
-
                 return setPrice((current) => ({
                     ...current,
                     min: formattedValue
                 }));
             }
 
-            if (e.target.id === 'max') {
-                const formattedValue = formatCurrency(value);
-
-                return setPrice((current) => ({
-                    ...current,
-                    max: formattedValue
-                }));
-            }
+            return setPrice((current) => ({
+                ...current,
+                max: formattedValue
+            }));
         } else {
             if (e.target.id === 'min') {
                 return setPrice((current) => ({
@@ -86,12 +80,10 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                 }));
             }
 
-            if (e.target.id === 'max') {
-                return setPrice((current) => ({
-                    ...current,
-                    max: ''
-                }));
-            }
+            return setPrice((current) => ({
+                ...current,
+                max: ''
+            }));
         }
     };
 
