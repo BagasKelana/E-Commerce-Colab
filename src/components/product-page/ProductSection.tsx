@@ -1,45 +1,26 @@
-import { useMemo } from 'react';
-
 import useFetch, { FetchAllProduct } from '@/hook/useFetch';
 import SkeletonCard from '../Card/SkeletonCard';
 import ErrorHandling from './ErrorHandling';
 import ProductCard from '../Card/ProductCard';
 import Pagination from './Pagination';
-import { FilterComponentProps } from './product-type';
+import { useCallback } from 'react';
 
 type ProductSectionProps = {
     children: React.ReactNode;
+    url: string;
 };
 
-const ProductSection: React.FC<ProductSectionProps & FilterComponentProps> = ({
-    filter,
-    children
-}) => {
-    const querySearch = useMemo(() => {
-        const { term, category_id, min, max, sf, so, page } = filter;
-
-        const queryString =
-            `?q=${term || ''}` +
-            `${page ? `&page=${page}` : ''}` +
-            `${category_id ? `&category_id=${category_id}` : ''}` +
-            `${min ? `&min=${min}` : ''}` +
-            `${max ? `&max=${max}` : ''}` +
-            `${sf ? `&sf=${sf}` : ''}` +
-            `${so ? `&so=${so}` : ''}`;
-
-        return queryString;
-    }, [filter]);
-
+const ProductSection: React.FC<ProductSectionProps> = ({ children, url }) => {
     const { data, error, loading } = useFetch<FetchAllProduct>(
-        `${import.meta.env.VITE_DEVELOPE_API}/product${querySearch}`,
+        `${url && `${import.meta.env.VITE_DEVELOPE_API}/product?${url}`}`,
         null
     );
 
-    const renderSkeleton = () => {
+    const renderSkeleton = useCallback(() => {
         return Array.from({ length: 10 }, (_, index) => (
             <SkeletonCard key={index} />
         ));
-    };
+    }, []);
 
     return (
         <ErrorHandling error={error}>
@@ -51,7 +32,7 @@ const ProductSection: React.FC<ProductSectionProps & FilterComponentProps> = ({
                     ? renderSkeleton()
                     : data?.data?.data?.map((product) => (
                           <ProductCard
-                              key={product.id}
+                              key={product.slug}
                               name={product.name}
                               src={product.product_image?.[0]?.image}
                               price={product.price}
@@ -59,7 +40,7 @@ const ProductSection: React.FC<ProductSectionProps & FilterComponentProps> = ({
                       ))}
             </section>
             <div className="w-full flex justify-center py-4">
-                {data?.data?.data?.length > 0 && <Pagination url={'/product'} links={data?.data?.links} querySearch={querySearch} />}
+                <Pagination links={data?.data?.links} />
             </div>
         </ErrorHandling>
     );
