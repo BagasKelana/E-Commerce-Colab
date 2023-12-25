@@ -4,7 +4,6 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 
 import { Input, InputProps } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
 import { RootState } from '@/redux/store';
 import { UserMenu } from './navbar/UserMenu';
 import HumburgerMenu from './navbar/HumburgerMenu';
@@ -19,12 +18,7 @@ const categoriesProduct = [
     'permainan'
 ];
 
-type NavbarProps = {
-    className?: string;
-    stikyNavBar: boolean;
-};
-
-const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
+const Navbar = () => {
     const [term, setTerm] = useState('');
     const [queryParameters] = useSearchParams();
     const { currentUser } = useSelector((state: RootState) => state.user);
@@ -61,12 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({ className, stikyNavBar }) => {
     };
 
     return (
-        <header
-            className={cn(
-                'bg-white min-w-full w-screen top-0 fixed z-[100]  ',
-                stikyNavBar && className
-            )}
-        >
+        <header className="bg-white min-w-full w-screen top-0 fixed z-[100] shadow-sm shadow-gray-50">
             <div className="container mx-auto px-4 md:px-8 py-4 md:pt-8 flex items-center justify-between md:justify-start">
                 <div className="mr-auto w-48 flex-shrink-0 hidden md:flex ">
                     <Link to="/">
