@@ -20,8 +20,8 @@ const ProductCard = ({ name, src, price }: ProductCardProps) => {
         navigate(`/product/${name}`, { state: { productData } });
     };
     return (
-        <div className="h-full" onClick={handleProductClick}>
-            <Card className="w-full h-full md:min-w-[100px] md:min-h-[257.844px] rounded-lg overflow-hidden">
+        <div className="h-full cursor-pointer" onClick={handleProductClick}>
+            <Card className="w-full h-full md:min-w-[100px] md:min-h-[257.844px] rounded-lg overflow-hidden hover:border-amber-500">
                 <CardHeader className="p-0">
                     <img
                         className="object-cover w-full"
