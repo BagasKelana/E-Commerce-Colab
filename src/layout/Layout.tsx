@@ -1,23 +1,15 @@
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 
-import { cn } from '@/lib/utils';
-
 type LayoutProps = {
     children: React.ReactNode;
-    bgColor?: string;
 };
 
-const Layout = ({ children, bgColor }: LayoutProps) => {
+const Layout = ({ children }: LayoutProps) => {
     return (
         <div className="w-full h-full ">
             <Navbar />
-            <div
-                className={cn(
-                    'h-full w-full transition-all ease-in-out duration-300 mt-[80px] md:mt-[123px]',
-                    bgColor
-                )}
-            >
+            <div className="h-full w-full transition-all ease-in-out duration-300 mt-[80px] md:mt-[123px]">
                 <main className="w-full h-full">{children}</main>
             </div>
             <Footer />
