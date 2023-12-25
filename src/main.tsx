@@ -7,19 +7,21 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import ScrollToTop from './components/ScrollToTop.tsx';
-import { createContext } from 'react';
+import { StrictMode, createContext } from 'react';
 
 export const UserContext = createContext({ role: '' });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-            <UserContext.Provider value={{ role: '' }}>
-                <BrowserRouter>
-                    <ScrollToTop />
-                    <App />
-                </BrowserRouter>
-            </UserContext.Provider>
-        </PersistGate>
-    </Provider>
+    <StrictMode>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <UserContext.Provider value={{ role: '' }}>
+                    <BrowserRouter>
+                        <ScrollToTop />
+                        <App />
+                    </BrowserRouter>
+                </UserContext.Provider>
+            </PersistGate>
+        </Provider>
+    </StrictMode>
 );
