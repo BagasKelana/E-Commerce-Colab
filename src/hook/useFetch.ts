@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 
 export type FetchAllProduct = {
@@ -79,30 +79,33 @@ export type FetchAllCategory = {
 const useFetch = <T>(url: string, initialState: null) => {
     const [data, setData] = useState<T | null>(initialState);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<unknown>(null);
+    const [error, setError] = useState<AxiosError | null>(null);
 
     useEffect(() => {
         const controller = new AbortController();
         const { signal } = controller;
 
         const fetchData = async () => {
-            try {
-                setLoading(true);
-                const res: AxiosResponse | null = await axios.get(url, {
-                    signal
-                });
+            if (url) {
+                try {
+                    setLoading(true);
+                    const res: AxiosResponse | null = await axios.get(url, {
+                        signal
+                    });
 
-                if (res?.data) {
-                    setData(res.data);
-                } else {
-                    setData(null);
+                    if (res?.data) {
+                        setData(res.data);
+                    } else {
+                        setData(null);
+                    }
+                } catch (err: unknown) {
+                    if (signal.aborted) return;
+                    const error = err as AxiosError;
+                    setError(error);
+                    console.error(err);
+                } finally {
+                    setLoading(false);
                 }
-            } catch (err) {
-                if (signal.aborted) return;
-                setError(err);
-                console.error(err);
-            } finally {
-                setLoading(false);
             }
         };
 
