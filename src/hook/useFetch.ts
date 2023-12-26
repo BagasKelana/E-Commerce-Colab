@@ -86,26 +86,24 @@ const useFetch = <T>(url: string, initialState: null) => {
         const { signal } = controller;
 
         const fetchData = async () => {
-            if (url) {
-                try {
-                    setLoading(true);
-                    const res: AxiosResponse | null = await axios.get(url, {
-                        signal
-                    });
+            try {
+                setLoading(true);
+                const res: AxiosResponse | null = await axios.get(url, {
+                    signal
+                });
 
-                    if (res?.data) {
-                        setData(res.data);
-                    } else {
-                        setData(null);
-                    }
-                } catch (err: unknown) {
-                    if (signal.aborted) return;
-                    const error = err as AxiosError;
-                    setError(error);
-                    console.error(err);
-                } finally {
-                    setLoading(false);
+                if (res?.data) {
+                    setData(res.data);
+                } else {
+                    setData(null);
                 }
+            } catch (err: unknown) {
+                if (signal.aborted) return;
+                const error = err as AxiosError;
+                setError(error);
+                console.error(err);
+            } finally {
+                setLoading(false);
             }
         };
 
