@@ -112,7 +112,7 @@ const SearchBar = () => {
         if (e.key === 'Enter') {
             e.preventDefault();
             if (e.currentTarget.value) {
-                const url = `/product?q=${e.currentTarget.value}&sf=`;
+                const url = `/product?q=${e.currentTarget.value}`;
                 navigate(url);
             }
         }
