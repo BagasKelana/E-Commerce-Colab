@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 
 export type FetchAllProduct = {
@@ -79,7 +79,7 @@ export type FetchAllCategory = {
 const useFetch = <T>(url: string, initialState: null) => {
     const [data, setData] = useState<T | null>(initialState);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<unknown>(null);
+    const [error, setError] = useState<AxiosError | null>(null);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -97,9 +97,10 @@ const useFetch = <T>(url: string, initialState: null) => {
                 } else {
                     setData(null);
                 }
-            } catch (err) {
+            } catch (err: unknown) {
                 if (signal.aborted) return;
-                setError(err);
+                const error = err as AxiosError;
+                setError(error);
                 console.error(err);
             } finally {
                 setLoading(false);

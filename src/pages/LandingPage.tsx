@@ -2,7 +2,7 @@ import LandingHero from '@/components/landing-page/LandingHero';
 import PopulerCategories from '@/components/landing-page/PopulerCategories';
 import { Button } from '@/components/ui/button';
 import ProductSection from '@/components/landing-page/ProductSection';
-import Footer from '@/components/Footer';
+
 import Layout from '@/layout/Layout';
 
 const LandingPage = () => {
@@ -34,7 +34,7 @@ const LandingPage = () => {
                             </Button>
                         </div>
                     </div>
-                    <div className="w-full xl:w-[376px] h-[180px]  xl:h-[376px] bg-slate-900 rounded row-span-auto xl:row-span-2 relative overflow-hidden">
+                    <div className="w-full xl:w-[376px] h-[180px] xl:h-[376px] bg-slate-900 rounded row-span-auto xl:row-span-2 relative overflow-hidden">
                         <div>
                             <img
                                 className="h-[400px] absolute top-1/2 -translate-y-1/2 right-1/2 translate-x-1/2  drop-shadow-md  "

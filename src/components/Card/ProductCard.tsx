@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { memo } from 'react';
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -7,9 +8,10 @@ type ProductCardProps = CardProps & {
     name: string;
     src: string;
     price: number;
+    slug?: string;
 };
 
-const ProductCard = ({ name, src, price }: ProductCardProps) => {
+const ProductCard = memo(({ name, src, price, slug }: ProductCardProps) => {
     const navigate = useNavigate();
     const handleProductClick = () => {
         const productData = {
@@ -17,11 +19,11 @@ const ProductCard = ({ name, src, price }: ProductCardProps) => {
             src,
             price
         };
-        navigate(`/product/${name}`, { state: { productData } });
+        navigate(`/product/${slug}`, { state: { productData } });
     };
     return (
-        <div className="h-full" onClick={handleProductClick}>
-            <Card className="w-full h-full md:min-w-[100px] md:min-h-[257.844px] rounded-lg overflow-hidden">
+        <div className="h-full cursor-pointer" onClick={handleProductClick}>
+            <Card className="w-full h-full md:min-w-[100px] md:min-h-[257.844px] rounded-lg overflow-hidden hover:border-amber-500">
                 <CardHeader className="p-0">
                     <img
                         className="object-cover w-full"
@@ -48,6 +50,6 @@ const ProductCard = ({ name, src, price }: ProductCardProps) => {
             </Card>
         </div>
     );
-};
+});
 
 export default ProductCard;

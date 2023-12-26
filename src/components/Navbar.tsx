@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import { Search, CircleUserRound, ShoppingCart } from 'lucide-react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { CircleUserRound, ShoppingCart, SearchIcon } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-import { Input, InputProps } from '@/components/ui/input';
+import { Input } from '@/components/ui/input';
 import { RootState } from '@/redux/store';
 import { UserMenu } from './navbar/UserMenu';
 import HumburgerMenu from './navbar/HumburgerMenu';
@@ -19,40 +19,7 @@ const categoriesProduct = [
 ];
 
 const Navbar = () => {
-    const [term, setTerm] = useState('');
-    const [queryParameters] = useSearchParams();
     const { currentUser } = useSelector((state: RootState) => state.user);
-    const navigate = useNavigate();
-
-    const handleOnKeyDown = (
-        e: React.KeyboardEvent<HTMLInputElement> & {
-            target: EventTarget &
-                HTMLInputElement &
-                React.ForwardRefExoticComponent<
-                    InputProps & React.RefAttributes<HTMLInputElement>
-                >;
-        }
-    ) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-
-            if (e.target.value) {
-                queryParameters.set('sf', '');
-                const url = `/product?q=${e.target.value}&sf=`;
-                navigate(url);
-            }
-        }
-    };
-
-    const handleOnChange = (
-        e: React.ChangeEvent<HTMLInputElement> & {
-            target: React.ForwardRefExoticComponent<
-                InputProps & React.RefAttributes<HTMLInputElement>
-            >;
-        }
-    ) => {
-        setTerm(() => e.target.value);
-    };
 
     return (
         <header className="bg-white min-w-full w-screen top-0 fixed z-[100] shadow-sm shadow-gray-50">
@@ -74,16 +41,9 @@ const Navbar = () => {
                     >
                         <option>all categories</option>
                     </select>
-                    <Input
-                        value={term}
-                        onChange={handleOnChange}
-                        onKeyDown={handleOnKeyDown}
-                        className="focus-visible:ring-0 border border-l-input border-r-0 border-y-0 focus-visible:ring-offset-0  md:rounded-none text-xs md:text-base "
-                        type="text"
-                        placeholder="Cari product disini..."
-                    />
+                    <SearchBar />
                     <div className="ml-auto px-2 md:px-4 text-gray-500 ">
-                        <Search className="h-5 w-5" />
+                        <SearchIcon className="h-5 w-5" />
                     </div>
                 </div>
                 <nav className="contents">
@@ -128,7 +88,9 @@ const Navbar = () => {
                                 )}
                             </Link>
                         </li>
-                        <HumburgerMenu />
+                        <div className="md:hidden">
+                            <HumburgerMenu />
+                        </div>
                     </ul>
                 </nav>
             </div>
@@ -139,6 +101,37 @@ const Navbar = () => {
             </div>
             <hr />
         </header>
+    );
+};
+
+const SearchBar = () => {
+    const [term, setTerm] = useState('');
+    const navigate = useNavigate();
+
+    const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (e.currentTarget.value) {
+                const url = `/product?q=${e.currentTarget.value}`;
+                navigate(url);
+            }
+        }
+    };
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTerm(() => e.target.value);
+    };
+    return (
+        <>
+            <Input
+                value={term}
+                onChange={handleOnChange}
+                onKeyDown={handleOnKeyDown}
+                className="focus-visible:ring-0 border border-l-input border-r-0 border-y-0 focus-visible:ring-offset-0  md:rounded-none text-xs md:text-base "
+                type="text"
+                placeholder="Cari product disini..."
+            />
+        </>
     );
 };
 
