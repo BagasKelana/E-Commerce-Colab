@@ -16,7 +16,9 @@ const ProductSection: React.FC<ProductSectionProps> = ({ children, url }) => {
         null
     );
 
-    console.log(data)
+    console.log(loading);
+
+    console.log(data);
 
     const renderSkeleton = useCallback(() => {
         return Array.from({ length: 10 }, (_, index) => (
@@ -24,7 +26,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ children, url }) => {
         ));
     }, []);
 
-    const productRendering = () => {
+    const productRendering = useCallback(() => {
         if (data?.data?.data) {
             if (data?.data?.data?.length > 0) {
                 return data?.data?.data?.map((product) => (
@@ -43,7 +45,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ children, url }) => {
                 </div>
             );
         }
-    };
+    }, [data?.data?.data]);
 
     return (
         <ErrorHandling error={error}>
