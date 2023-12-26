@@ -26,7 +26,7 @@ const ProductCard = memo(({ name, src, price, slug }: ProductCardProps) => {
             <Card className="w-full h-full md:min-w-[100px] md:min-h-[257.844px] rounded-lg overflow-hidden hover:border-amber-500">
                 <CardHeader className="p-0">
                     <img
-                        className="object-cover w-full"
+                        className="object-cover w-full h-[200px]"
                         height={512}
                         width={512}
                         src={`${import.meta.env.VITE_DEVELOPE_API_IMG}/${src}`}
