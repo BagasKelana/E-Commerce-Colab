@@ -116,7 +116,9 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
                     index === links.length - 1 ? (
                         <Link
                             key={index}
-                            className="pointer-events-none"
+                            className={buttonVariants({
+                                variant: 'disable'
+                            })}
                             to={`${url}?${updatedQuerySearch}&page=${
                                 link.url ? getAllUrlParams(link.url).page : ''
                             }`}
@@ -152,7 +154,9 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
                     index === 0 ? (
                         <Link
                             key={index}
-                            className="pointer-events-none"
+                            className={buttonVariants({
+                                variant: 'disable'
+                            })}
                             to={`${url}?${updatedQuerySearch}&page=${
                                 link.url ? getAllUrlParams(link.url).page : ''
                             }`}
@@ -202,11 +206,7 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
         return null;
     };
 
-    return (
-        <>
-            <div>{disabledLink()}</div>
-        </>
-    );
+    return <>{disabledLink()}</>;
 };
 
 export default Pagination;
