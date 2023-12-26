@@ -74,6 +74,43 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
         const currentPage = Page?.[0].label;
 
         if (links && currentPage) {
+            if (links.length === 3) {
+                return links?.map((link, index) =>
+                    index === links.length - 2 ? (
+                        <Link
+                            key={index}
+                            className={buttonVariants({
+                                variant: link.active ? 'ghost' : 'outline'
+                            })}
+                            to={`${url}?${updatedQuerySearch}&page=${
+                                link.url ? getAllUrlParams(link.url).page : ''
+                            }`}
+                        >
+                            {link.label === '&laquo; Previous'
+                                ? '«'
+                                : link.label === 'Next &raquo;'
+                                ? '»'
+                                : link.label}
+                        </Link>
+                    ) : (
+                        <Link
+                            key={index}
+                            className={buttonVariants({
+                                variant: 'disable'
+                            })}
+                            to={`${url}?${updatedQuerySearch}&page=${
+                                link.url ? getAllUrlParams(link.url).page : ''
+                            }`}
+                        >
+                            {link.label === '&laquo; Previous'
+                                ? '«'
+                                : link.label === 'Next &raquo;'
+                                ? '»'
+                                : link.label}
+                        </Link>
+                    )
+                );
+            }
             if (+currentPage === links?.length - 2) {
                 return links?.map((link, index) =>
                     index === links.length - 1 ? (
