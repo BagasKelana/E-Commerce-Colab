@@ -8,9 +8,9 @@ import ProductSection from './ProductSection';
 
 const Product = () => {
     const [queryParameters] = useSearchParams();
-    const [url, setUrl] = useState('');
 
     const [filter, setFilter] = useState<Filter>({
+        term: '',
         category_id: '',
         min: '',
         max: '',
@@ -18,10 +18,13 @@ const Product = () => {
         so: '',
         page: ''
     });
+    const [url, setUrl] = useState<string | null>(queryParameters.toString());
 
     useEffect(() => {
-        const urlParams = new URLSearchParams(location.search);
+        const urlParams = new URLSearchParams(queryParameters);
+
         const initialFilterState = {
+            term: queryParameters.get('q'),
             category_id: queryParameters.get('category_id'),
             min: queryParameters.get('min'),
             max: queryParameters.get('max'),
@@ -37,6 +40,7 @@ const Product = () => {
         }
 
         const searchQuery = urlParams.toString();
+
         setUrl(() => searchQuery);
     }, [queryParameters]);
 

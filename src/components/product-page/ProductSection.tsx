@@ -7,12 +7,13 @@ import { useCallback } from 'react';
 
 type ProductSectionProps = {
     children: React.ReactNode;
-    url: string;
+    url: string | null;
 };
 
 const ProductSection: React.FC<ProductSectionProps> = ({ children, url }) => {
+    const querySearch = url ? `?${url}` : '';
     const { data, error, loading } = useFetch<FetchAllProduct>(
-        `${import.meta.env.VITE_DEVELOPE_API}/product?${url}`,
+        `${import.meta.env.VITE_DEVELOPE_API}/product${querySearch}`,
         null
     );
 
