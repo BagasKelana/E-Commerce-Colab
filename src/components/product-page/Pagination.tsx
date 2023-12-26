@@ -70,48 +70,21 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
         return obj;
     }
     const disabledLink = () => {
-        const Page = links?.filter((link) => link.active);
-        const currentPage = Page?.[0].label;
+        const filteredLinks = [];
 
-        if (links && currentPage) {
-            if (links.length === 3) {
-                return links?.map((link, index) =>
-                    index === links.length - 2 ? (
-                        <Link
-                            key={index}
-                            className={buttonVariants({
-                                variant: link.active ? 'ghost' : 'outline'
-                            })}
-                            to={`${url}?${updatedQuerySearch}&page=${
-                                link.url ? getAllUrlParams(link.url).page : ''
-                            }`}
-                        >
-                            {link.label === '&laquo; Previous'
-                                ? '«'
-                                : link.label === 'Next &raquo;'
-                                ? '»'
-                                : link.label}
-                        </Link>
-                    ) : (
-                        <Link
-                            key={index}
-                            className={buttonVariants({
-                                variant: 'disable'
-                            })}
-                            to={`${url}?${updatedQuerySearch}&page=${
-                                link.url ? getAllUrlParams(link.url).page : ''
-                            }`}
-                        >
-                            {link.label === '&laquo; Previous'
-                                ? '«'
-                                : link.label === 'Next &raquo;'
-                                ? '»'
-                                : link.label}
-                        </Link>
-                    )
-                );
+        if (links?.length) {
+            for (let i = 0; i < links.length; i++) {
+                const link = links?.[i];
+                if (link?.active) {
+                    filteredLinks.push({ ...link, index: i });
+                }
             }
-            if (+currentPage === links?.length - 2) {
+        }
+
+        const [currentPage] = filteredLinks;
+
+        if (links?.length && currentPage.index) {
+            if (links.length - 2 === currentPage.index) {
                 return links?.map((link, index) =>
                     index === links.length - 1 ? (
                         <Link
@@ -149,7 +122,7 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
                 );
             }
 
-            if (+currentPage === 1) {
+            if (currentPage.index === 1) {
                 return links?.map((link, index) =>
                     index === 0 ? (
                         <Link
@@ -190,7 +163,9 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
             return links?.map((link, index) => (
                 <Link
                     key={index}
-                    className="pointer-events-none"
+                    className={buttonVariants({
+                        variant: link.active ? 'ghost' : 'outline'
+                    })}
                     to={`${url}?${updatedQuerySearch}&page=${
                         link.url ? getAllUrlParams(link.url).page : ''
                     }`}
@@ -203,7 +178,6 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
                 </Link>
             ));
         }
-        return null;
     };
 
     return <>{disabledLink()}</>;
