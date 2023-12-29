@@ -1,36 +1,44 @@
-import useFetch, { FetchAllProduct } from '@/hook/useFetch';
+import { FetchAllProduct } from '@/hook/useFetch';
 import SkeletonCard from '../Card/SkeletonCard';
 import ErrorHandling from './ErrorHandling';
 import ProductCard from '../Card/ProductCard';
 import Pagination from './Pagination';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
+import OrderBox from './OrderBox';
+import { AxiosError } from 'axios';
+import AdsProduct from './AdsProduct';
 
 type ProductSectionProps = {
+    term?: string | null;
     children: React.ReactNode;
-    url: string | null;
+    data: FetchAllProduct | null;
+    error: AxiosError | null;
+    loading: boolean;
 };
 
-const ProductSection: React.FC<ProductSectionProps> = ({ children, url }) => {
-    const querySearch = url ? `?${url}` : '';
-    const { data, error, loading } = useFetch<FetchAllProduct>(
-        `${import.meta.env.VITE_DEVELOPE_API}/product${querySearch}`,
-        null
-    );
+const ProductSection: React.FC<ProductSectionProps> = ({
+    term,
+    children,
+    data,
+    loading,
+    error
+}) => {
+    const renderSkeleton = () => {
+        if (loading) {
+            return Array.from({ length: 10 }, (_, index) => (
+                <SkeletonCard key={index} />
+            ));
+        }
 
-    console.log(loading);
+        return null;
+    };
 
-    console.log(data);
-
-    const renderSkeleton = useCallback(() => {
-        return Array.from({ length: 10 }, (_, index) => (
-            <SkeletonCard key={index} />
-        ));
-    }, []);
+    const productData = useMemo(() => data, [data]);
 
     const productRendering = useCallback(() => {
-        if (data?.data?.data) {
-            if (data?.data?.data?.length > 0) {
-                return data?.data?.data?.map((product) => (
+        if (productData) {
+            if (productData?.data?.data?.length > 0) {
+                return productData?.data?.data?.map((product) => (
                     <ProductCard
                         slug={product.slug}
                         key={product.slug}
@@ -40,24 +48,63 @@ const ProductSection: React.FC<ProductSectionProps> = ({ children, url }) => {
                     />
                 ));
             }
+
             return (
                 <div className="col-span-5 row-span-2 place-content-center justify-items-center">
                     Product Tidak Ditemukan
                 </div>
             );
         }
-    }, [data?.data?.data]);
+        return null;
+    }, [productData]);
 
     return (
         <ErrorHandling error={error}>
-            <div className="flex justify-between xl:justify-end items-center mb-4">
-                {children}
+            <div className="mb-4 flex flex-col gap-1">
+                <div className="flex justify-between items-start">
+                    <div className="font-bold xl:hidden">Filter</div>
+                    <div className="hidden xl:flex">
+                        {loading ? (
+                            <p>Mohon tunggu sebentar...</p>
+                        ) : (
+                            <p>
+                                {term ? (
+                                    <>
+                                        {' '}
+                                        Menampilan {data?.data?.total} product
+                                        untuk <strong>"{term}"</strong>{' '}
+                                        <strong>
+                                            (1-{data?.data?.last_page} of{' '}
+                                            {data?.data?.total})
+                                        </strong>
+                                    </>
+                                ) : (
+                                    <>
+                                        {' '}
+                                        Menampilan {data?.data?.total} product
+                                        untuk <strong>"Semua Product"</strong>{' '}
+                                        <strong>
+                                            (1-{data?.data?.last_page} of{' '}
+                                            {data?.data?.total})
+                                        </strong>
+                                    </>
+                                )}
+                            </p>
+                        )}
+                    </div>
+                    <OrderBox />
+                </div>
+                <div className="hidden xl:block">{!loading && children}</div>
             </div>
+            <AdsProduct />
             <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-x-4 gap-y-5 place-items-stretch mb-4 w-full">
                 {loading ? renderSkeleton() : productRendering()}
             </section>
-            <div className="w-full flex justify-center py-4">
-                <Pagination url={'/product'} links={data?.data?.links} />
+            <div className="w-full flex justify-center py-4 px-4">
+                <Pagination
+                    url={'/product'}
+                    linksPagination={productData?.data?.links}
+                />
             </div>
         </ErrorHandling>
     );

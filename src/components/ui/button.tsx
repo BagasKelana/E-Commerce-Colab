@@ -19,14 +19,18 @@ const buttonVariants = cva(
                     'bg-secondary text-secondary-foreground hover:bg-secondary/80',
                 ghost: 'hover:bg-accent hover:text-accent-foreground',
                 link: 'text-primary underline-offset-4 hover:underline',
-                primery: 'bg-amber-500 text-white hover:bg-amber-500/90',
-                disable: 'bg-gray-500/80 text-white pointer-events-none'
+                primery: 'text-white bg-teal-700 hover:bg-teal-700/90',
+                disable: 'pointer-events-none',
+                outline1:
+                    'bg-background hover:bg-accent hover:text-accent-foreground '
             },
             size: {
                 default: 'h-10 px-4 py-2',
                 sm: 'h-9 rounded-md px-3',
                 lg: 'h-11 rounded-md px-8',
-                icon: 'h-10 w-10'
+                icon: 'h-10 w-10',
+                pagination:
+                    'text-xs sm:text-sm md:text-base h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 rounded-md'
             }
         },
         defaultVariants: {

@@ -26,7 +26,6 @@ import { useDispatch } from 'react-redux';
 
 import { signOutUserSuccess } from '@/redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 export function UserMenu() {
     const dispatch = useDispatch();
@@ -39,16 +38,21 @@ export function UserMenu() {
     };
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Avatar className="h-8 w-8 mr-2">
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+            <DropdownMenuTrigger role="button" asChild>
+                <div className="h-8 w-8 mr-2 rounded-full overflow-hidden">
+                    <img
+                        className="w-full h-full object-cover"
+                        alt="user avatar"
+                        src="/images/profile_3135715.png"
+                    />
+                </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
                 hideWhenDetached={true}
                 align="end"
-                className="w-56 z-[100] "
+                className="w-56 h-64 z-[100] shadow shadow-gray-400 "
+                sideOffset={10}
+                alignOffset={-30}
             >
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -90,7 +94,10 @@ export function UserMenu() {
                     </DropdownMenuSub>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
+                <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={handleLogout}
+                >
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

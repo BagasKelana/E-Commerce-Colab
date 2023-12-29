@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const User = () => {
     return (
-        <Layout bgColor="bg-slate-50">
+        <Layout>
             <div className="w-full pl-4 md:px-20 py-5 ">
                 <div className="w-full grid grid-cols-4 gap-4">
                     <DocsSidebarNavItems />

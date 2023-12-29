@@ -9,10 +9,10 @@ import { cn } from '@/lib/utils';
 import { NextArrow, PrevArrow } from '../Carousel/Arrow';
 
 const img = [
-    '/images/6561a9a2627d81eb4c09c0e8.jpg',
-    '/images/6561a9a3627d81eb4c09c1a7.jpg',
-    '/images/6561a9a3627d81eb4c09c1c9.jpg',
-    '/images/6561a9a3627d81eb4c09c1ee.jpg',
+    '/images/429e3395-e54d-4ff2-8d54-47784086daa0.jpg.webp',
+    '/images/09ca38b8-fa15-4e7c-a852-da2be08b5042.jpg.webp',
+    '/images/id-50009109-96e46f7e61898a3baddbae5f7d65f1e5_xxhdpi.png',
+    '/images/id-50009109-b36a2f24939caa00a796df79fd0e0c99_xxhdpi.png',
     '/images/6561a9a3627d81eb4c09c1ee.jpg',
     '/images/6561a9a3627d81eb4c09c1ee.jpg',
     '/images/6561a9a3627d81eb4c09c1ee.jpg'
@@ -85,8 +85,9 @@ const LandingHero = () => {
                             key={img}
                             height={300}
                             width={1200}
-                            className="object-cover h-[200px] md:h-[300px] w-full  "
+                            className="object-cover h-[150px] md:h-[300px] w-full"
                             src={img}
+                            alt="img-slider"
                         />
                     ))}
                 </Slider>

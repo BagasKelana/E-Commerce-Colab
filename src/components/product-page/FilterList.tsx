@@ -4,13 +4,16 @@ const FilterList: React.FC<FilterListProps> = ({
     onClick,
     id,
     children,
-    className
+    className,
+    isLoading
 }) => {
     return (
         <li
             onClick={onClick}
             id={id}
-            className={`${className} cursor-pointer p-2 text-black`}
+            className={`${className || 'text-gray-600'} ${
+                isLoading && 'pointer-events-none'
+            } cursor-pointer p-2 select-none hover:bg-gray-100 rounded `}
         >
             {children}
         </li>

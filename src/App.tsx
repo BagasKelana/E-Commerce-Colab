@@ -19,7 +19,7 @@ export default function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/user/:id" element={<User />} />
             <Route path="/user/:id/setting" element={<UserSettings />} />
-
+            <Route path="*" element={<>404 Kosong</>} />
             {/* <Route element={<AdminPrivateRoute />}>
 
                 <Route path="/dashboard-admin" element={< />} />

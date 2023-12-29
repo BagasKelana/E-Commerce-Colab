@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 
 interface initialStateProps {
     currentUser: {
@@ -6,7 +7,7 @@ interface initialStateProps {
         name: string;
         role: string;
     } | null;
-    error: unknown;
+    error: AxiosError | null;
     loading: boolean;
 }
 

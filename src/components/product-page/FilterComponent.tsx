@@ -1,25 +1,32 @@
-import { useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ChevronDown, Filter } from 'lucide-react';
 
-import useFetch, { FetchAllCategory } from '@/hook/useFetch';
-import { FilterComponentProps } from './product-type';
-
 import { cn } from '@/lib/utils';
 import FilterList from './FilterList';
-import { Input, InputProps } from '../ui/input';
+import { Input } from '../ui/input';
 
-const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
-    const { data, loading } = useFetch<FetchAllCategory>(
-        `${import.meta.env.VITE_DEVELOPE_API}/category`,
-        null
-    );
+import { Filter as FilterProps } from './product-type';
+import { ProductCategoriesContext } from '@/ProductCategories';
 
+type FilterComponentPro = {
+    categoriesFilter: FilterProps;
+    isLoading: boolean;
+};
+
+const FilterComponent: React.FC<FilterComponentPro> = ({
+    categoriesFilter,
+    isLoading
+}) => {
+    const { data, loading } = useContext(ProductCategoriesContext);
     const [queryParameters, setQueryParameters] = useSearchParams();
     const [showFilter, setShowFilter] = useState({
         categories: true,
         price: true
     });
+
+    const filter = useMemo(() => categoriesFilter, [categoriesFilter]);
+
     const [price, setPrice] = useState({
         min: filter.min
             ? new Intl.NumberFormat('id-ID').format(+filter.min)
@@ -35,6 +42,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
             return { ...value, categories: !value.categories };
         });
     };
+
     const handleShowPrice = () => {
         setShowFilter((value) => {
             return { ...value, price: !value.price };
@@ -55,13 +63,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
         return setQueryParameters(queryParameters);
     };
 
-    const handleChangePrice = (
-        e: React.ChangeEvent<HTMLInputElement> & {
-            target: React.ForwardRefExoticComponent<
-                InputProps & React.RefAttributes<HTMLInputElement>
-            >;
-        }
-    ) => {
+    const handleChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = convertToNumber(e.target.value);
 
         if (value > 0) {
@@ -134,25 +136,25 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
     };
 
     return (
-        <div className="hidden h-full w-1/5 flex-col gap-4 p-4 xl:flex ">
+        <div className="hidden h-full w-1/5 flex-col gap-4 xl:flex ">
             <div className="whitespace-nowrap flex items-center ">
                 <Filter className="w-4 h-4 mr-2" />
                 <h3 className="font-semibold">FILTER</h3>
             </div>
-            <div className="h-full w-full border border-input">
+            <div className="h-full w-full border border-input shadow-sm shadow-slate-200">
                 {loading ? (
                     <>halo</>
                 ) : (
-                    <div className="flex w-full flex-col">
+                    <div className="flex w-full flex-col pb-4">
                         <>
                             <button
                                 onClick={handleShowCategoris}
-                                className="flex cursor-pointer items-center justify-between p-2 w-full"
+                                className="flex cursor-pointer items-center justify-between p-2 w-full "
                             >
                                 <div className="font-semibold">Categories</div>
                                 <span
                                     className={cn(
-                                        'transition-all duration-150 ease-in-out -rotate-180',
+                                        'transition-all duration-150 ease-in-out -rotate-180 rounded-full bg-teal-600/80 text-white',
                                         !showFilter.categories && 'rotate-0'
                                     )}
                                 >
@@ -161,7 +163,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                             </button>
                             <ul
                                 className={cn(
-                                    'ml-5 flex origin-top flex-col text-sm transition-all duration-200 ease-in-out max-h-[180px] scale-y-100 ',
+                                    'ml-5 px-2 gap-2 flex origin-top flex-col text-sm transition-all duration-200 ease-in-out max-h-[400px] scale-y-100',
                                     !showFilter.categories &&
                                         'max-h-[0px] scale-y-0'
                                 )}
@@ -170,7 +172,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                                     return `${category.id}` ===
                                         filter.category_id ? (
                                         <FilterList
-                                            className={'bg-blue-600'}
+                                            isLoading={isLoading}
+                                            className={'font-bold text-black'}
                                             key={category.slug}
                                             onClick={filterCategories}
                                             id={`${category.id}`}
@@ -179,6 +182,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                                         </FilterList>
                                     ) : (
                                         <FilterList
+                                            isLoading={isLoading}
                                             key={index}
                                             onClick={filterCategories}
                                             id={`${category.id}`}
@@ -192,12 +196,12 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                         <>
                             <button
                                 onClick={handleShowPrice}
-                                className="flex cursor-pointer items-center justify-between p-2 w-full"
+                                className="flex cursor-pointer items-center justify-between p-2 w-full "
                             >
                                 <div className="font-semibold">Price</div>
                                 <span
                                     className={cn(
-                                        'transition-all duration-150 ease-in-out -rotate-180',
+                                        'transition-all duration-150 ease-in-out -rotate-180 rounded-full bg-teal-600/80 text-white',
                                         !showFilter.price && 'rotate-0'
                                     )}
                                 >
@@ -213,9 +217,10 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                             >
                                 <div className="w-full flex flex-col gap-2 py-2 px-2">
                                     <Input
+                                        disabled={isLoading}
                                         onBlur={handleInputMin}
                                         onChange={handleChangePrice}
-                                        className="p-2"
+                                        className="rounded-lg focus-visible:ring-1 focus-visible:ring-teal-700 focus-visible:ring-offset-0"
                                         id="min"
                                         name="min"
                                         data-type="currency"
@@ -224,6 +229,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                                         value={price.min}
                                     />
                                     <Input
+                                        disabled={isLoading}
                                         onBlur={handleInputMax}
                                         onChange={handleChangePrice}
                                         id="max"
@@ -232,6 +238,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ filter }) => {
                                         type="text"
                                         placeholder="Max Price"
                                         value={price.max}
+                                        className="rounded-lg focus-visible:ring-1 focus-visible:ring-teal-700 focus-visible:ring-offset-0"
                                     />
                                     {price.errorMessage && (
                                         <span className="text-rose-500 text-xs">

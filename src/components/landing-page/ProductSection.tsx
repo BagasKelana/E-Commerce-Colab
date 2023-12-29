@@ -5,10 +5,10 @@ import { Button } from '../ui/button';
 const ProductSection = () => {
     return (
         <section className="w-full pl-4 md:px-20 my-6">
-            <div className="w-full  p-2 mb-4 rounded border-[1px] border-amber-600 bg-amber-500 ">
-                <h2 className="text-white text-center">RECOMMENDATION</h2>
+            <div className="w-full p-2 mb-4 rounded border-[1px] border-b-gray-400">
+                <h2 className="text-teal-700 text-center">RECOMMENDATION</h2>
             </div>
-            <section className="grid grid-cols-6 gap-x-4 gap-y-5  place-items-stretch mb-4">
+            <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-5 place-items-stretch mb-4">
                 {products.map((product, index) => (
                     <ProductCard
                         key={index}
