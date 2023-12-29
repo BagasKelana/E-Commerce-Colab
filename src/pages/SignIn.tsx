@@ -7,7 +7,7 @@ import {
     signInFailure
 } from '../redux/user/userSlice';
 import AuthForm from '@/components/auth-page/AuthForm';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { RootState } from '@/redux/store';
 
 interface formDataProps {
@@ -63,8 +63,9 @@ export default function SignIn() {
                 dispatch(signInSuccess(data.data));
                 navigate('/');
             }
-        } catch (error) {
-            dispatch(signInFailure(error.message));
+        } catch (err: unknown) {
+            const error = err as AxiosError;
+            if (error.message) dispatch(signInFailure(error.message));
         }
     };
     return (
@@ -84,7 +85,11 @@ export default function SignIn() {
                     <span className="text-blue-700">Sign Up</span>
                 </Link>
             </div>
-            {Boolean(error) && <p className="text-red-500 mt-5">{error}</p>}
+            {Boolean(error) && (
+                <p className="text-red-500 mt-5">
+                    {error && 'terjadi masalah bos'}
+                </p>
+            )}
         </div>
     );
 }

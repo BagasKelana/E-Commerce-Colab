@@ -1,14 +1,17 @@
 import { buttonVariants } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Link as LinkProps } from '@/hook/useFetch';
+import { useMemo } from 'react';
 
 interface PaginationProps {
-    links?: LinkProps[];
+    linksPagination?: LinkProps[];
     url?: string;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
+const Pagination: React.FC<PaginationProps> = ({ url, linksPagination }) => {
     const searchParams = new URLSearchParams(location.search);
+
+    const links = useMemo(() => linksPagination, [linksPagination]);
 
     searchParams.delete('page');
 
@@ -69,7 +72,8 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
 
         return obj;
     }
-    const disabledLink = () => {
+
+    const paginationFunctionComponent = () => {
         const filteredLinks = [];
 
         if (links?.length) {
@@ -83,41 +87,25 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
 
         const [currentPage] = filteredLinks;
 
-        if (links?.length && currentPage.index) {
+        if (links?.length && currentPage?.index && links?.length > 3) {
             if (links.length - 2 === currentPage.index) {
                 return links?.map((link, index) =>
                     index === links.length - 1 ? (
-                        <Link
+                        <LinkDisable
                             key={index}
-                            className={buttonVariants({
-                                variant: 'disable'
-                            })}
-                            to={`${url}?${updatedQuerySearch}&page=${
+                            link={link}
+                            url={`${url}?${updatedQuerySearch}&page=${
                                 link.url ? getAllUrlParams(link.url).page : ''
                             }`}
-                        >
-                            {link.label === '&laquo; Previous'
-                                ? '«'
-                                : link.label === 'Next &raquo;'
-                                ? '»'
-                                : link.label}
-                        </Link>
+                        />
                     ) : (
-                        <Link
+                        <LinkActive
                             key={index}
-                            className={buttonVariants({
-                                variant: link.active ? 'ghost' : 'outline'
-                            })}
-                            to={`${url}?${updatedQuerySearch}&page=${
+                            link={link}
+                            url={`${url}?${updatedQuerySearch}&page=${
                                 link.url ? getAllUrlParams(link.url).page : ''
                             }`}
-                        >
-                            {link.label === '&laquo; Previous'
-                                ? '«'
-                                : link.label === 'Next &raquo;'
-                                ? '»'
-                                : link.label}
-                        </Link>
+                        />
                     )
                 );
             }
@@ -125,62 +113,82 @@ const Pagination: React.FC<PaginationProps> = ({ url, links }) => {
             if (currentPage.index === 1) {
                 return links?.map((link, index) =>
                     index === 0 ? (
-                        <Link
-                            key={index}
-                            className={buttonVariants({
-                                variant: 'disable'
-                            })}
-                            to={`${url}?${updatedQuerySearch}&page=${
+                        <LinkDisable
+                            link={link}
+                            url={`${url}?${updatedQuerySearch}&page=${
                                 link.url ? getAllUrlParams(link.url).page : ''
                             }`}
-                        >
-                            {link.label === '&laquo; Previous'
-                                ? '«'
-                                : link.label === 'Next &raquo;'
-                                ? '»'
-                                : link.label}
-                        </Link>
+                            key={index}
+                        />
                     ) : (
-                        <Link
+                        <LinkActive
                             key={index}
-                            className={buttonVariants({
-                                variant: link.active ? 'ghost' : 'outline'
-                            })}
-                            to={`${url}?${updatedQuerySearch}&page=${
+                            link={link}
+                            url={`${url}?${updatedQuerySearch}&page=${
                                 link.url ? getAllUrlParams(link.url).page : ''
                             }`}
-                        >
-                            {link.label === '&laquo; Previous'
-                                ? '«'
-                                : link.label === 'Next &raquo;'
-                                ? '»'
-                                : link.label}
-                        </Link>
+                        />
                     )
                 );
             }
 
             return links?.map((link, index) => (
-                <Link
+                <LinkActive
                     key={index}
-                    className={buttonVariants({
-                        variant: link.active ? 'ghost' : 'outline'
-                    })}
-                    to={`${url}?${updatedQuerySearch}&page=${
+                    link={link}
+                    url={`${url}?${updatedQuerySearch}&page=${
                         link.url ? getAllUrlParams(link.url).page : ''
                     }`}
-                >
-                    {link.label === '&laquo; Previous'
-                        ? '«'
-                        : link.label === 'Next &raquo;'
-                        ? '»'
-                        : link.label}
-                </Link>
+                />
             ));
         }
+
+        return null;
     };
 
-    return <>{disabledLink()}</>;
+    return <>{paginationFunctionComponent()}</>;
+};
+
+const LinkActive = ({ link, url }: { link: LinkProps; url: string }) => {
+    const linkActive = useMemo(() => link, [link]);
+    return (
+        <Link
+            className={buttonVariants({
+                variant: linkActive.active
+                    ? 'primery'
+                    : linkActive.label !== '...' && isNaN(+linkActive.label)
+                    ? 'outline'
+                    : 'outline1',
+                size: 'pagination'
+            })}
+            to={url}
+        >
+            {linkActive.label === '&laquo; Previous'
+                ? '«'
+                : linkActive.label === 'Next &raquo;'
+                ? '»'
+                : linkActive.label}
+        </Link>
+    );
+};
+
+const LinkDisable = ({ link, url }: { link: LinkProps; url: string }) => {
+    const linkActive = useMemo(() => link, [link]);
+    return (
+        <Link
+            className={buttonVariants({
+                variant: 'disable',
+                size: 'pagination'
+            })}
+            to={url}
+        >
+            {linkActive.label === '&laquo; Previous'
+                ? '«'
+                : linkActive.label === 'Next &raquo;'
+                ? '»'
+                : linkActive.label}
+        </Link>
+    );
 };
 
 export default Pagination;

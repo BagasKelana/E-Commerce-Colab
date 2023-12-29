@@ -15,7 +15,7 @@ export default function HumburgerMenu() {
         <Sheet>
             <SheetTrigger asChild>
                 <li className="ml-2 lg:ml-4 relative inline-block md:hidden">
-                    <Menu className="w-10 h-10 p-2" />
+                    <Menu className="w-10 h-10 p-2 text-slate-100" />
                 </li>
             </SheetTrigger>
             <SheetContent className="overflow-auto no-scrollbar">

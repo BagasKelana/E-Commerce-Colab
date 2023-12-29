@@ -72,7 +72,7 @@ export default function SignUp() {
                     navigate('/signin');
                 }
             }
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
             setError(error.message);
         } finally {

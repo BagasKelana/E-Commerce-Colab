@@ -10,8 +10,7 @@ const LandingPage = () => {
         <Layout>
             <LandingHero />
             <PopulerCategories />
-            <hr />
-            <section className="w-full pl-4 md:px-20 my-6">
+            <section className="w-full pl-4 md:px-20 py-6  border border-input">
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 place-items-center ">
                     <div className="w-full h-[180px] bg-gradient-to-l from-gray-300 to-gray-100 rounded relative overflow-hidden">
                         <div>
@@ -24,12 +23,12 @@ const LandingPage = () => {
                         <div className="flex flex-col w-full h-full justify-center pl-8 ">
                             <h1>HEADPHONE</h1>
                             <small className="font-semibold ">
-                                <span className="text-red-500 ">
+                                <span className="text-red-700 ">
                                     {'50% OFF '}
                                 </span>
                                 FOR EVERYONE
                             </small>
-                            <Button className="w-fit px-6 mt-5 text-lg bg-amber-500 hover:bg-amber-400">
+                            <Button className="w-fit px-6 mt-5 text-lg bg-teal-700 hover:bg-teal-700/90">
                                 Get Now
                             </Button>
                         </div>
@@ -78,7 +77,6 @@ const LandingPage = () => {
                     </div>
                 </div>
             </section>
-            <hr />
             <PopulerCategories />
             <hr />
             <ProductSection />

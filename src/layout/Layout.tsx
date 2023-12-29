@@ -1,4 +1,3 @@
-import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 
 type LayoutProps = {
@@ -12,7 +11,6 @@ const Layout = ({ children }: LayoutProps) => {
             <div className="h-full w-full transition-all ease-in-out duration-300 mt-[80px] md:mt-[123px]">
                 <main className="w-full h-full">{children}</main>
             </div>
-            <Footer />
         </div>
     );
 };

@@ -3,6 +3,7 @@ export type FilterListProps = {
     id: string;
     children: React.ReactNode;
     className?: string;
+    isLoading: boolean;
 };
 
 export type Filter = {
@@ -13,6 +14,7 @@ export type Filter = {
     max?: string | null;
     sf?: string | null;
     so?: string | null;
+    [key: string]: string | null | undefined;
 };
 
 export type FilterComponentProps = {

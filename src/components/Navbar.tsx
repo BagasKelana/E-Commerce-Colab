@@ -1,105 +1,110 @@
 import { useSelector } from 'react-redux';
-import { CircleUserRound, ShoppingCart, SearchIcon } from 'lucide-react';
+import { ShoppingCart, SearchIcon } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { Input } from '@/components/ui/input';
 import { RootState } from '@/redux/store';
 import { UserMenu } from './navbar/UserMenu';
 import HumburgerMenu from './navbar/HumburgerMenu';
-
-const categoriesProduct = [
-    'baju',
-    'games',
-    'laptop',
-    'kecantikan',
-    'olahraga',
-    'hobi',
-    'permainan'
-];
+import { ProductCategoriesContext } from '@/ProductCategories';
 
 const Navbar = () => {
     const { currentUser } = useSelector((state: RootState) => state.user);
+    const { data } = useContext(ProductCategoriesContext);
+
+    const formattedName = currentUser?.name
+        .split('')
+        .map((value, index) => (index === 0 ? value.toUpperCase() : value))
+        .join('')
+        .substring(0, 5);
+
+    const ariaLabel = `View profile for ${currentUser?.name}`;
 
     return (
-        <header className="bg-white min-w-full w-screen top-0 fixed z-[100] shadow-sm shadow-gray-50">
-            <div className="container mx-auto px-4 md:px-8 py-4 md:pt-8 flex items-center justify-between md:justify-start">
-                <div className="mr-auto w-48 flex-shrink-0 hidden md:flex ">
+        <header className="bg-gradient-to-l from-teal-700 to-teal-800 min-w-full w-screen top-0 fixed z-[100] md:h-[110px]">
+            <div className="container mx-auto px-4 md:px-8 pt-4 pb-4 md:pt-8 md:pb-0 flex items-center justify-between md:justify-start">
+                <div className="flex-shrink-0 hidden md:flex mr-8 ">
                     <Link to="/">
                         <img
-                            className="h-10"
-                            src="/images/online shop ecommerce logo app icon logo - Dibuat dengan PosterMyWall.png"
+                            className="h-10 object-cover brightness-0 invert"
+                            src="/images/shopee-logo-31408.png"
                             alt="logo"
                         />
                     </Link>
                 </div>
-                <div className="w-full max-w-xs md:max-w-full 2xl:max-w-3xl rounded-md flex items-center focus-within:ring-2 focus-within:ring-amber-500 border border-input transition ease-in-out duration-200 ">
-                    <select
-                        className="bg-transparent uppercase font-medium text-sm py-2 px-2 mr-2 hidden lg:block"
-                        name=""
-                        id=""
-                    >
-                        <option>all categories</option>
-                    </select>
-                    <SearchBar />
-                    <div className="ml-auto px-2 md:px-4 text-gray-500 ">
-                        <SearchIcon className="h-5 w-5" />
-                    </div>
-                </div>
+                <SearchBar />
+
                 <nav className="contents">
                     <ul className="ml-4 xl:w-48 flex items-center justify-end">
-                        <li className="ml-2 lg:ml-4 relative inline-block">
-                            <Link to="">
-                                <div className="absolute -top-0 right-0 z-10 bg-orange-300 text-xs font-semibold p-0.5 rounded-full">
+                        <li className=" lg:ml-4 relative inline-block">
+                            <Link
+                                to="/"
+                                aria-label="Shopping Cart with 20 items"
+                            >
+                                <div
+                                    className="absolute -top-0 right-0 z-10 text-lime-700 bg-white text-xs font-semibold p-0.5 rounded-full"
+                                    aria-hidden="true"
+                                >
                                     20
                                 </div>
-                                <ShoppingCart className="w-10 h-10 p-2" />
+                                <span className="sr-only">Shopping Cart</span>
+                                <ShoppingCart
+                                    className="w-10 h-10 px-2 text-slate-100"
+                                    aria-hidden="true"
+                                />
                             </Link>
                         </li>
-                        <svg
-                            className="relative ml-2 lg:ml-4 md:inline-block hidden"
-                            height="20"
-                            width="1"
-                        >
-                            <line
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="20"
-                                style={{ stroke: 'black', strokeWidth: 1 }}
-                            />
-                        </svg>
+                        <li className="relative ml-2 lg:ml-4 md:inline-block hidden">
+                            <svg height="20" width="1">
+                                <line
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="20"
+                                    style={{ stroke: 'white', strokeWidth: 1 }}
+                                />
+                            </svg>
+                        </li>
                         <li className="ml-2 lg:ml-4 relative md:inline-block hidden">
-                            <Link to={'/'}>
-                                {currentUser?.name ? (
-                                    <div className="flex items-center font-semibold text-sm">
-                                        <UserMenu />
-                                        {currentUser.name
-                                            .split('')
-                                            .map((value, index) =>
-                                                index === 0
-                                                    ? value.toUpperCase()
-                                                    : value
-                                            )
-                                            .join('')}
-                                    </div>
-                                ) : (
-                                    <CircleUserRound className="h-10 p-2 w-10 text-gray-500 hover:text-gray-600" />
-                                )}
-                            </Link>
+                            {currentUser?.name ? (
+                                <div className="flex items-center font-semibold text-sm text-slate-100">
+                                    <UserMenu />
+                                    <Link aria-label={ariaLabel} to={'/'}>
+                                        <span aria-hidden="true">
+                                            {currentUser.name && formattedName}
+                                            ...
+                                        </span>
+                                    </Link>
+                                </div>
+                            ) : (
+                                <div className="flex gap-2">
+                                    <Link
+                                        className="text-slate-100 px-2 border-white border"
+                                        aria-label="Masuk"
+                                        to={'/signin'}
+                                    >
+                                        Masuk
+                                    </Link>
+                                    <Link
+                                        className="text-teal-700 font-semibold px-2 bg-white "
+                                        aria-label="Daftar"
+                                        to={'/signup'}
+                                    >
+                                        Daftar
+                                    </Link>
+                                </div>
+                            )}
                         </li>
-                        <div className="md:hidden">
-                            <HumburgerMenu />
-                        </div>
+                        <HumburgerMenu />
                     </ul>
                 </nav>
             </div>
-            <div className="w-full px-8 pb-2 hidden md:flex items-center justify-center space-x-5 text-gray-500 text-base">
-                {categoriesProduct.map((categorie, index) => (
-                    <div key={index}>{categorie}</div>
+            <div className="w-full px-8 py-2 hidden md:flex items-center justify-center space-x-5 text-slate-200 text-sm">
+                {data?.data.map((category, index) => (
+                    <div key={index}>{category.name}</div>
                 ))}
             </div>
-            <hr />
         </header>
     );
 };
@@ -121,17 +126,46 @@ const SearchBar = () => {
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTerm(() => e.target.value);
     };
+
+    const handleOnClick = () => {
+        if (term) {
+            const url = `/product?q=${term}`;
+            navigate(url);
+        }
+    };
     return (
-        <>
+        <div className="group w-full max-w-xs md:max-w-full 2xl:max-w-3xl rounded-md flex items-center justify-between bg-slate-50 border border-input transition-all ease-in-out duration-200 mr-2 ">
+            <label htmlFor="categories" className="sr-only">
+                Categories
+            </label>
+            <select
+                className="bg-transparent uppercase font-medium text-sm p-0 mx-0 group:focus-within:p-2 group-focus-within:mx-2 hidden lg:block group-focus-within:max-w-[150px] max-w-[0px]  scale-y-100 group-focus-within:scale-x-100 scale-x-0 origin-left transition-all duration-300 ease-in-out"
+                name="categories"
+                id="categories"
+            >
+                <option value="" disabled>
+                    Select a category
+                </option>
+                <option value="category1">Category 1</option>
+                <option value="category2">Category 2</option>
+            </select>
             <Input
                 value={term}
                 onChange={handleOnChange}
                 onKeyDown={handleOnKeyDown}
-                className="focus-visible:ring-0 border border-l-input border-r-0 border-y-0 focus-visible:ring-offset-0  md:rounded-none text-xs md:text-base "
+                className="focus-visible:ring-0 border border-l-input border-r-0 border-y-0 focus-visible:ring-offset-0 md:rounded-none text-xs md:text-base bg-slate-50"
                 type="text"
                 placeholder="Cari product disini..."
             />
-        </>
+            <button
+                type="button"
+                aria-label="search button with search icon"
+                onClick={handleOnClick}
+                className="group/search-icon ml-auto px-2 md:px-4 text-teal-700 py-2 cursor-pointer"
+            >
+                <SearchIcon className="h-5 w-5" />
+            </button>
+        </div>
     );
 };
 

@@ -1,6 +1,6 @@
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+
 import Slider from 'react-slick';
 
 import CategoriesCard from '../Card/CategoriesCard';
@@ -29,15 +29,11 @@ const PopulerCategories = () => {
                 </div>
             </div>
             <div className="w-full relative">
-                <div className="group h-full relative w-full">
+                <div className="group slice-categories h-full relative w-full">
                     <Slider {...settings}>
                         {populerCategories.map((category, index) => (
                             <CategoriesCard
                                 key={index}
-                                className={cn(
-                                    'sm:translate-x-[0%] ',
-                                    `translate-x-[10%]`
-                                )}
                                 src={category.src}
                                 title={category.name}
                             />

@@ -33,7 +33,12 @@ const orders = [
 const OrderBox = () => {
     const [open, setOpen] = useState(false);
     const [queryParameters, setQueryParameters] = useSearchParams();
-    const [value, setValue] = useState(queryParameters.get('sf') === 'price' && queryParameters.get('so') === 'desc' ? 'price_desc' : queryParameters.get('sf') || 'relevance');
+    const [value, setValue] = useState(
+        queryParameters.get('sf') === 'price' &&
+            queryParameters.get('so') === 'desc'
+            ? 'price_desc'
+            : queryParameters.get('sf') || 'relevance'
+    );
 
     const handleOnSelect: ((value: string) => void) | undefined = (
         currentValue
@@ -50,14 +55,14 @@ const OrderBox = () => {
 
             queryParameters.delete('page');
             setQueryParameters(queryParameters);
-                        
+
             return setValue(currentValue);
         } else {
             queryParameters.delete('sf');
             queryParameters.delete('so');
             queryParameters.delete('page');
             setQueryParameters(queryParameters);
-            
+
             return setValue('relevance');
         }
     };
@@ -66,10 +71,11 @@ const OrderBox = () => {
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
+                    aria-label="combobox-order"
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between"
+                    className="w-[200px] justify-between hover:border-teal-700 hover:bg-transparent"
                 >
                     {value
                         ? orders.find((order) => order.value === value)?.label
