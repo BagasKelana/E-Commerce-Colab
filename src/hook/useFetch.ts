@@ -76,10 +76,12 @@ export type FetchAllCategory = {
     };
 };
 
-const useFetch = <T>(url: string, initialState: null) => {
+export type FetchErrorType = AxiosError | null;
+
+const useFetch = <T>(url: string, initialState: null, token?: string) => {
     const [data, setData] = useState<T | null>(initialState);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<AxiosError | null>(null);
+    const [error, setError] = useState<FetchErrorType>(null);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -88,9 +90,17 @@ const useFetch = <T>(url: string, initialState: null) => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const res: AxiosResponse | null = await axios.get(url, {
-                    signal
-                });
+                const userToken = token ? { Authorization: token } : '';
+
+                const axiosConfig = {
+                    signal,
+                    headers: userToken || {}
+                };
+
+                const res: AxiosResponse | null = await axios.get(
+                    url,
+                    axiosConfig
+                );
 
                 if (res?.data) {
                     setData(res.data);
@@ -110,7 +120,7 @@ const useFetch = <T>(url: string, initialState: null) => {
         fetchData();
 
         return () => controller.abort();
-    }, [url]);
+    }, [url, token]);
 
     return { data, loading, error };
 };
