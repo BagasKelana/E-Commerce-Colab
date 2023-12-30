@@ -25,7 +25,7 @@ import {
 import { useDispatch } from 'react-redux';
 
 import { signOutUserSuccess } from '@/redux/user/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function UserMenu() {
     const dispatch = useDispatch();
@@ -57,11 +57,13 @@ export function UserMenu() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <User className="mr-2 h-4 w-4" />
-                        <span>Profile</span>
-                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                    </DropdownMenuItem>
+                    <Link to="/user">
+                        <DropdownMenuItem className="cursor-pointer">
+                            <User className="mr-2 h-4 w-4" />
+                            <span>Profile</span>
+                            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                    </Link>
                     <DropdownMenuItem>
                         <Settings className="mr-2 h-4 w-4" />
                         <span>Settings</span>
