@@ -37,7 +37,7 @@ const Navbar = () => {
 
                 <nav className="contents">
                     <ul className="ml-4 xl:w-48 flex items-center justify-end">
-                        <li className=" lg:ml-4 relative inline-block">
+                        <li className="relative inline-block">
                             <Link
                                 to="/"
                                 aria-label="Shopping Cart with 20 items"

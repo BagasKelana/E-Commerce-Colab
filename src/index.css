@@ -95,8 +95,8 @@ body,
         display: none;
     }
     .no-scrollbar {
-        -ms-overflow-style: none; 
-        scrollbar-width: none; 
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
     .line-claps-with-ellipsis {
         @apply line-clamp-2 text-ellipsis;
@@ -121,5 +121,4 @@ body,
 .slice-categories .slick-slide {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
- 
 }
