@@ -1,5 +1,5 @@
+import { ErrorFetchType } from '@/fetch';
 import { createSlice } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
 
 interface initialStateProps {
     currentUser: {
@@ -7,7 +7,7 @@ interface initialStateProps {
         name: string;
         role: string;
     } | null;
-    error: AxiosError | null;
+    error: ErrorFetchType | null;
     loading: boolean;
 }
 

@@ -77,7 +77,7 @@ const LandingHero = () => {
         ]
     };
     return (
-        <div className="w-full px-4 md:px-20 my-4 container ">
+        <div className="w-full pt-4 px-4 md:px-20 my-4 container">
             <div className="group h-full relative w-full">
                 <Slider {...settings}>
                     {img.map((img) => (

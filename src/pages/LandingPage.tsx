@@ -10,7 +10,7 @@ const LandingPage = () => {
         <Layout>
             <LandingHero />
             <PopulerCategories />
-            <section className="w-full pl-4 md:px-20 py-6  border border-input">
+            <section className="w-full px-2 md:px-20 py-6 border border-input">
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 place-items-center ">
                     <div className="w-full h-[180px] bg-gradient-to-l from-gray-300 to-gray-100 rounded relative overflow-hidden">
                         <div>

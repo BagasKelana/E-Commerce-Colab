@@ -6,9 +6,9 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
     return (
-        <div className="w-full h-full ">
+        <div className="w-full h-full">
             <Navbar />
-            <div className="h-full w-full transition-all ease-in-out duration-300 mt-[80px] md:mt-[123px]">
+            <div className="h-full w-full transition-all ease-in-out duration-300 mt-[80px] md:mt-[110px]">
                 <main className="w-full h-full">{children}</main>
             </div>
         </div>

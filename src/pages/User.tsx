@@ -1,10 +1,26 @@
 import UserProfileForm from '@/components/user-page/UserProfileForm';
+import { FetchCurrentUserType } from '@/fetch';
+import useFetch from '@/hook/useFetch';
 import Layout from '@/layout/Layout';
 import { cn } from '@/lib/utils';
 
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
+
+type CurrentUser = {
+    token: string;
+};
 
 const User = () => {
+    const token = useOutletContext<CurrentUser>();
+    console.log(token);
+
+    const { data, loading, error } = useFetch<FetchCurrentUserType>(
+        'https://roughy-loyal-daily.ngrok-free.app/api/user',
+        null,
+        `Bearer ${token}`
+    );
+
+    console.log(data);
     return (
         <Layout>
             <div className="w-full pl-4 md:px-20 py-5 ">
@@ -23,7 +39,11 @@ const User = () => {
 
                         <hr className="mt-4" />
                         <div>
-                            <UserProfileForm />
+                            <UserProfileForm
+                                currentUser={data?.data?.user}
+                                isLoading={loading}
+                                isError={error}
+                            />
                         </div>
                     </main>
                 </div>
