@@ -60,12 +60,6 @@ const formSchema = z.object({
     _method: z.string()
 });
 
-type userProfileProps = {
-    name: string;
-    email: string;
-    image: File[] | null;
-};
-
 const UserProfileForm: React.FC<UserProfileFormProps> = ({
     currentUser,
     isLoading,
@@ -74,22 +68,18 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
 }) => {
     const user = useMemo(() => currentUser, [currentUser]);
     const dispatch = useDispatch();
-    const { currentUser: myUser } = useSelector(
+    const { currentUser: myUser, loading } = useSelector(
         (state: RootState) => state.user
     );
 
     console.log(isError, isLoading);
 
-    const [userProfile, setUserProfile] = useState<userProfileProps>({
-        name: '',
-        email: '',
-        image: null
-    });
+    const [userProfile, setUserProfile] = useState<File[] | null>();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: user?.name || '',
+            name: myUser?.name || '',
             email: user?.email || '',
             image: null,
             _method: 'PUT'
@@ -106,6 +96,7 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
 
         console.log(formData);
         try {
+            dispatch(dispatch(signInStart()));
             const response: AxiosResponse = await axios.post(
                 'https://roughy-loyal-daily.ngrok-free.app/api/profile',
                 formData,
@@ -128,16 +119,13 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
 
         const { setValue } = form;
         if (files) {
-            setUserProfile((current) => ({
-                ...current,
-                image: files ? Array.from(files) : null
-            }));
+            setUserProfile(files ? Array.from(files) : null);
             setValue('image', files[0]);
         }
     };
 
-    const urlImage = userProfile?.image?.[0]
-        ? URL.createObjectURL(userProfile?.image?.[0])
+    const urlImage = userProfile?.[0]
+        ? URL.createObjectURL(userProfile?.[0])
         : user?.image
         ? `${import.meta.env.VITE_DEVELOPE_API_IMG}/${user?.image}`
         : '/images/profile_3135715.png';
@@ -173,7 +161,10 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
                                                     <Input
                                                         type="text"
                                                         className="placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0"
-                                                        placeholder="change user name here!"
+                                                        placeholder={
+                                                            currentUser?.name ||
+                                                            ''
+                                                        }
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -209,7 +200,10 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
                                                     <Input
                                                         type="email"
                                                         className="placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0"
-                                                        placeholder="change email here!"
+                                                        placeholder={
+                                                            currentUser?.email ||
+                                                            ''
+                                                        }
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -224,7 +218,11 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
                             <TableRow className="hover:bg-transparent">
                                 <TableCell></TableCell>
                                 <TableCell className="w-full ">
-                                    <Button variant={'primery'} type="submit">
+                                    <Button
+                                        disabled={loading}
+                                        variant={'primery'}
+                                        type="submit"
+                                    >
                                         Save Changes
                                     </Button>
                                 </TableCell>
