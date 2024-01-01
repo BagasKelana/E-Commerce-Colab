@@ -12,15 +12,16 @@ type CurrentUser = {
 
 const User = () => {
     const token = useOutletContext<CurrentUser>();
-    console.log(token);
 
-    const { data, loading, error } = useFetch<FetchCurrentUserType>(
-        'https://roughy-loyal-daily.ngrok-free.app/api/user',
-        null,
-        `Bearer ${token}`
-    );
+    const { data, loading, error, reFetchData } =
+        useFetch<FetchCurrentUserType>(
+            'https://roughy-loyal-daily.ngrok-free.app/api/user',
+            null,
+            `Bearer ${token}`
+        );
 
     console.log(data);
+
     return (
         <Layout>
             <div className="w-full pl-4 md:px-20 py-5 ">
@@ -43,6 +44,7 @@ const User = () => {
                                 currentUser={data?.data?.user}
                                 isLoading={loading}
                                 isError={error}
+                                reFetch={reFetchData}
                             />
                         </div>
                     </main>
