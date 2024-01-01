@@ -122,7 +122,31 @@ const useFetch = <T>(url: string, initialState: null, token?: string) => {
         return () => controller.abort();
     }, [url, token]);
 
-    return { data, loading, error };
+    const reFetchData = async () => {
+        try {
+            setLoading(true);
+            const userToken = token ? { Authorization: token } : '';
+
+            const axiosConfig = {
+                headers: userToken || {}
+            };
+
+            const res: AxiosResponse | null = await axios.get(url, axiosConfig);
+            if (res?.data) {
+                setData(res.data);
+            } else {
+                setData(null);
+            }
+        } catch (err: unknown) {
+            const error = err as AxiosError;
+            setError(error);
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { data, loading, error, reFetchData };
 };
 
 export default useFetch;

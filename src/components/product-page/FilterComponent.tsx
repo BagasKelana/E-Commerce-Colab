@@ -8,6 +8,7 @@ import { Input } from '../ui/input';
 
 import { Filter as FilterProps } from './product-type';
 import { ProductCategoriesContext } from '@/ProductCategories';
+import SkeletonFilter from '../Card/SkeletonFilter';
 
 type FilterComponentPro = {
     categoriesFilter: FilterProps;
@@ -143,7 +144,7 @@ const FilterComponent: React.FC<FilterComponentPro> = ({
             </div>
             <div className="h-full w-full border border-input shadow-sm shadow-slate-200">
                 {loading ? (
-                    <>halo</>
+                    <SkeletonFilter />
                 ) : (
                     <div className="flex w-full flex-col pb-4">
                         <>

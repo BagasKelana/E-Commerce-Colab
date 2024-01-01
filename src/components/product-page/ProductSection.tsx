@@ -7,6 +7,7 @@ import { useCallback, useMemo } from 'react';
 import OrderBox from './OrderBox';
 import { AxiosError } from 'axios';
 import AdsProduct from './AdsProduct';
+import MobileFilterComponent from './MobileFilterComponent';
 
 type ProductSectionProps = {
     term?: string | null;
@@ -23,16 +24,6 @@ const ProductSection: React.FC<ProductSectionProps> = ({
     loading,
     error
 }) => {
-    const renderSkeleton = () => {
-        if (loading) {
-            return Array.from({ length: 10 }, (_, index) => (
-                <SkeletonCard key={index} />
-            ));
-        }
-
-        return null;
-    };
-
     const productData = useMemo(() => data, [data]);
 
     const productRendering = useCallback(() => {
@@ -58,11 +49,23 @@ const ProductSection: React.FC<ProductSectionProps> = ({
         return null;
     }, [productData]);
 
+    const renderSkeleton = () => {
+        if (loading) {
+            return Array.from({ length: 10 }, (_, index) => (
+                <SkeletonCard key={index} />
+            ));
+        }
+
+        return null;
+    };
+    console.log(term);
     return (
         <ErrorHandling error={error}>
             <div className="mb-4 flex flex-col gap-1">
                 <div className="flex justify-between items-start">
-                    <div className="font-bold xl:hidden">Filter</div>
+                    <div className="font-bold xl:hidden">
+                        <MobileFilterComponent />
+                    </div>
                     <div className="hidden xl:flex">
                         {loading ? (
                             <p>Mohon tunggu sebentar...</p>
@@ -92,7 +95,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                             </p>
                         )}
                     </div>
-                    <OrderBox />
+                    <OrderBox term={term} />
                 </div>
                 <div className="hidden xl:block">{!loading && children}</div>
             </div>
