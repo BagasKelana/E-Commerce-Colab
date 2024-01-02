@@ -8,6 +8,7 @@ import ProductDetailsPage from './pages/ProductDetailsPage';
 import User from './pages/User';
 import UserSettings from './pages/UserSettings';
 import UserPrivateRoute from './components/PrivateRoute/UserPrivateRoute';
+import Test from './pages/Test';
 
 export default function App() {
     return (
@@ -19,6 +20,8 @@ export default function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/user/:id/setting" element={<UserSettings />} />
+            <Route path="/test" element={<Test />} />
+            <Route path="/test/:id" element={<Test />} />
             <Route path="*" element={<>404 Kosong</>} />
             {/* <Route element={<AdminPrivateRoute />}>
                 <Route path="/dashboard-admin" element={< />} />
