@@ -32,9 +32,8 @@ export function UserMenu() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        navigate('/');
-        window.location.reload();
         dispatch(signOutUserSuccess());
+        navigate('/', { replace: true });
     };
     return (
         <DropdownMenu>
