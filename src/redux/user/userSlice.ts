@@ -5,6 +5,8 @@ interface initialStateProps {
     currentUser: {
         token: string;
         name: string;
+        email: string;
+        image: string;
         role: string;
     } | null;
     error: ErrorFetchType | null;
