@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import LandingPage from '@/pages/LandingPage';
 import ProductPage from './pages/ProductPage';
 import DashboardPage from './pages/DashboardPage';
@@ -8,7 +8,7 @@ import ProductDetailsPage from './pages/ProductDetailsPage';
 import User from './pages/User';
 import UserSettings from './pages/UserSettings';
 import UserPrivateRoute from './components/PrivateRoute/UserPrivateRoute';
-import Test from './pages/Test';
+import { useEffect } from 'react';
 
 export default function App() {
     return (
@@ -20,8 +20,7 @@ export default function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/user/:id/setting" element={<UserSettings />} />
-            <Route path="/test" element={<Test />} />
-            <Route path="/test/:id" element={<Test />} />
+
             <Route path="*" element={<>404 Kosong</>} />
             {/* <Route element={<AdminPrivateRoute />}>
                 <Route path="/dashboard-admin" element={< />} />
@@ -36,8 +35,20 @@ export default function App() {
             </Route> */}
 
             <Route element={<UserPrivateRoute />}>
-                <Route path="/user" element={<User />} />
+                <Route path="/user" element={<UserRedirect />} />
+                <Route path="/user/profile" element={<User />} />
+                <Route path="/user/my-order" element={<User />} />
             </Route>
         </Routes>
     );
 }
+
+const UserRedirect = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        navigate('/user/profile');
+    }, [navigate]);
+
+    return null;
+};
