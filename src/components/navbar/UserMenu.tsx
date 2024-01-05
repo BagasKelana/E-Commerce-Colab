@@ -22,19 +22,19 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { signOutUserSuccess } from '@/redux/user/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
+import { RootState } from '@/redux/store';
 
 export function UserMenu() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { currentUser } = useSelector((state: RootState) => state.user);
     const handleLogout = () => {
-        navigate('/');
-        window.location.reload();
         dispatch(signOutUserSuccess());
+        navigate('/', { replace: true });
     };
     return (
         <DropdownMenu>
@@ -43,7 +43,13 @@ export function UserMenu() {
                     <img
                         className="w-full h-full object-cover"
                         alt="user avatar"
-                        src="/images/profile_3135715.png"
+                        src={
+                            currentUser?.image
+                                ? `${import.meta.env.VITE_DEVELOPE_API_IMG}/${
+                                      currentUser.image
+                                  }`
+                                : '/images/profile_3135715.png'
+                        }
                     />
                 </div>
             </DropdownMenuTrigger>

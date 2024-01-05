@@ -1,13 +1,16 @@
-import { User } from '@/fetch';
+import { useState } from 'react';
+import * as z from 'zod';
+import axios, { AxiosResponse } from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { RootState } from '@/redux/store';
+import { signInStart, signInSuccess } from '@/redux/user/userSlice';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Table, TableBody, TableCell, TableRow } from '../ui/table';
-import { FetchErrorType } from '@/hook/useFetch';
-import { useMemo, useState } from 'react';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import {
     Form,
     FormControl,
@@ -15,21 +18,6 @@ import {
     FormItem,
     FormMessage
 } from '../ui/form';
-import axios, { AxiosResponse } from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
-import {
-    signInFailure,
-    signInStart,
-    signInSuccess
-} from '@/redux/user/userSlice';
-
-type UserProfileFormProps = {
-    currentUser: User | undefined;
-    isLoading: boolean;
-    isError: FetchErrorType;
-    reFetch: () => Promise<void>;
-};
 
 // const isImageFile = (fileName: string): boolean => {
 //     const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
@@ -60,27 +48,19 @@ const formSchema = z.object({
     _method: z.string()
 });
 
-const UserProfileForm: React.FC<UserProfileFormProps> = ({
-    currentUser,
-    isLoading,
-    isError,
-    reFetch
-}) => {
-    const user = useMemo(() => currentUser, [currentUser]);
+const UserProfileForm = () => {
     const dispatch = useDispatch();
-    const { currentUser: myUser, loading } = useSelector(
+    const { currentUser, loading } = useSelector(
         (state: RootState) => state.user
     );
-
-    console.log(isError, isLoading);
 
     const [userProfile, setUserProfile] = useState<File[] | null>();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: myUser?.name || '',
-            email: user?.email || '',
+            name: currentUser?.name || '',
+            email: currentUser?.email || '',
             image: null,
             _method: 'PUT'
         }
@@ -94,7 +74,6 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
         formData.append('name', values.name);
         formData.append('_method', 'PUT');
 
-        console.log(formData);
         try {
             dispatch(dispatch(signInStart()));
             const response: AxiosResponse = await axios.post(
@@ -102,13 +81,13 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
                 formData,
                 {
                     headers: {
-                        Authorization: `Bearer ${myUser?.token}`
+                        Authorization: `Bearer ${currentUser?.token}`
                     }
                 }
             );
             const data = await response.data;
-            dispatch(signInSuccess({ ...myUser, name: data.data.name }));
-            reFetch();
+            dispatch(signInSuccess({ ...currentUser, ...data.data }));
+            setUserProfile(null);
         } catch (err: unknown) {
             console.log(err);
         }
@@ -126,8 +105,8 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
 
     const urlImage = userProfile?.[0]
         ? URL.createObjectURL(userProfile?.[0])
-        : user?.image
-        ? `${import.meta.env.VITE_DEVELOPE_API_IMG}/${user?.image}`
+        : currentUser?.image
+        ? `${import.meta.env.VITE_DEVELOPE_API_IMG}/${currentUser?.image}`
         : '/images/profile_3135715.png';
 
     return (
@@ -143,7 +122,7 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
                                 <TableCell className="font-medium whitespace-nowrap text-neutral-500 ">
                                     Current Name
                                 </TableCell>
-                                <TableCell>{user?.name}</TableCell>
+                                <TableCell>{currentUser?.name}</TableCell>
                             </TableRow>
                         </TableBody>
                         <TableBody>
@@ -181,7 +160,7 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({
                                     Current Email
                                 </TableCell>
                                 <TableCell className="w-full">
-                                    {user?.email}
+                                    {currentUser?.email}
                                 </TableCell>
                             </TableRow>
                         </TableBody>

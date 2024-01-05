@@ -95,7 +95,7 @@ export default function SignIn() {
                     </Link>
                 </div>
             </div>
-            <div className="w-full h-screen flex items-center justify-center bg-slate-50 ">
+            <div className="w-full h-full py-10  flex items-center justify-center bg-slate-50 ">
                 <div className="h-full hidden lg:flex items-center justify-center lg:w-3/5 ">
                     <div>
                         <img

@@ -34,7 +34,6 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <SearchBar />
-
                 <nav className="contents">
                     <ul className="ml-4 xl:w-48 flex items-center justify-end">
                         <li className="relative inline-block">
