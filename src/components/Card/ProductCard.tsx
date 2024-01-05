@@ -28,7 +28,8 @@ const ProductCard = ({ name, src, price, slug }: ProductCardProps) => {
                         className="object-cover w-full h-[200px]"
                         height={512}
                         width={512}
-                        src={`/images/product/1ee9fd68-309c-473f-b5f9-b28c13c59d7b.png`}
+                        // src={`/images/product/1ee9fd68-309c-473f-b5f9-b28c13c59d7b.png`}
+                        src={`${import.meta.env.VITE_DEVELOPE_API_IMG}/${src}`}
                         alt="card-img"
                         loading="lazy"
                     />
