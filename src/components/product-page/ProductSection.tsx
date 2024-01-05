@@ -58,6 +58,9 @@ const ProductSection: React.FC<ProductSectionProps> = ({
         return null;
     }, [productData]);
 
+
+    console.log(data);
+
     return (
         <ErrorHandling error={error}>
             <div className="mb-4 flex flex-col gap-1">
@@ -74,7 +77,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                                         Menampilan {data?.data?.total} product
                                         untuk <strong>"{term}"</strong>{' '}
                                         <strong>
-                                            (1-{data?.data?.last_page} of{' '}
+                                            ({data?.data?.from}-{data?.data?.to} of{' '}
                                             {data?.data?.total})
                                         </strong>
                                     </>
@@ -84,7 +87,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                                         Menampilan {data?.data?.total} product
                                         untuk <strong>"Semua Product"</strong>{' '}
                                         <strong>
-                                            (1-{data?.data?.last_page} of{' '}
+                                            ({data?.data?.from}-{data?.data?.to} of{' '}
                                             {data?.data?.total})
                                         </strong>
                                     </>
