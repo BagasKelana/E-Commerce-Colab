@@ -17,12 +17,12 @@ const Navbar = () => {
         .split('')
         .map((value, index) => (index === 0 ? value.toUpperCase() : value))
         .join('')
-        .substring(0, 5);
+        .substring(0, 6);
 
     const ariaLabel = `View profile for ${currentUser?.name}`;
 
     return (
-        <header className="bg-gradient-to-l from-teal-700 to-teal-800 min-w-full w-screen top-0 fixed z-[100] md:h-[110px]">
+        <header className="bg-gradient-to-l from-teal-700 to-teal-800 min-w-full w-screen top-0 fixed z-[50] md:h-[110px]">
             <div className="container mx-auto px-4 md:px-8 pt-4 pb-4 md:pt-8 md:pb-0 flex items-center justify-between md:justify-start">
                 <div className="flex-shrink-0 hidden md:flex mr-8 ">
                     <Link to="/">
@@ -71,7 +71,10 @@ const Navbar = () => {
                                 <div className="flex items-center font-semibold text-sm text-slate-100">
                                     <UserMenu />
                                     <Link aria-label={ariaLabel} to={'/'}>
-                                        <span aria-hidden="true">
+                                        <span
+                                            className="whitespace-nowrap"
+                                            aria-hidden="true"
+                                        >
                                             {currentUser.name && formattedName}
                                             ...
                                         </span>
