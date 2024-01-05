@@ -9,6 +9,10 @@ import User from './pages/User';
 import UserSettings from './pages/UserSettings';
 import UserPrivateRoute from './components/PrivateRoute/UserPrivateRoute';
 import { useEffect } from 'react';
+import UserLayout from './layout/UserLayout';
+import UserOrder from './pages/UserOrder';
+import AuthRoute from './components/PrivateRoute/AuthRoute';
+import Cart from './pages/Cart/Cart';
 
 export default function App() {
     return (
@@ -17,11 +21,10 @@ export default function App() {
             <Route path="/product" element={<ProductPage />} />
             <Route path="/product/:name" element={<ProductDetailsPage />} />
             <Route path="/dashboard-admin" element={<DashboardPage />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/user/:id/setting" element={<UserSettings />} />
 
+            <Route path="/user/:id/setting" element={<UserSettings />} />
             <Route path="*" element={<>404 Kosong</>} />
+
             {/* <Route element={<AdminPrivateRoute />}>
                 <Route path="/dashboard-admin" element={< />} />
                 <Route path="/dashboard-admin/product" element={< />} />
@@ -34,10 +37,19 @@ export default function App() {
                 <Route path="/dashboard-admin/order-details" element={< />} />
             </Route> */}
 
+            <Route path="/cart" element={<Cart />} />
+
             <Route element={<UserPrivateRoute />}>
                 <Route path="/user" element={<UserRedirect />} />
-                <Route path="/user/profile" element={<User />} />
-                <Route path="/user/my-order" element={<User />} />
+                <Route element={<UserLayout />}>
+                    <Route path="/user/profile" element={<User />} />
+                    <Route path="/user/my-order" element={<UserOrder />} />
+                </Route>
+            </Route>
+
+            <Route element={<AuthRoute />}>
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
             </Route>
         </Routes>
     );
@@ -47,7 +59,7 @@ const UserRedirect = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        navigate('/user/profile');
+        navigate('/user/profile', { replace: true });
     }, [navigate]);
 
     return null;
