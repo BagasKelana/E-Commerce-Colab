@@ -11,6 +11,8 @@ const ProductSection = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorProduct, setErrorProduct] = useState<AxiosError | null>(null);
 
+    console.log(isLoading, errorProduct);
+
     useEffect(() => {
         const controller = new AbortController();
         const { signal } = controller;
