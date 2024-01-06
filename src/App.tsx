@@ -13,6 +13,7 @@ import UserLayout from './layout/UserLayout';
 import UserOrder from './pages/UserOrder';
 import AuthRoute from './components/PrivateRoute/AuthRoute';
 import Cart from './pages/Cart/Cart';
+import UserChangePassword from './components/user-page/UserChangePassword';
 
 export default function App() {
     return (
@@ -43,7 +44,10 @@ export default function App() {
                 <Route element={<UserLayout />}>
                     <Route path="/user/profile" element={<User />} />
                     <Route path="/user/my-order" element={<UserOrder />} />
-                    <Route path="/user/change-password" element={<User />} />
+                    <Route
+                        path="/user/change-password"
+                        element={<UserChangePassword />}
+                    />
                 </Route>
             </Route>
 
