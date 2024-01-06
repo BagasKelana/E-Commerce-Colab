@@ -24,6 +24,15 @@ export type FetchAllProduct = {
     };
 };
 
+export type FetchAllProductfeatured = {
+    meta: {
+        code: number;
+        status: string;
+        message: string;
+    };
+    data: ProductData[];
+};
+
 type ProductData = {
     id: number;
     name: string;
