@@ -11,7 +11,51 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { settings } from '../Carousel/CarouselSettings';
 
+import { useEffect, useState } from 'react';
+import { FetchAllCategory } from '@/hook/useFetch';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+
 const PopulerCategories = () => {
+    const [categoryData, setCategoryData] = useState<FetchAllCategory | null>(
+        null
+    );
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [errorCategory, setErrorCategory] = useState<AxiosError | null>(null);
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const { signal } = controller;
+
+        const url = `${
+            import.meta.env.VITE_DEVELOPE_API
+        }/category`;
+
+        const fetchData = async (url: string) => {
+            try {
+                setIsLoading(true);
+                const res: AxiosResponse | null = await axios.get(url, {
+                    signal
+                });
+
+                if (res?.data) {
+                    setCategoryData(res.data);
+                } else {
+                    setCategoryData(null);
+                }
+            } catch (err: unknown) {
+                if (signal.aborted) return;
+                const error = err as AxiosError;
+                setErrorCategory(error);
+                console.error(err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData(url);
+
+    }, []);
+
     return (
         <section className="w-full pl-4 md:px-20 my-6">
             <div className="w-full flex justify-between mb-4">
@@ -31,10 +75,10 @@ const PopulerCategories = () => {
             <div className="w-full relative">
                 <div className="group slice-categories h-full relative w-full">
                     <Slider {...settings}>
-                        {populerCategories.map((category, index) => (
+                        {categoryData?.data?.map((category, index) => (
                             <CategoriesCard
                                 key={index}
-                                src={category.src}
+                                src={`${import.meta.env.VITE_DEVELOPE_API_IMG}/${category.image}`}
                                 title={category.name}
                             />
                         ))}
