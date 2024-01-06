@@ -1,15 +1,13 @@
-import { products } from '@/assets/products';
 import ProductCard from '../Card/ProductCard';
 import { Button } from '../ui/button';
 
 import { useEffect, useState } from 'react';
-import { FetchAllProduct } from '@/hook/useFetch';
+import { FetchAllProductfeatured } from '@/hook/useFetch';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const ProductSection = () => {
-    const [productData, setProductData] = useState<FetchAllProduct | null>(
-        null
-    );
+    const [productData, setProductData] =
+        useState<FetchAllProductfeatured | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorProduct, setErrorProduct] = useState<AxiosError | null>(null);
 
@@ -19,7 +17,7 @@ const ProductSection = () => {
 
         const url = `${
             import.meta.env.VITE_DEVELOPE_API
-        }/product/featured?limit=18`;
+        }/product/featured?limit=12`;
 
         const fetchData = async (url: string) => {
             try {
@@ -30,6 +28,7 @@ const ProductSection = () => {
 
                 if (res?.data) {
                     setProductData(res.data);
+                    console.log(res.data);
                 } else {
                     setProductData(null);
                 }
@@ -44,7 +43,6 @@ const ProductSection = () => {
         };
 
         fetchData(url);
-
     }, []);
 
     return (
@@ -59,7 +57,7 @@ const ProductSection = () => {
                         slug={product.slug}
                         name={product.name}
                         price={product.price}
-                        src={product.featured_image?.image}
+                        src={product?.featured_image?.image || ''}
                     />
                 ))}
             </section>
