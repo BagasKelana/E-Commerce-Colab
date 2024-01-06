@@ -1,8 +1,14 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { MenuSquare, Pencil, User2 } from 'lucide-react';
+import { MenuSquareIcon, Pencil, User2 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger
+} from '@/components/ui/accordion';
 
 const UserSidebar = () => {
     const { currentUser } = useSelector((state: RootState) => state.user);
@@ -30,39 +36,63 @@ const UserSidebar = () => {
                     </p>
                 </div>
             </div>
-            <div className="mt-7">
-                <ul className="font-medium text-sm flex flex-col gap-4 select-none">
-                    <NavLink
-                        to="/user/profile"
-                        className={({ isActive, isPending }) =>
-                            isPending
-                                ? 'pending'
-                                : isActive
-                                ? 'text-teal-800'
-                                : 'text-black'
-                        }
-                    >
-                        <li className="flex whitespace-nowrap gap-2">
-                            <User2 className="h-5 w-5" />
-                            <span> My Profile</span>
-                        </li>
-                    </NavLink>
-                    <NavLink
-                        to="/user/my-order"
-                        className={({ isActive, isPending }) =>
-                            isPending
-                                ? 'pending'
-                                : isActive
-                                ? 'text-teal-800'
-                                : 'text-black'
-                        }
-                    >
-                        <li className="flex whitespace-nowrap gap-2">
-                            <MenuSquare className="h-5 w-5" />
-                            <span>My Order</span>
-                        </li>
-                    </NavLink>
-                </ul>
+
+            <div className="font-medium text-sm  flex flex-col select-none mt-7">
+                <Accordion
+                    defaultValue="item-1"
+                    type="single"
+                    className="w-full leading-4"
+                >
+                    <AccordionItem className="border-0 " value="item-1">
+                        <NavLink to="/user/profile">
+                            <AccordionTrigger className="hover:no-underline p-0 pb-4">
+                                <li className="flex whitespace-nowrap gap-2">
+                                    <User2 className="h-4 w-4 text-teal-700" />
+                                    <span> My Account</span>
+                                </li>
+                            </AccordionTrigger>
+                        </NavLink>
+                        <AccordionContent>
+                            <div className="flex flex-col gap-4 ml-8 font-normal">
+                                <NavLink
+                                    to="/user/profile"
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? 'text-teal-600 font-medium'
+                                            : 'text-neutral-600'
+                                    }
+                                >
+                                    Profile
+                                </NavLink>
+                                <NavLink
+                                    to="/user/change-password"
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? 'text-teal-600 font-medium'
+                                            : 'text-neutral-600 font-normal '
+                                    }
+                                >
+                                    Ubah Password
+                                </NavLink>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem className="border-0" value="item-2">
+                        <NavLink
+                            to="/user/my-order"
+                            className={({ isActive }) =>
+                                isActive ? 'text-teal-600' : 'text-black'
+                            }
+                        >
+                            <AccordionTrigger className="hover:no-underline p-0 pb-4">
+                                <li className="flex whitespace-nowrap gap-2">
+                                    <MenuSquareIcon className="h-4 w-4 text-orange-500" />
+                                    <span>My Order</span>
+                                </li>
+                            </AccordionTrigger>
+                        </NavLink>
+                    </AccordionItem>
+                </Accordion>
             </div>
         </div>
     );
