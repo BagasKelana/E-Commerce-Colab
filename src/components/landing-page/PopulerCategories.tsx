@@ -5,56 +5,16 @@ import Slider from 'react-slick';
 
 import CategoriesCard from '../Card/CategoriesCard';
 
-import { populerCategories } from '@/assets/populerCategories';
-
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { settings } from '../Carousel/CarouselSettings';
 
-import { useEffect, useState } from 'react';
-import { FetchAllCategory } from '@/hook/useFetch';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { useContext } from 'react';
+
+import { ProductCategoriesContext } from '@/ProductCategories';
 
 const PopulerCategories = () => {
-    const [categoryData, setCategoryData] = useState<FetchAllCategory | null>(
-        null
-    );
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [errorCategory, setErrorCategory] = useState<AxiosError | null>(null);
-
-    useEffect(() => {
-        const controller = new AbortController();
-        const { signal } = controller;
-
-        const url = `${
-            import.meta.env.VITE_DEVELOPE_API
-        }/category`;
-
-        const fetchData = async (url: string) => {
-            try {
-                setIsLoading(true);
-                const res: AxiosResponse | null = await axios.get(url, {
-                    signal
-                });
-
-                if (res?.data) {
-                    setCategoryData(res.data);
-                } else {
-                    setCategoryData(null);
-                }
-            } catch (err: unknown) {
-                if (signal.aborted) return;
-                const error = err as AxiosError;
-                setErrorCategory(error);
-                console.error(err);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchData(url);
-
-    }, []);
+    const { data: categoryData } = useContext(ProductCategoriesContext);
 
     return (
         <section className="w-full pl-4 md:px-20 my-6">
@@ -78,7 +38,9 @@ const PopulerCategories = () => {
                         {categoryData?.data?.map((category, index) => (
                             <CategoriesCard
                                 key={index}
-                                src={`${import.meta.env.VITE_DEVELOPE_API_IMG}/${category.image}`}
+                                src={`${
+                                    import.meta.env.VITE_DEVELOPE_API_IMG
+                                }/${category.image}`}
                                 title={category.name}
                             />
                         ))}
