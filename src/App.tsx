@@ -21,7 +21,6 @@ export default function App() {
             <Route path="/product" element={<ProductPage />} />
             <Route path="/product/:name" element={<ProductDetailsPage />} />
             <Route path="/dashboard-admin" element={<DashboardPage />} />
-
             <Route path="/user/:id/setting" element={<UserSettings />} />
             <Route path="*" element={<>404 Kosong</>} />
 
@@ -44,6 +43,7 @@ export default function App() {
                 <Route element={<UserLayout />}>
                     <Route path="/user/profile" element={<User />} />
                     <Route path="/user/my-order" element={<UserOrder />} />
+                    <Route path="/user/change-password" element={<User />} />
                 </Route>
             </Route>
 
