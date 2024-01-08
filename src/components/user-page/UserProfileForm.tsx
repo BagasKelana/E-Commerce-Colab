@@ -10,7 +10,6 @@ import { RootState } from '@/redux/store';
 import { signInStart, signInSuccess } from '@/redux/user/userSlice';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Table, TableBody, TableCell, TableRow } from '../ui/table';
 import {
     Form,
     FormControl,
@@ -18,6 +17,8 @@ import {
     FormItem,
     FormMessage
 } from '../ui/form';
+
+import { Circle } from 'lucide-react';
 
 // const isImageFile = (fileName: string): boolean => {
 //     const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
@@ -110,156 +111,148 @@ const UserProfileForm = () => {
         : '/images/profile_3135715.png';
 
     return (
-        <Form {...form}>
-            <form
-                onSubmit={form.handleSubmit(handleOnSubmit)}
-                className="input-form"
-            >
-                <div className="flex gap-4 mt-4 p-4">
-                    <Table>
-                        <TableBody>
-                            <TableRow className="hover:bg-transparent">
-                                <TableCell className="font-medium whitespace-nowrap text-neutral-500 ">
-                                    Current Name
-                                </TableCell>
-                                <TableCell>{currentUser?.name}</TableCell>
-                            </TableRow>
-                        </TableBody>
-                        <TableBody>
-                            <TableRow className="hover:bg-transparent">
-                                <TableCell className="font-medium text-neutral-500">
-                                    Name
-                                </TableCell>
-                                <TableCell>
+        <section className="p-6 bg-slate-100 border-l-0 border-t-4 lg:border-t-0 lg:border-l-4 border-teal-700 shadow shadow-slate-300">
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(handleOnSubmit)}
+                    className="input-form flex flex-col gap-4"
+                >
+                    <div className="w-full flex items-center gap-2">
+                        <Circle className="bg-teal-700 rounded-full text-teal-700 h-3 w-3 animate-pulse" />
+                        <span className="text-teal-700">
+                            Perubahan berhasil
+                        </span>
+                    </div>
+                    <section className="flex flex-col-reverse md:flex-row gap-6">
+                        <div className="w-full flex flex-col">
+                            <div className="flex shadow-md shadow-slate-300">
+                                <section className="hidden xl:flex flex-col gap-2 bg-white rounded-s py-6 pl-6 pr-2 text-black font-normal">
+                                    <div className="flex text-sm pb-2 whitespace-nowrap">
+                                        Current Name
+                                    </div>
+                                    <div className="h-10 mb-4 flex items-center text-sm">
+                                        Name
+                                    </div>
+                                    <div className="flex text-sm pb-2 whitespace-nowrap">
+                                        Current Email
+                                    </div>
+                                    <div className="h-10 mb-4 flex items-center text-sm">
+                                        Email
+                                    </div>
+                                </section>
+                                <section className="flex flex-col gap-2 bg-white rounded-e w-full p-6 ">
+                                    <div className="flex text-sm pb-2">
+                                        {currentUser?.name}
+                                    </div>
                                     <FormField
                                         control={form.control}
                                         name="name"
                                         render={({ field }) => (
-                                            <FormItem>
+                                            <FormItem className="h-14 space-y-0">
                                                 <FormControl>
                                                     <Input
                                                         type="text"
-                                                        className="placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0"
-                                                        placeholder={
-                                                            currentUser?.name ||
-                                                            ''
-                                                        }
+                                                        className=" border-sky-700 focus-within:border-transparent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-700 focus-visible:ring-offset-0 rounded"
+                                                        placeholder="Masukan nama baru disini.."
                                                         {...field}
                                                     />
                                                 </FormControl>
-                                                <FormMessage />
+                                                <FormMessage className="text-xs" />
                                             </FormItem>
                                         )}
                                     />
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                        <TableBody>
-                            <TableRow className="hover:bg-transparent">
-                                <TableCell className="font-medium text-neutral-500">
-                                    Current Email
-                                </TableCell>
-                                <TableCell className="w-full">
-                                    {currentUser?.email}
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                        <TableBody>
-                            <TableRow className="hover:bg-transparent">
-                                <TableCell className="font-medium text-neutral-500">
-                                    Email
-                                </TableCell>
-                                <TableCell className="w-full">
+                                    <div className="flex text-sm pb-2">
+                                        {currentUser?.email}
+                                    </div>
                                     <FormField
                                         control={form.control}
                                         name="email"
                                         render={({ field }) => (
-                                            <FormItem>
+                                            <FormItem className="h-14 space-y-0">
                                                 <FormControl>
                                                     <Input
                                                         type="email"
-                                                        className="placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0"
-                                                        placeholder={
-                                                            currentUser?.email ||
-                                                            ''
-                                                        }
+                                                        className="border-sky-700 focus-within:border-transparent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-teal-700 focus-visible:ring-offset-0 rounded"
+                                                        placeholder="Masukan email baru disini.."
                                                         {...field}
                                                     />
                                                 </FormControl>
-                                                <FormMessage />
+                                                <FormMessage className="text-xs" />
                                             </FormItem>
                                         )}
                                     />
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                        <TableBody>
-                            <TableRow className="hover:bg-transparent">
-                                <TableCell></TableCell>
-                                <TableCell className="w-full ">
-                                    <Button
-                                        disabled={loading}
-                                        variant={'primery'}
-                                        type="submit"
-                                    >
-                                        Save Changes
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                    <div className="px-10 py-5 space-y-4 flex flex-col items-center justify-center border border-input h-fit rounded-md ">
-                        <label
-                            className="w-24 flex cursor-pointer"
-                            htmlFor="image"
-                        >
-                            <Avatar className="h-24 w-24">
-                                <AvatarImage
-                                    alt="image-avatar"
-                                    src={urlImage}
-                                />
-                                <AvatarFallback>user image</AvatarFallback>
-                            </Avatar>
-                            <FormField
-                                control={form.control}
-                                name="image"
-                                render={() => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <Input
-                                                name="image"
-                                                onChange={handleOnChange}
-                                                className="hidden"
-                                                id="image"
-                                                type="file"
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <Input
-                                onChange={handleOnChange}
-                                className="hidden"
-                                id="image=@"
-                                name="image=@"
-                                type="file"
-                            />
-                        </label>
-                        <label
-                            className="flex text-sm rounded-md justify-center w-24 whitespace-nowrap p-2 border border-input items-center gap-2 cursor-pointer select-none"
-                            htmlFor="image=@"
-                        >
-                            Select Image
-                        </label>
-                        <div className="text-xs text-neutral-500 whitespace-nowrap">
-                            <p>Ukuran gambar: maks. 1 MB</p>
-                            <p>Format gambar: .JPEG, .PNG</p>
+                                </section>
+                            </div>
+                            <div className="flex mt-6">
+                                <Button
+                                    className="rounded w-full"
+                                    disabled={loading}
+                                    variant={'primery'}
+                                    type="submit"
+                                >
+                                    Save Changes
+                                </Button>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </form>
-        </Form>
+
+                        <div className="px-10 py-2 md:py-5 space-y-4 flex flex-col items-center justify-center md:border md:border-sky-700 h-full rounded-md ">
+                            <label
+                                className="w-20 md:w-24 flex cursor-pointer"
+                                htmlFor="image"
+                            >
+                                <Avatar className="h-20 w-20 md:h-24 md:w-24">
+                                    <AvatarImage
+                                        alt="image-avatar"
+                                        src={urlImage}
+                                    />
+                                    <AvatarFallback>
+                                        <img
+                                            src="/images/profile_3135715.png"
+                                            alt="user-image"
+                                        />
+                                    </AvatarFallback>
+                                </Avatar>
+                                <FormField
+                                    control={form.control}
+                                    name="image"
+                                    render={() => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <Input
+                                                    name="image"
+                                                    onChange={handleOnChange}
+                                                    className="hidden"
+                                                    id="image"
+                                                    type="file"
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <Input
+                                    onChange={handleOnChange}
+                                    className="hidden"
+                                    id="image=@"
+                                    name="image=@"
+                                    type="file"
+                                />
+                            </label>
+                            <label
+                                className="flex text-xs md:text-sm text-sky-700 rounded-md justify-center w-24 whitespace-nowrap p-2 border border-sky-700 items-center gap-2 cursor-pointer select-none"
+                                htmlFor="image=@"
+                            >
+                                Select Image
+                            </label>
+                            <div className="text-xs text-neutral-500 whitespace-nowrap">
+                                <p>Ukuran gambar: maks. 1 MB</p>
+                                <p>Format gambar: .JPEG, .PNG</p>
+                            </div>
+                        </div>
+                    </section>
+                </form>
+            </Form>
+        </section>
     );
 };
 
