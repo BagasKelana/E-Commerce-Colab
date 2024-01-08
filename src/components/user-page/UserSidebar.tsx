@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { MenuSquareIcon, Pencil, User2 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ import {
 const UserSidebar = () => {
     const { currentUser } = useSelector((state: RootState) => state.user);
     return (
-        <div className="w-full col-span-1 flex flex-col ">
+        <div className="hidden lg:flex flex-col md:w-[300px] ">
             <div className="w-full my-4 flex gap-4">
                 <Avatar className="h-12 w-12">
                     <AvatarImage
@@ -22,9 +22,15 @@ const UserSidebar = () => {
                                 ? `${import.meta.env.VITE_DEVELOPE_API_IMG}/${
                                       currentUser?.image
                                   }`
-                                : 'images/profile_3135715.png'
+                                : '/images/profile_3135715.png'
                         }
                     />
+                    <AvatarFallback>
+                        <img
+                            src="/images/profile_3135715.png"
+                            alt="user-image"
+                        />
+                    </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col my-1">
                     <h3 className="text-sm font-semibold">
