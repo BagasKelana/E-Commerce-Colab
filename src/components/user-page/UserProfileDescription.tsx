@@ -8,11 +8,11 @@ const UserProfileDescription: React.FC<UserProfileDescriptionProps> = ({
     title
 }) => {
     return (
-        <>
-            <h2 className="font-medium text-base">{title}</h2>
+        <div className="bg-white">
+            <h1 className="font-semibold text-xl">{title}</h1>
             <p className="text-sm text-neutral-500">{children}</p>
             <hr className="mt-4" />
-        </>
+        </div>
     );
 };
 
