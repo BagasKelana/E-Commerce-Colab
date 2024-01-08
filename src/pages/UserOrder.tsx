@@ -1,12 +1,88 @@
-import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { products } from '@/assets/dummyOrder';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Info } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { Circle } from 'lucide-react';
 
 const UserOrder = () => {
     return (
-        <main className="w-full col-span-5 ">
+        <main className="w-full">
+            <div className="w-full flex flex-col gap-4 mb-4">
+                <h1 className="text-xl">Order history</h1>
+                <span className="text-muted-foreground">3 orders</span>
+            </div>
+            <div className="w-full flex flex-col gap-6">
+                <OrderCart />
+                <OrderCart />
+                <OrderCart />
+            </div>
+        </main>
+    );
+};
+
+const OrderCart = () => {
+    const dummy = products[1];
+    return (
+        <section className="w-full flex flex-col gap-5 bg-slate-100 px-6 pt-6 pb-8 shadow shadow-slate-200 border-l-0 border-t-4 lg:border-l-4 lg:border-t-0 border-teal-700">
+            <div className="w-full flex items-center gap-2">
+                <Circle className="bg-teal-700 rounded-full text-teal-700 h-3 w-3" />
+                <span className="text-teal-700">Dikirim</span>
+            </div>
+            <div className="w-full flex flex-col lg:flex-row gap-6">
+                <div className="bg-white w-full lg:w-3/5 shadow-slate-300/80 shadow-md">
+                    <section className="flex items-center p-6 gap-5 border-b-2 rounded ">
+                        <div className="flex gap-2 w-1/3 justify-center p-2">
+                            <div className="w-[50px] h-[50px]">
+                                <img
+                                    className="object-cover aspect-square"
+                                    src={dummy.img}
+                                    alt="product-order"
+                                />
+                            </div>
+                        </div>
+                        <div className="w-2/3">
+                            <h2 className="line-claps-with-ellipsis font-semibold text-base">
+                                {dummy.name}
+                            </h2>
+                        </div>
+                    </section>
+                    <section className="flex items-center p-6 gap-5 border-b-2 rounded">
+                        <div className="flex w-1/3 justify-center p-2">
+                            <div className="w-[50px] h-[50px]">
+                                <img
+                                    className="object-cover aspect-square "
+                                    src={dummy.img}
+                                    alt="product-order"
+                                />
+                            </div>
+                        </div>
+                        <div className="w-2/3">
+                            <h2 className="line-claps-with-ellipsis font-semibold text-base">
+                                {dummy.name}
+                            </h2>
+                        </div>
+                    </section>
+                </div>
+                <div className="w-full lg:w-2/5 flex flex-col gap-3">
+                    <Button
+                        variant="primery"
+                        className="w-full font-semibold rounded p-6"
+                    >
+                        Beli Lagi
+                    </Button>
+                    <Button
+                        variant="outline"
+                        className="w-full font-semibold bg-transparent border-sky-700 hover:border-sky-700/80 rounded p-6 text-sky-700 hover:text-sky-700/80"
+                    >
+                        Lihat Detail Pembelian
+                    </Button>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default UserOrder;
+
+/*  <main className="w-full col-span-5 ">
             <section className="w-full mb-3 bg-white grid grid-cols-6 text-center ">
                 <NavLink className="px-2 py-3 w-full" to="">
                     <span>Semua</span>
@@ -96,8 +172,4 @@ const UserOrder = () => {
                     </section>
                 </div>
             </div>
-        </main>
-    );
-};
-
-export default UserOrder;
+        </main> */
