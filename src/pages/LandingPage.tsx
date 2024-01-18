@@ -1,16 +1,99 @@
 import LandingHero from '@/components/landing-page/LandingHero';
 import PopulerCategories from '@/components/landing-page/PopulerCategories';
 import { Button } from '@/components/ui/button';
-import ProductSection from '@/components/landing-page/ProductSection';
-
 import Layout from '@/layout/Layout';
+
+import FeaturedProducts from '@/components/landing-page/FeaturedProducts';
 
 const LandingPage = () => {
     return (
         <Layout>
             <LandingHero />
+
             <PopulerCategories />
-            <section className="w-full px-2 md:px-20 py-6 border border-input">
+            {/* Untuk mobile rubah GAMING-SETUP (gambar keyboard,monitor dll) jadi slider */}
+            <section
+                id="GAMING-SETUP"
+                className="w-full h-[1500px] md:h-[600px] xl:h-[800px] px-4 md:px-6 lg:px-20 my-4 py-6"
+            >
+                <div className="w-full h-full grid grid-cols-1 md:grid-cols-4 grid-flow-row md:grid-rows-2 gap-2 place-items-center justify-items-center">
+                    {/* Image 1 */}
+                    <div
+                        id="bg-playgame"
+                        className="md:col-span-2 w-full h-full bg-[url('/images/landing/playgame.jpg')] bg-cover bg-center"
+                    >
+                        <div className="w-full h-full bg-gradient-to-tl from-rose-700/30 to-sky-700/30 flex items-center justify-center">
+                            <div className="text-2xl lg:text-3xl font-semibold w-3/4 text-white text-center flex flex-col">
+                                Power Up Your Play
+                                <span className="text-sm font-medium text-white/80">
+                                    Immerse Yourself in Unparalleled Universes!
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden">
+                        <div className="w-full top-[50%] md:top-0 absolute -translate-y-[50%] md:translate-y-0 md:static">
+                            <img
+                                className="object-cover scale-50 md:scale-110 md:absolute md:top-[30%] xl:top-[20%]  right-0 md:animate-up-down"
+                                src="/images/landing/pc-set3.png"
+                                alt="headphone-img"
+                            />
+                        </div>
+                    </div>
+                    <div className="w-full h-full flex relative bg-gradient-radial overflow-hidden from-slate-300 to-slate-200">
+                        <div className="absolute top-[50%] -translate-y-[50%] right-0 ">
+                            <img
+                                className="object-cover scale-50 md:scale-110"
+                                src="/images/landing/pc-set1.png"
+                                alt="headphone-img"
+                            />
+                        </div>
+                    </div>
+                    <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden">
+                        <div className="absolute top-[50%] -translate-y-[50%] right-0  w-full">
+                            <img
+                                className="object-cover scale-50 md:scale-100"
+                                src="/images/landing/pc-set2.png"
+                                alt="headphone-img"
+                            />
+                        </div>
+                    </div>
+                    {/* Image 2 */}
+                    <div
+                        id="bg-playgame"
+                        className="md:col-span-2 w-full h-full bg-[url('/images/landing/playgame2.jpg')] bg-cover bg-center"
+                    >
+                        <div className="w-full h-full bg-gradient-to-tl from-rose-700/30 to-sky-700/30 flex items-center justify-center">
+                            <div className="text-2xl lg:text-3xl  font-semibold w-3/4 text-white text-center flex flex-col">
+                                Unlock the Extraordinary
+                                <span className="text-sm font-medium text-white/80">
+                                    Dive into Your Next Gaming Obsession!
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden">
+                        <div className="absolute top-[50%] -translate-y-[50%] right-0 w-full">
+                            <img
+                                className="object-cover scale-50  md:-scale-x-100 md:scale-y-100"
+                                src="/images/landing/pc-set7.png"
+                                alt="headphone-img"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/* mungkin di bawah ini bisa digunakan untuk benner GET_ALL_GAMING_SETUP  */}
+            <section
+                id="GET_ALL_GAMING_SETUP"
+                className="px-4 md:px-6 lg:px-20 my-4 "
+            >
+                <div className="h-full w-full bg-gradient-to-r via-violet-500 from-pink-500 to-sky-500">
+                    <div className="w-full h-full bg-slate-700/80 flex flex-col items-center justify-center p-4"></div>
+                </div>
+            </section>
+            {/* Di bawah ini masih bisa di improve  */}
+            <section className="w-full px-4 md:px-6 lg:px-20 py-6 my-4 ">
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 place-items-center ">
                     <div className="w-full h-[180px] bg-gradient-to-l from-gray-300 to-gray-100 rounded relative overflow-hidden">
                         <div>
@@ -77,9 +160,9 @@ const LandingPage = () => {
                     </div>
                 </div>
             </section>
-            <PopulerCategories />
             <hr />
-            <ProductSection />
+            {/* Klik see more  */}
+            <FeaturedProducts />
         </Layout>
     );
 };
