@@ -77,15 +77,13 @@ const LandingHero = () => {
         ]
     };
     return (
-        <div className="w-full pt-4 px-4 md:px-20 my-4 container">
+        <div className="w-full pt-4 px-4 md:px-6 lg:px-20 my-4 container">
             <div className="group h-full relative w-full">
                 <Slider {...settings}>
                     {img.map((img) => (
                         <img
                             key={img}
-                            height={300}
-                            width={1200}
-                            className="object-cover h-[150px] md:h-[300px] w-full"
+                            className="object-cover object-center aspect-[12/5] md:aspect-[12/4]  xl:aspect-[12/3]  rounded overflow-hidden"
                             src={img}
                             alt="img-slider"
                         />
