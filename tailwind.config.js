@@ -82,12 +82,18 @@ module.exports = {
                     '0%': { transform: 'translateY(-10%)' },
                     '50%': { transform: 'none' },
                     '100%': { transform: 'translateY(-10%)' }
+                },
+                'ligh-on': {
+                    '0%': { filter: 'saturate(200%)' },
+                    '50%': { filter: 'saturate(50%)' },
+                    '100%': { filter: 'saturate(200%)' }
                 }
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
-                'up-down': 'up-down 1.5s ease-in-out infinite'
+                'up-down': 'up-down 1.5s ease-in-out infinite',
+                'ligh-on': 'ligh-on 1.5s ease-in infinite'
             }
         }
     },
