@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Separator } from '../ui/separator';
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -9,20 +10,21 @@ type CategoriesCardProps = CardProps & {
 
 const CategoriesCard = ({ title, src }: CategoriesCardProps) => {
     return (
-        <Card>
+        <Card className="rounded-xl border-slate-400/80 ">
             <CardHeader>
                 <img
-                    className="object-cover"
+                    className="object-cover aspect-square hover:scale-110 transition-all ease-in"
                     height={512}
                     width={512}
                     src={src}
                     alt="card-img"
+                    loading="lazy"
                 />
             </CardHeader>
-
-            <hr />
+            <Separator />
             <CardContent className="text-center p-4">
-                <h3 className="font-bold">{title}</h3>
+                <span className="sr-only">category-name</span>
+                <h3 className="font-semibold text-">{title}</h3>
             </CardContent>
         </Card>
     );
