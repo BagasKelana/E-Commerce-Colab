@@ -22,7 +22,7 @@ const CategoriesCard = ({ title, src }: CategoriesCardProps) => {
                 />
             </CardHeader>
             <Separator />
-            <CardContent className="text-center p-4">
+            <CardContent className="text-center py-2 md:p-4 ">
                 <span className="sr-only">category-name</span>
                 <h3 className="font-semibold text-">{title}</h3>
             </CardContent>

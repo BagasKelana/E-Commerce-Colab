@@ -75,9 +75,9 @@ const LandingPage = () => {
                     <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden">
                         <div className="absolute top-[50%] -translate-y-[50%] right-0 w-full">
                             <img
-                                className="object-cover scale-50  md:-scale-x-100 md:scale-y-100"
+                                className="object-cover scale-50 md:-scale-x-100 md:scale-y-100 md:animate-ligh-on"
                                 src="/images/landing/pc-set7.png"
-                                alt="headphone-img"
+                                alt="keyboard-img"
                             />
                         </div>
                     </div>

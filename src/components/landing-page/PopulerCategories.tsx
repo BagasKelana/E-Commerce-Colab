@@ -33,19 +33,23 @@ const PopulerCategories = () => {
                 </div>
             </div>
             <div className="w-full relative">
-                <div className="group slice-categories h-full relative w-full">
-                    <Slider {...settings}>
-                        {categoryData?.data?.map((category, index) => (
-                            <CategoriesCard
-                                key={index}
-                                src={`${
-                                    import.meta.env.VITE_DEVELOPE_API_IMG
-                                }/${category.image}`}
-                                title={category.name}
-                            />
-                        ))}
-                    </Slider>
-                </div>
+                {categoryData?.data ? (
+                    <div className="group slice-categories h-full relative w-full">
+                        <Slider {...settings}>
+                            {categoryData?.data?.map((category, index) => (
+                                <CategoriesCard
+                                    key={index}
+                                    src={`${
+                                        import.meta.env.VITE_DEVELOPE_API_IMG
+                                    }/${category.image}`}
+                                    title={category.name}
+                                />
+                            ))}
+                        </Slider>
+                    </div>
+                ) : (
+                    ''
+                )}
             </div>
         </section>
     );
