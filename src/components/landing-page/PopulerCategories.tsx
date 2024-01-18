@@ -17,7 +17,7 @@ const PopulerCategories = () => {
     const { data: categoryData } = useContext(ProductCategoriesContext);
 
     return (
-        <section className="w-full pl-4 md:px-20 my-6">
+        <section className="w-full pl-4 md:px-6 lg:px-20 my-6">
             <div className="w-full flex justify-between mb-4">
                 <div>
                     <h2 className="max-md:text-base">Popular Categories</h2>
