@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { formatRupiah } from '@/helpers/formatRupiah';
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -13,22 +14,16 @@ type ProductCardProps = CardProps & {
 const ProductCard = ({ name, src, price, slug }: ProductCardProps) => {
     const navigate = useNavigate();
     const handleProductClick = () => {
-        const productData = {
-            name,
-            src,
-            price
-        };
-        navigate(`/product/${slug}`, { state: { productData } });
+        navigate(`/product/${slug}`);
     };
     return (
         <div className="h-full cursor-pointer" onClick={handleProductClick}>
-            <Card className="w-full md:min-w-[100px] h-[273px] rounded-lg overflow-hidden hover:border-teal-700 shadow-sm shadow-gray-300">
+            <Card className="w-full md:min-w-[100px] h-[273px] rounded-lg overflow-hidden hover:border-teal-700 hover:-translate-y-1 transition-all duration-100 ease-in-out shadow-sm shadow-gray-300">
                 <CardHeader className="p-0">
                     <img
-                        className="object-cover w-full h-[200px]"
+                        className="object-cover w-[200px] h-[200px]"
                         height={512}
                         width={512}
-                        // src={`/images/product/1ee9fd68-309c-473f-b5f9-b28c13c59d7b.png`}
                         src={`${import.meta.env.VITE_DEVELOPE_API_IMG}/${src}`}
                         alt="card-img"
                         loading="lazy"
@@ -36,15 +31,13 @@ const ProductCard = ({ name, src, price, slug }: ProductCardProps) => {
                 </CardHeader>
 
                 <hr />
-                <CardContent className="py-4 px-2 md:p-2  h-full">
+                <CardContent className="py-4 px-2 md:p-2 h-full">
                     <p className="font-medium text-xs line-claps-with-ellipsis">
                         {name}
                     </p>
                     <h2 className="text-base font-bold break-words">
                         Rp
-                        {price?.toLocaleString('id-ID', {
-                            currency: 'IDR'
-                        })}
+                        {formatRupiah(price)}
                     </h2>
                 </CardContent>
             </Card>

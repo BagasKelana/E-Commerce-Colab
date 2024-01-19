@@ -125,7 +125,7 @@ const UserProfileForm = () => {
                     </div>
                     <section className="flex flex-col-reverse md:flex-row gap-6">
                         <div className="w-full flex flex-col">
-                            <div className="flex shadow-md shadow-slate-300">
+                            <div className="flex md:shadow-md md:shadow-slate-300">
                                 <section className="hidden xl:flex flex-col gap-2 bg-white rounded-s py-6 pl-6 pr-2 text-black font-normal">
                                     <div className="flex text-sm pb-2 whitespace-nowrap">
                                         Current Name
@@ -140,7 +140,7 @@ const UserProfileForm = () => {
                                         Email
                                     </div>
                                 </section>
-                                <section className="flex flex-col gap-2 bg-white rounded-e w-full p-6 ">
+                                <section className="flex flex-col gap-2 md:bg-white rounded w-full md:p-6 ">
                                     <div className="flex text-sm pb-2">
                                         {currentUser?.name}
                                     </div>
@@ -245,7 +245,7 @@ const UserProfileForm = () => {
                                 Select Image
                             </label>
                             <div className="text-xs text-neutral-500 whitespace-nowrap">
-                                <p>Ukuran gambar: maks. 1 MB</p>
+                                <p>Ukuran gambar: maks. 8 MB</p>
                                 <p>Format gambar: .JPEG, .PNG</p>
                             </div>
                         </div>

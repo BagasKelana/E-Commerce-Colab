@@ -1,11 +1,12 @@
 import {
+    LayoutDashboard,
     LogOut,
-    Mail,
-    MessageSquare,
     Settings,
+    ShieldCheck,
     ShoppingBag,
     ShoppingCart,
-    User
+    User,
+    UserCheck2
 } from 'lucide-react';
 import {
     DropdownMenu,
@@ -13,12 +14,7 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
@@ -27,6 +23,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signOutUserSuccess } from '@/redux/user/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { RootState } from '@/redux/store';
+import { cn } from '@/lib/utils';
+import { Avatar, AvatarImage } from '../ui/avatar';
+import { showImageAPI } from '@/helpers/showImageAPI';
+import { firstLetterToUpper } from '@/helpers/firstLetterToUpper';
 
 export function UserMenu() {
     const dispatch = useDispatch();
@@ -56,59 +56,91 @@ export function UserMenu() {
             <DropdownMenuContent
                 hideWhenDetached={true}
                 align="end"
-                className="w-56 h-64 z-[100] shadow shadow-gray-400 "
+                className="w-56 h-fit py-2 z-[100] shadow shadow-slate-500 rounded bg-white "
                 sideOffset={10}
                 alignOffset={-30}
             >
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>
+                    <div className="w-full px-4 py-2 flex gap-2">
+                        <Avatar>
+                            <AvatarImage
+                                src={showImageAPI(currentUser?.image)}
+                            />
+                        </Avatar>
+
+                        <div>
+                            <h3 className="line-clamp-1 ">
+                                {firstLetterToUpper(currentUser?.name)}
+                            </h3>
+
+                            {currentUser?.role === 'admin' ? (
+                                <span className="whitespace-nowrap text-teal-700/80 flex gap-1 items-center font-normal">
+                                    <ShieldCheck className="w-4 h-full" />
+                                    {currentUser.role}
+                                </span>
+                            ) : (
+                                <span className="whitespace-nowrap text-black/80 flex gap-1 items-center font-normal">
+                                    <UserCheck2 className="w-4 h-4 stroke-1" />
+                                    {currentUser?.role}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <Link to="/user">
-                        <DropdownMenuItem className="cursor-pointer">
-                            <User className="mr-2 h-4 w-4" />
+                        <DropdownMenuItem
+                            className={cn(
+                                'cursor-pointer',
+                                currentUser?.role === 'admin'
+                                    ? 'text-teal-700'
+                                    : 'text-black/80'
+                            )}
+                        >
+                            <User
+                                className={
+                                    currentUser?.role === 'admin'
+                                        ? 'mr-2 h-4 w-4'
+                                        : 'mr-2 h-4 w-4 stroke-1'
+                                }
+                            />
                             <span>Profile</span>
-                            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                         </DropdownMenuItem>
                     </Link>
                     <DropdownMenuItem>
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Settings</span>
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                        <Settings className="mr-2 h-4 w-4 stroke-1" />
+                        <span className="text-black/80">Settings</span>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuGroup>
+                <DropdownMenuGroup className="">
+                    {currentUser?.role === 'admin' && (
+                        <Link to={'/dashboard-admin/product'}>
+                            <DropdownMenuItem>
+                                <LayoutDashboard className="mr-2 h-4 w-4 stroke-1" />
+                                <span className="text-black/80">
+                                    Dashboard Admin
+                                </span>
+                            </DropdownMenuItem>
+                        </Link>
+                    )}
                     <DropdownMenuItem>
-                        <ShoppingCart className="mr-2 h-4 w-4" />
-                        <span>My Cart</span>
+                        <ShoppingCart className="mr-2 h-4 w-4 stroke-1" />
+                        <span className="text-black/80">My Cart</span>
                     </DropdownMenuItem>
-                    <DropdownMenuSub>
-                        <DropdownMenuSubTrigger>
-                            <ShoppingBag className="mr-2 h-4 w-4" />
-                            <span>My Orders</span>
-                        </DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
-                            <DropdownMenuSubContent>
-                                <DropdownMenuItem>
-                                    <Mail className="mr-2 h-4 w-4" />
-                                    <span>...</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <MessageSquare className="mr-2 h-4 w-4" />
-                                    <span>...</span>
-                                </DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                    </DropdownMenuSub>
+                    <DropdownMenuItem>
+                        <ShoppingBag className="mr-2 h-4 w-4 stroke-1" />
+                        <span className="text-black/80">My Orders</span>
+                    </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                    className="cursor-pointer"
+                    className="cursor-pointer text-destructive focus:text-destructive/90 "
                     onClick={handleLogout}
                 >
-                    <LogOut className="mr-2 h-4 w-4" />
+                    <LogOut className="mr-2 h-4 w-4 " />
                     <span>Log out</span>
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

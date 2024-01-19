@@ -7,7 +7,7 @@ import { useCallback, useMemo } from 'react';
 import OrderBox from './OrderBox';
 import { AxiosError } from 'axios';
 import AdsProduct from './AdsProduct';
-import MobileFilterComponent from './MobileFilterComponent';
+import MobileFilterComponent from './filter/MobileFilterComponent';
 
 type ProductSectionProps = {
     term?: string | null;
@@ -25,6 +25,16 @@ const ProductSection: React.FC<ProductSectionProps> = ({
     error
 }) => {
     const productData = useMemo(() => data, [data]);
+
+    const renderSkeleton = () => {
+        if (loading) {
+            return Array.from({ length: 10 }, (_, index) => (
+                <SkeletonCard key={index} />
+            ));
+        }
+
+        return null;
+    };
 
     const productRendering = useCallback(() => {
         if (productData) {
@@ -49,16 +59,6 @@ const ProductSection: React.FC<ProductSectionProps> = ({
         return null;
     }, [productData]);
 
-    const renderSkeleton = () => {
-        if (loading) {
-            return Array.from({ length: 10 }, (_, index) => (
-                <SkeletonCard key={index} />
-            ));
-        }
-
-        return null;
-    };
-
     return (
         <ErrorHandling error={error}>
             <div className="mb-4 flex flex-col gap-1">
@@ -77,8 +77,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                                         Menampilan {data?.data?.total} product
                                         untuk <strong>"{term}"</strong>{' '}
                                         <strong>
-                                            ({data?.data?.from}-{data?.data?.to} of{' '}
-                                            {data?.data?.total})
+                                            ({data?.data?.from}-{data?.data?.to}{' '}
+                                            of {data?.data?.total})
                                         </strong>
                                     </>
                                 ) : (
@@ -87,8 +87,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                                         Menampilan {data?.data?.total} product
                                         untuk <strong>"Semua Product"</strong>{' '}
                                         <strong>
-                                            ({data?.data?.from}-{data?.data?.to} of{' '}
-                                            {data?.data?.total})
+                                            ({data?.data?.from}-{data?.data?.to}{' '}
+                                            of {data?.data?.total})
                                         </strong>
                                     </>
                                 )}

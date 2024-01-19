@@ -136,7 +136,7 @@ const SearchBar = () => {
         }
     };
     return (
-        <div className="group w-full max-w-xs md:max-w-full 2xl:max-w-3xl rounded-md flex items-center justify-between bg-slate-50 border border-input transition-all ease-in-out duration-200 mr-2 ">
+        <div className="group w-full max-w-xs md:max-w-full 2xl:max-w-3xl rounded-md flex items-center justify-between bg-white border border-input transition-all ease-in-out duration-200 mr-2 ">
             <label htmlFor="categories" className="sr-only">
                 Categories
             </label>
@@ -155,7 +155,7 @@ const SearchBar = () => {
                 value={term}
                 onChange={handleOnChange}
                 onKeyDown={handleOnKeyDown}
-                className="focus-visible:ring-0 border border-l-input border-r-0 border-y-0 focus-visible:ring-offset-0 md:rounded-none text-xs md:text-base bg-slate-50"
+                className="focus-visible:ring-0 border border-l-input border-r-0 border-y-0 md:rounded-none text-xs md:text-base bg-white"
                 type="text"
                 placeholder="Cari product disini..."
             />

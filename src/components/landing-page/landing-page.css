@@ -1,6 +1,6 @@
 .slick-list {
     overflow: hidden;
-    border-radius: 14px;
+    @apply rounded-none md:rounded-2xl;
 }
 
 .dots-list > li {

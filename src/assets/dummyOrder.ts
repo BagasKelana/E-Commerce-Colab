@@ -4,6 +4,8 @@ export const products = [
         price: 2502000,
         img: '/images/product/01163021-d33f-436e-bd08-4a4984302305.jpg',
         status: 'selesai'
+        
+
     },
     {
         name: 'Laptop Dell Latitude 6510 Core i5 RAM 4GB SSD 128GB SSD 15Inch Murah - HDD 320GB',

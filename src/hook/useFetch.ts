@@ -100,12 +100,16 @@ const useFetch = <T>(url: string, initialState: null, token?: string) => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const userToken = token ? { Authorization: token } : '';
+                const userToken = token
+                    ? { Authorization: 'Bearer ' + token }
+                    : '';
 
                 const axiosConfig = {
                     signal,
                     headers: userToken || {}
                 };
+
+                console.log(url, axiosConfig);
 
                 const res: AxiosResponse | null = await axios.get(
                     url,

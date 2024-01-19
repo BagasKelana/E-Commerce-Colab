@@ -1,18 +1,121 @@
-import LandingHero from '@/components/landing-page/LandingHero';
 import PopulerCategories from '@/components/landing-page/PopulerCategories';
 import { Button } from '@/components/ui/button';
-import ProductSection from '@/components/landing-page/ProductSection';
-
 import Layout from '@/layout/Layout';
+
+import FeaturedProducts from '@/components/landing-page/FeaturedProducts';
+import {
+    LandingHero,
+    LandingHeroMobile
+} from '@/components/landing-page/LandingHero';
 
 const LandingPage = () => {
     return (
-        <Layout>
-            <LandingHero />
-            <PopulerCategories />
-            <section className="w-full px-2 md:px-20 py-6 border border-input">
-                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 place-items-center ">
-                    <div className="w-full h-[180px] bg-gradient-to-l from-gray-300 to-gray-100 rounded relative overflow-hidden">
+        <Layout className="py-0">
+            <section className="w-full md:px-6 xl:px-16">
+                <LandingHero />
+                <LandingHeroMobile />
+            </section>
+            <section className="w-full px-4 md:px-6 xl:px-16 bg-slate-50 py-4 text-slate-950 border-y border-input">
+                <PopulerCategories />
+            </section>
+
+            {/* Untuk mobile rubah GAMING-SETUP (gambar keyboard,monitor dll) jadi slider */}
+            <section
+                id="GAMING-SETUP"
+                className="w-full px-4 md:px-6 xl:px-16 py-4 "
+            >
+                <div className="w-full h-[1200px] sm:h-[1800px] md:h-[600px] xl:h-[800px] ">
+                    <div className="w-full h-full grid grid-cols-1 md:grid-cols-4 grid-flow-row md:grid-rows-2 gap-2 place-items-center justify-items-center">
+                        {/* Image 1 */}
+                        <div
+                            id="bg-playgame"
+                            className="md:col-span-2 w-full h-full bg-[url('/images/landing/playgame.jpg')] bg-cover bg-center"
+                        >
+                            <div className="w-full h-full bg-gradient-to-tl from-rose-700/30 to-sky-700/30 flex items-center justify-center">
+                                <div className=" w-3/4 text-white text-center flex flex-col">
+                                    <h1 className="text-2xl lg:text-4xl font-semibold">
+                                        Power Up Your Play
+                                    </h1>
+                                    <p className="text-xs font-medium  text-white/80">
+                                        Immerse Yourself in Unparalleled
+                                        Universes!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {/* headphone */}
+                        <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden">
+                            <div className="w-full top-[50%] md:top-0 absolute -translate-y-[50%] md:translate-y-0 md:static">
+                                <img
+                                    className="object-cover scale-50 md:scale-110 md:absolute md:top-[30%] xl:top-[20%]  right-0 md:animate-up-down"
+                                    src="/images/landing/pc-set3.png"
+                                    alt="headphone-img"
+                                />
+                            </div>
+                        </div>
+                        {/* PC */}
+                        <div className="w-full h-full flex relative bg-gradient-radial overflow-hidden from-slate-300 to-slate-200">
+                            <div className="absolute top-[50%] -translate-y-[50%] right-0 ">
+                                <img
+                                    className="object-cover scale-50 md:scale-110"
+                                    src="/images/landing/pc-set1.png"
+                                    alt="headphone-img"
+                                />
+                            </div>
+                        </div>
+                        {/* Monitor */}
+                        <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden">
+                            <div className="absolute top-[50%] -translate-y-[50%] right-0  w-full">
+                                <img
+                                    className="object-cover scale-50 md:scale-100"
+                                    src="/images/landing/pc-set2.png"
+                                    alt="headphone-img"
+                                />
+                            </div>
+                        </div>
+                        {/* Image 2 */}
+                        <div
+                            id="bg-playgame"
+                            className="row-start-2 md:row-start-auto md:col-span-2 w-full h-full bg-[url('/images/landing/playgame2.jpg')] bg-cover bg-center"
+                        >
+                            <div className="w-full h-full bg-gradient-to-tl from-rose-700/30 to-sky-700/30 flex items-center justify-center">
+                                <div className=" w-3/4 text-white text-center flex flex-col">
+                                    <h1 className="text-2xl lg:text-4xl font-semibold">
+                                        Unlock the Extraordinary
+                                    </h1>
+                                    <span className="text-xs font-medium  text-white/80">
+                                        Dive into Your Next Gaming Obsession!
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Keyboard */}
+                        <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden">
+                            <div className="absolute top-[50%] -translate-y-[50%] right-0 w-full">
+                                <img
+                                    className="object-cover scale-50 md:-scale-x-100 md:scale-y-100 md:animate-ligh-on"
+                                    src="/images/landing/pc-set7.png"
+                                    alt="keyboard-img"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/* mungkin di bawah ini bisa digunakan untuk benner GET_ALL_GAMING_SETUP  */}
+            <section
+                id="GET_ALL_GAMING_SETUP"
+                className="w-full px-4 md:px-6 xl:px-16"
+            >
+                <div className="h-full w-full bg-gradient-to-r via-violet-500 from-pink-500 to-sky-500">
+                    <div className="w-full h-full bg-slate-700/80 flex flex-col items-center justify-center p-4"></div>
+                </div>
+            </section>
+            {/* Di bawah ini masih bisa di improve  */}
+            <section className="w-full px-4 md:px-6 xl:px-16 bg-slate-50 py-4 border-y border-input">
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2 place-items-center ">
+                    {/* Headphone */}
+                    <div className="w-full h-[180px] bg-gradient-to-l from-slate-300 to-slate-200 rounded relative overflow-hidden shadow shadow-slate-400">
                         <div>
                             <img
                                 className="h-[300px] md:h-[320px] absolute  -top-16 -right-24 md:-right-16"
@@ -33,18 +136,19 @@ const LandingPage = () => {
                             </Button>
                         </div>
                     </div>
-                    <div className="w-full xl:w-[376px] h-[180px] xl:h-[376px] bg-slate-900 rounded row-span-auto xl:row-span-2 relative overflow-hidden">
+                    {/* SmartPhone */}
+                    <div className="w-full h-[180px] xl:h-[376px] bg-slate-900 rounded row-span-auto xl:row-span-2 relative overflow-hidden  shadow shadow-slate-400">
                         <div>
                             <img
-                                className="h-[400px] absolute top-1/2 -translate-y-1/2 right-1/2 translate-x-1/2  drop-shadow-md  "
+                                className="h-[350px] absolute top-1/2 -translate-y-1/2 right-1/2 translate-x-1/2  drop-shadow-md  "
                                 src="/images/special-offer/pngwing.com (7).png"
                                 alt="Apple"
                             />
                         </div>
                         <div></div>
                     </div>
-
-                    <div className="w-full h-[180px] bg-gradient-to-tl from-slate-400 to-slate-300 rounded relative overflow-hidden ">
+                    {/* PS% */}
+                    <div className="w-full h-[180px] bg-gradient-to-tl from-slate-400 to-slate-300 rounded relative overflow-hidden  shadow shadow-slate-400">
                         <div>
                             <img
                                 className="h-[400px] absolute -top-36 -right-16 -rotate-0 scale-y-90 -scale-x-90 drop-shadow-md  "
@@ -54,8 +158,8 @@ const LandingPage = () => {
                         </div>
                         <div></div>
                     </div>
-
-                    <div className="w-full h-[180px] bg-gradient-to-tl from-slate-500 to-slate-600 rounded relative overflow-hidden ">
+                    {/* Laptop */}
+                    <div className="w-full h-[180px] bg-gradient-to-tl from-slate-500 to-slate-600 rounded relative overflow-hidden  shadow shadow-slate-400">
                         <div>
                             <img
                                 className="h-[360px] absolute -top-44 -left-28  drop-shadow-lg rotate-3 "
@@ -65,7 +169,8 @@ const LandingPage = () => {
                         </div>
                         <div></div>
                     </div>
-                    <div className="w-full h-[180px] bg-gradient-to-tl from-gray-700 to-gray-600 rounded relative overflow-hidden col-auto lg:col-span-2 xl:col-auto">
+                    {/* SmartWatch */}
+                    <div className="w-full h-[180px] bg-gradient-to-tl from-gray-700 to-gray-600 rounded relative overflow-hidden col-auto lg:col-span-2 xl:col-auto  shadow shadow-slate-400">
                         <div>
                             <img
                                 className="h-[320px] absolute -top-16 -left-16 -rotate-0 scale-y-90 -scale-x-90 drop-shadow-md  "
@@ -77,9 +182,11 @@ const LandingPage = () => {
                     </div>
                 </div>
             </section>
-            <PopulerCategories />
-            <hr />
-            <ProductSection />
+
+            {/* Klik see more  */}
+            <section className="w-full px-4 md:px-6 xl:px-16">
+                <FeaturedProducts />
+            </section>
         </Layout>
     );
 };

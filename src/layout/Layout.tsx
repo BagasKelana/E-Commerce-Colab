@@ -8,10 +8,17 @@ type LayoutProps = {
 
 const Layout = ({ children, className }: LayoutProps) => {
     return (
-        <div className={cn('w-full h-full ', className)}>
+        <div className="w-full h-full">
             <Navbar />
-            <div className="h-full w-full transition-all ease-in-out duration-300 mt-[80px] md:mt-[110px]">
-                <main className="w-full h-full">{children}</main>
+            <div className="h-full px-0 container transition-all ease-out duration-200 mt-[74px] md:mt-[110px]">
+                <main
+                    className={cn(
+                        'h-full w-full flex flex-col gap-6 py-2 md:py-4',
+                        className
+                    )}
+                >
+                    {children}
+                </main>
             </div>
         </div>
     );
