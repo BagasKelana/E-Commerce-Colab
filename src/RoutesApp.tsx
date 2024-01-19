@@ -15,7 +15,6 @@ import Cart from './pages/Cart/Cart';
 import UserChangePassword from './components/user-page/UserChangePassword';
 import ProductsAdmin from './components/dashboard-page/Products/ProductsAdmin';
 import AddProduct from './components/dashboard-page/Products/add-product/AddProduct';
-
 import UserManagement from './components/dashboard-page/User/UserManagement';
 import UpdateUser from './components/dashboard-page/User/UpdateUser';
 import CategoryManagement from './components/dashboard-page/Category/CategoryManagement';

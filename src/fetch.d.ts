@@ -18,7 +18,7 @@ type Role = Timestamps & {
     guard_name: string;
 };
 
-type User = Timestamps & {
+export type User = Timestamps & {
     id: number;
     name: string;
     email: string;
@@ -155,6 +155,3 @@ export type FetchAllCategoryAdminType = ApiResponse<CategoryData>;
 
 //FetchALlOrderAdmin
 export type FetchAllOrderAdminType = ApiResponse<OrderAdminDetailType>;
-
-
-

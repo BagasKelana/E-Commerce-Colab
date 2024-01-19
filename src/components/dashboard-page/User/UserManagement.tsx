@@ -3,7 +3,7 @@ import DataTable from './table/DataTable';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 
-import { FetchAllUserAdmin, UserDataType } from '@/fetch';
+import { FetchAllUserAdmin, User } from '@/fetch';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Filter } from '@/components/product-page/product-type';
 import { useEffect, useMemo, useState, useTransition } from 'react';
@@ -81,7 +81,7 @@ export default function UserManagement() {
     const [isPending, startTransition] = useTransition();
 
     // Memoize the columns so they don't re-render on every render
-    const columns = useMemo<ColumnDef<UserDataType, unknown>[]>(
+    const columns = useMemo<ColumnDef<User, unknown>[]>(
         () =>
             fetchTasksTableColumnDefs(
                 isPending,

@@ -1,4 +1,4 @@
-import { fakeOrderDetail, fakeOrder } from '@/assets/fakeOrder';
+import { fakeOrder } from '@/assets/fakeOrder';
 import { Button } from '@/components/ui/button';
 import { firstLetterToUpper } from '@/helpers/firstLetterToUpper';
 import { formatRupiah } from '@/helpers/formatRupiah';

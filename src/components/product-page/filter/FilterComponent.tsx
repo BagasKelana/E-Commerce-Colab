@@ -136,17 +136,19 @@ const FilterPrice: React.FC<FilterComponentProps> = ({ filter, isLoading }) => {
 
         if (value > 0) {
             const formattedValue = formatRupiah(value);
-            if (e.target.id === 'min') {
+            if (formattedValue) {
+                if (e.target.id === 'min') {
+                    return setPrice((current) => ({
+                        ...current,
+                        min: formattedValue
+                    }));
+                }
+
                 return setPrice((current) => ({
                     ...current,
-                    min: formattedValue
+                    max: formattedValue
                 }));
             }
-
-            return setPrice((current) => ({
-                ...current,
-                max: formattedValue
-            }));
         } else {
             if (e.target.id === 'min') {
                 return setPrice((current) => ({

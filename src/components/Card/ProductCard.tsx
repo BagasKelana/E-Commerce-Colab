@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { formatRupiah } from '@/helpers/formatRupiah';
+import { showImageAPI } from '@/helpers/showImageAPI';
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -24,7 +25,7 @@ const ProductCard = ({ name, src, price, slug }: ProductCardProps) => {
                         className="object-cover w-[200px] h-[200px]"
                         height={512}
                         width={512}
-                        src={`${import.meta.env.VITE_DEVELOPE_API_IMG}/${src}`}
+                        src={showImageAPI(src)}
                         alt="card-img"
                         loading="lazy"
                     />
