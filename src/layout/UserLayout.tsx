@@ -5,7 +5,7 @@ import UserSidebar from '@/components/user-page/UserSidebar';
 const UserLayout = () => {
     return (
         <Layout>
-            <div className="w-full h-full px-4 xl:px-20 py-5 ">
+            <div className="w-full h-full py-5  px-4 md:px-6 xl:px-16">
                 <div className="w-full flex gap-4">
                     <UserSidebar />
                     <Outlet />

@@ -1,4 +1,3 @@
-
 import ProductSection from '@/components/product-page/ProductSection';
 import DeleteFilterProduct from '@/components/product-page/filter/DeleteFilterProduct';
 import FilterComponent from '@/components/product-page/filter/FilterComponent';
@@ -9,7 +8,7 @@ const ProductPage = () => {
     const { productData, isLoading, errorProduct, filter } = useSearchProduct();
     return (
         <Layout>
-            <section className="w-full h-full px-4 md:px-20 pt-4">
+            <section className="w-full h-full px-2 md:px-6 xl:px-16">
                 <div className="h-full w-full flex gap-6 mb-4">
                     <FilterComponent isLoading={isLoading} filter={filter} />
                     <ProductSection

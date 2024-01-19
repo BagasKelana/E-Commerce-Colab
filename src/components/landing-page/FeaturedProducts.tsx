@@ -48,7 +48,7 @@ const FeaturedProducts = () => {
     }, []);
 
     return (
-        <section className="w-full px-4 md:px-6 lg:px-20  my-6">
+        <>
             <div className="w-full p-2 mb-6 rounded shadow-sm shadow-gray-300 bg-slate-50">
                 <h2 className="text-teal-700 text-center">RECOMMENDATION</h2>
             </div>
@@ -68,7 +68,7 @@ const FeaturedProducts = () => {
                     See More
                 </Button>
             </div>
-        </section>
+        </>
     );
 };
 
