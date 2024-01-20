@@ -7,7 +7,6 @@
 html,
 body,
 :root {
-    height: 100%;
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
 }
@@ -92,32 +91,34 @@ body,
 }
 
 @layer utilities {
-    /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
         display: none;
     }
-
-    /* Hide scrollbar for IE, Edge and Firefox */
     .no-scrollbar {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
     .line-claps-with-ellipsis {
         @apply line-clamp-2 text-ellipsis;
     }
+
+    .input-form input:-webkit-autofill,
+    .input-form input:-webkit-autofill:hover,
+    .input-form input:-webkit-autofill:focus,
+    .input-form textarea:-webkit-autofill,
+    .input-form textarea:-webkit-autofill:hover,
+    .input-form textarea:-webkit-autofill:focus,
+    .input-form select:-webkit-autofill,
+    .input-form select:-webkit-autofill:hover,
+    .input-form select:-webkit-autofill:focus {
+        -webkit-text-fill-color: black;
+        /* -webkit-box-shadow: 0 0 0px 1000px #1b1b6c inset; */
+        background-color: #1b1b6c;
+        transition: background-color 5000s ease-in-out 0s;
+    }
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-    -webkit-text-fill-color: black;
-    /* -webkit-box-shadow: 0 0 0px 1000px #1b1b6c inset; */
-    background-color: #1b1b6c;
-    transition: background-color 5000s ease-in-out 0s;
+.slice-categories .slick-slide {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }

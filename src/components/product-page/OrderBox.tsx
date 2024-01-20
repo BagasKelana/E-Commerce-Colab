@@ -18,34 +18,67 @@ const orders = [
     },
     {
         value: 'name',
-        label: 'Name'
+        label: 'Nama'
     },
     {
         value: 'price',
-        label: 'Price'
+        label: 'Harga Termurah'
+    },
+    {
+        value: 'price_desc',
+        label: 'Harga Termahal'
     }
 ];
 
-const OrderBox = () => {
+const OrderBox = ({ term }: { term?: string | null }) => {
     const [open, setOpen] = useState(false);
-
     const [queryParameters, setQueryParameters] = useSearchParams();
-    const [value, setValue] = useState('relevance');
-
-    console.log(value);
+    const [value, setValue] = useState(
+        queryParameters.get('sf') === 'price' &&
+            queryParameters.get('so') === 'desc'
+            ? 'price_desc'
+            : queryParameters.get('sf') || 'relevance'
+    );
 
     useEffect(() => {
-        setValue(queryParameters.get('sf') || 'relevance');
-    }, [queryParameters]);
+        setValue('relevance');
+    }, [term]);
+
+    const handleOnSelect: ((value: string) => void) | undefined = (
+        currentValue
+    ) => {
+        if (currentValue && currentValue !== 'relevance') {
+            if (currentValue === 'price_desc') {
+                queryParameters.set('sf', 'price');
+                queryParameters.set('so', 'desc');
+            } else {
+                queryParameters.set('sf', currentValue);
+                queryParameters.delete('so');
+            }
+
+            queryParameters.delete('page');
+            setQueryParameters(queryParameters);
+            setOpen(false);
+            return setValue(currentValue);
+        } else {
+            queryParameters.delete('sf');
+            queryParameters.delete('so');
+            queryParameters.delete('page');
+            setQueryParameters(queryParameters);
+            setOpen(false);
+            return setValue('relevance');
+        }
+    };
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
+                    aria-label="combobox-order"
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between"
+                    className="w-[200px] justify-between hover:border-teal-700 hover:bg-transparent"
                 >
                     {value
                         ? orders.find((order) => order.value === value)?.label
@@ -59,29 +92,8 @@ const OrderBox = () => {
                         {orders.map((order) => (
                             <CommandItem
                                 key={order.value}
-                                value={order.value}
-                                onSelect={(currentValue) => {
-                                    setValue(
-                                        currentValue === value
-                                            ? ''
-                                            : currentValue
-                                    );
-                                    setOpen(false);
-                                    if (
-                                        currentValue === '' ||
-                                        currentValue === 'relevance'
-                                    ) {
-                                        queryParameters.delete('sf');
-                                        return setQueryParameters(
-                                            queryParameters
-                                        );
-                                    } else {
-                                        queryParameters.set('sf', currentValue);
-                                        return setQueryParameters(
-                                            queryParameters
-                                        );
-                                    }
-                                }}
+                                value={order.value || 'relevance'}
+                                onSelect={handleOnSelect}
                             >
                                 <Check
                                     className={cn(

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 
 export type FetchAllProduct = {
@@ -22,6 +22,15 @@ export type FetchAllProduct = {
         to: number;
         total: number;
     };
+};
+
+export type FetchAllProductfeatured = {
+    meta: {
+        code: number;
+        status: string;
+        message: string;
+    };
+    data: ProductData[];
 };
 
 type ProductData = {
@@ -54,7 +63,7 @@ type ProductImage = {
     product_id: number;
 };
 
-type Link = {
+export type Link = {
     url?: string;
     label: string;
     active: boolean;
@@ -65,6 +74,7 @@ export type FetchAllCategory = {
         id: number;
         name: string;
         slug: string;
+        image: string;
         created_at: string | null;
         updated_at: string | null;
         deleted_at: string | null;
@@ -76,10 +86,12 @@ export type FetchAllCategory = {
     };
 };
 
-const useFetch = <T>(url: string, initialState: null) => {
+export type FetchErrorType = AxiosError | null;
+
+const useFetch = <T>(url: string, initialState: null, token?: string) => {
     const [data, setData] = useState<T | null>(initialState);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<unknown>(null);
+    const [error, setError] = useState<FetchErrorType>(null);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -88,18 +100,31 @@ const useFetch = <T>(url: string, initialState: null) => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const res: AxiosResponse | null = await axios.get(url, {
-                    signal
-                });
+                const userToken = token
+                    ? { Authorization: 'Bearer ' + token }
+                    : '';
+
+                const axiosConfig = {
+                    signal,
+                    headers: userToken || {}
+                };
+
+                console.log(url, axiosConfig);
+
+                const res: AxiosResponse | null = await axios.get(
+                    url,
+                    axiosConfig
+                );
 
                 if (res?.data) {
                     setData(res.data);
                 } else {
                     setData(null);
                 }
-            } catch (err) {
+            } catch (err: unknown) {
                 if (signal.aborted) return;
-                setError(err);
+                const error = err as AxiosError;
+                setError(error);
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -109,9 +134,33 @@ const useFetch = <T>(url: string, initialState: null) => {
         fetchData();
 
         return () => controller.abort();
-    }, [url]);
+    }, [url, token]);
 
-    return { data, loading, error };
+    const reFetchData = async () => {
+        try {
+            setLoading(true);
+            const userToken = token ? { Authorization: token } : '';
+
+            const axiosConfig = {
+                headers: userToken || {}
+            };
+
+            const res: AxiosResponse | null = await axios.get(url, axiosConfig);
+            if (res?.data) {
+                setData(res.data);
+            } else {
+                setData(null);
+            }
+        } catch (err: unknown) {
+            const error = err as AxiosError;
+            setError(error);
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { data, loading, error, reFetchData };
 };
 
 export default useFetch;

@@ -7,18 +7,7 @@ import { Link } from 'react-router-dom';
 export default function Footer() {
     return (
         <footer className="bg-gray-900">
-            <div
-                className="
-        container
-        flex flex-col flex-wrap
-        px-4
-        py-16
-        mx-auto
-        md:items-center
-        lg:items-start
-        md:flex-row md:flex-nowrap
-      "
-            >
+            <div className="container flex flex-col flex-wrap px-4 py-16 mx-auto md:items-center lg:items-start md:flex-row md:flex-nowrap">
                 <div className="flex-shrink-0 w-64 mx-auto text-center md:mx-0 md:text-left">
                     <Link to={'/'} className="text-2xl text-white">
                         Entahlah

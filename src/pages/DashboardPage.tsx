@@ -1,26 +1,17 @@
-import { Plus } from 'lucide-react';
-
-import CreateProduct from '@/components/dashboard-page/CreateProduct';
-import { Button } from '@/components/ui/button';
-
+import Navbar from '@/components/Navbar';
+import { Outlet } from 'react-router-dom';
 
 const DashboardPage = () => {
     return (
-        <>
-            <div className="flex justify-between w-full pl-4 md:px-10 my-6 ">
-                <div>
-                    <h1>Products</h1>
-                </div>
-                <div>
-                    <Button>
-                        <Plus /> Add New
-                    </Button>
-                </div>
+        <div className="w-full h-full relative">
+            <Navbar />
+            <aside className="w-[254px] h-screen fixed top-0 left-0 border border-slate-300 mt-[110px]"></aside>
+            <div className="flex-1 transition-all ease-in-out duration-300 mt-[110px] ml-[254px]">
+                <main className="w-full h-full bg-slate-100">
+                    <Outlet />
+                </main>
             </div>
-            <section className="w-full pl-4 md:px-10 my-6 ">
-                <CreateProduct />
-            </section>
-        </>
+        </div>
     );
 };
 
