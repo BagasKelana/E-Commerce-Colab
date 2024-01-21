@@ -83,10 +83,10 @@ body,
         @apply bg-background text-foreground;
     }
     h2 {
-        @apply leading-9 font-extrabold text-xl;
+        @apply leading-9 font-semibold text-xl;
     }
     h1 {
-        @apply leading-10 font-extrabold text-4xl;
+        @apply font-bold text-3xl;
     }
 }
 
