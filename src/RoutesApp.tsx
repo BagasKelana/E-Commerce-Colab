@@ -26,7 +26,7 @@ export default function RoutesApp() {
         <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/product" element={<ProductPage />} />
-            <Route path="/product/:name" element={<ProductDetailsPage />} />
+            <Route path="/product/:slug" element={<ProductDetailsPage />} />
             <Route path="*" element={<>404 Kosong</>} />
             <Route element={<AuthRoute />}>
                 <Route path="/signin" element={<SignIn />} />
