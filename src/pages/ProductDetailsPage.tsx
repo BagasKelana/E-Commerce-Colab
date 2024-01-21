@@ -9,7 +9,6 @@ import { useParams } from 'react-router-dom';
 
 const ProductDetailsPage = () => {
     const { slug } = useParams();
-    console.log(slug);
 
     const url = `${import.meta.env.VITE_USER_PRODUCT_DETAIL}/${slug}`;
     const { data } = useFetch<DetailProductProps>(url, null);
