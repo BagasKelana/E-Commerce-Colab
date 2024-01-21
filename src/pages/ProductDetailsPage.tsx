@@ -45,7 +45,7 @@ const ProductDetailsPage = () => {
                                 }
                             )}
                         </div>
-                        <div className="grid grid-cols-5 w-full gap-1 mt-4">
+                        <div className="grid grid-cols-5 w-full gap-2 mt-2">
                             {data?.data?.product_image?.map(
                                 (product, index) => {
                                     return (
@@ -75,10 +75,9 @@ const ProductDetailsPage = () => {
                     </div>
                     <div className="w-3/5 flex flex-col">
                         <h2 className="text-xl font-semibold">
-                            WorkPro® 12000 Series Ergonomic Mesh/Fabric Mid-Back
-                            Chair, Black/Black, BIFMA Compliant
+                            {data?.data.name}
                         </h2>
-                        <h1>Rp {formatRupiah(1000000)}</h1>
+                        <h1>Rp {formatRupiah(data?.data.price)}</h1>
                     </div>
                 </div>
             </div>
