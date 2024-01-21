@@ -89,3 +89,40 @@ export interface Link {
     label: string;
     active: boolean;
 }
+
+// product detail by slug
+
+export interface DetailProductProps {
+    meta: Meta;
+    data: DetailProduct;
+}
+
+export interface DetailProduct {
+    id: number;
+    name: string;
+    slug: string;
+    description: string;
+    price: number;
+    is_available: number;
+    featured: number;
+    featured_image_id: number;
+    created_at: string | null;
+    updated_at: string | null;
+    deleted_at: string | null;
+    category_id: number;
+    featured_image: FeaturedImage;
+    product_image: ProductImage[];
+}
+
+export interface FeaturedImage {
+    id: number;
+    image: string;
+}
+
+export interface ProductImage {
+    id: number;
+    image: string;
+    created_at?: string;
+    updated_at?: string;
+    product_id: number;
+}
