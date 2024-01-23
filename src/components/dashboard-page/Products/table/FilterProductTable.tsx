@@ -19,39 +19,40 @@ const FilterProductTable = ({ isLoading }: { isLoading: boolean }) => {
     }, 500);
 
     return (
-        <div className="w-full flex flex-col px-8 py-6">
-            <h1>Products</h1>
-            <div className="flex w-full gap-4 py-4">
-                <Input
-                    placeholder="Search Product..."
-                    onChange={(e) => debounced(e.target.value)}
-                    className="max-w-sm"
-                />
+        <div className="flex flex-col">
+            <div className="bg-white px-4 py-8 rounded-xl shadow-md shadow-slate-400/80">
+                <h1>PRODUCTS</h1>
+                <div className="flex w-full gap-4 py-4">
+                    <Input
+                        placeholder="Search Product..."
+                        onChange={(e) => debounced(e.target.value)}
+                        className="max-w-sm"
+                    />
 
-                <div>
-                    <FilterProductCategory>
-                        <DropdownMenuCategory
-                            disabled={isLoading}
-                            className="ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 disabled:pointer-events-none focus-visible:border-0 ml-auto"
-                            asChild
-                        >
-                            <Button variant="outline" className="ml-auto">
-                                Category
-                                <ChevronDown className="ml-2 h-4 w-4" />
-                            </Button>
-                        </DropdownMenuCategory>
-                    </FilterProductCategory>
+                    <div>
+                        <FilterProductCategory>
+                            <DropdownMenuCategory disabled={isLoading} asChild>
+                                <Button
+                                    variant="outline"
+                                    className="ml-auto border-input"
+                                >
+                                    Category
+                                    <ChevronDown className="ml-2 h-4 w-4" />
+                                </Button>
+                            </DropdownMenuCategory>
+                        </FilterProductCategory>
+                    </div>
                 </div>
-            </div>
-            <div className="w-full">
-                <Link to={'/dashboard-admin/update-product'}>
-                    <Button className="text-xs w-36 h-10" variant="primery">
-                        <span className="flex items-center">
-                            <Plus className="w-4 h-4 font-semibold  mr-1" />
-                            <span>Add Product</span>
-                        </span>
-                    </Button>
-                </Link>
+                <div className="w-full">
+                    <Link to={'/dashboard-admin/update-product'}>
+                        <Button className="text-xs w-36 h-10" variant="primery">
+                            <span className="flex items-center">
+                                <Plus className="w-4 h-4 font-semibold  mr-1" />
+                                <span>Add Product</span>
+                            </span>
+                        </Button>
+                    </Link>
+                </div>
             </div>
         </div>
     );
