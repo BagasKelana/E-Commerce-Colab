@@ -60,9 +60,9 @@ export function fetchTasksTableColumnDefs(
                     'featured_image'
                 ) as FeaturedImage;
                 return (
-                    <div className=" flex items-center h-12 border rounded border-input aspect-square overflow-hidden">
+                    <div className="flex min-w-12 items-center justify-center h-12 border rounded border-input  overflow-hidden">
                         <img
-                            className="object-cover"
+                            className="object-cover h-full w-full"
                             src={`${import.meta.env.VITE_DEVELOPE_API_IMG}/${
                                 featuredImage.image
                             }`}
