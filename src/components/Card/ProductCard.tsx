@@ -22,7 +22,7 @@ const ProductCard = ({ name, src, price, slug }: ProductCardProps) => {
             <Card className="w-full md:min-w-[100px] h-[273px] rounded-lg overflow-hidden hover:border-teal-700 hover:-translate-y-1 transition-all duration-100 ease-in-out shadow-sm shadow-gray-300">
                 <CardHeader className="p-0">
                     <img
-                        className="object-cover w-[200px] h-[200px]"
+                        className="object-cover w-full h-[200px]"
                         height={512}
                         width={512}
                         src={showImageAPI(src)}
