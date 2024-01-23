@@ -13,6 +13,7 @@ import { ProductCategoriesContext } from '@/ProductCategories';
 import { ColumnDef } from '@tanstack/react-table';
 import { Toaster } from 'sonner';
 import useFetchDataTable from '@/hook/useFetchDataTable';
+import FilterProductTable from './table/FilterProductTable';
 
 export default function ProductAdmin() {
     const { currentUser } = useSelector((state: RootState) => state.user);
@@ -43,23 +44,18 @@ export default function ProductAdmin() {
     );
 
     return (
-        <>
-            {errorProduct ? (
-                <div>Maaf Terjadi Kendala</div>
-            ) : (
-                <div className="w-full ">
-                    {productData?.data?.data && (
-                        <DataTable
-                            isLoading={isLoading}
-                            columns={columns}
-                            data={productData?.data?.data}
-                            totalProduct={productData?.data.total}
-                            nextPagination={productData?.data.next_page_url}
-                        />
-                    )}
-                    <Toaster />
-                </div>
+        <div className="flex flex-col px-4 py-6  gap-6">
+            <FilterProductTable isLoading={isLoading} />
+            {productData?.data?.data && (
+                <DataTable
+                    isLoading={isLoading}
+                    columns={columns}
+                    data={productData?.data?.data}
+                    totalProduct={productData?.data.total}
+                    nextPagination={productData?.data.next_page_url}
+                />
             )}
-        </>
+            <Toaster />
+        </div>
     );
 }
