@@ -44,7 +44,9 @@ const useFetchDataTable = <T>(
                     headers: userToken || {}
                 };
 
-                console.log(url, axiosConfig);
+                if (!userToken) {
+                    throw new Error('Unauthorized. User Token Required');
+                }
 
                 const res: AxiosResponse | null = await axios.get(
                     `${url}?${searchQuery}`,
