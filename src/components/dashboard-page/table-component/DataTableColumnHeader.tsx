@@ -28,7 +28,11 @@ export default function DataTableColumnHeader<TData, TValue>({
     const [queryParameters, setQueryParams] = useSearchParams();
 
     if (!column.getCanSort()) {
-        return <div className={cn(className)}>{title}</div>;
+        return (
+            <div className={cn(className)}>
+                {title === 'NAME' ? 'PRODUCT NAME' : title}
+            </div>
+        );
     }
 
     const handleSortAscending = () => {
@@ -58,11 +62,14 @@ export default function DataTableColumnHeader<TData, TValue>({
                     asChild
                 >
                     <Button
-                        className="px-0 hover:bg-transparent py-0 h-fit"
+                        className="px-0 hover:bg-transparent py-0 h-fit text-sm font-medium"
                         variant="ghost"
                         aria-label="Sorting button. Click to sort ascending or descending."
                     >
-                        <span>{title}</span>
+                        <span>
+                            {' '}
+                            {title === 'NAME' ? 'PRODUCT NAME' : title}
+                        </span>
 
                         <ChevronsUpDown
                             className="ml-2 h-4 w-4"

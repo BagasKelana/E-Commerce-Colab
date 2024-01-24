@@ -120,6 +120,9 @@ const useFetch = <T>(url: string, initialState: null, token?: string) => {
                     setData(res.data);
                 } else {
                     setData(null);
+                    throw new Error(
+                        'An Unexpected Error Occurred. Please refresh the page to try again.'
+                    );
                 }
             } catch (err: unknown) {
                 if (signal.aborted) return;

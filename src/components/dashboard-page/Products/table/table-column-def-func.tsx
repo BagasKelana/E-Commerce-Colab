@@ -8,9 +8,9 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
-import { ChevronsUpDown, MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, MoreVertical } from 'lucide-react';
 
-import { FeaturedImage, ProductAdmin } from '@/fetch';
+import { ProductAdmin } from '@/fetch';
 
 import { Separator } from '@/components/ui/separator';
 import { FetchAllCategory } from '@/hook/useFetch';
@@ -19,6 +19,8 @@ import { catchError } from '@/lib/catch-error';
 import { deleteItem } from '@/lib/delete-item-func';
 import DataTableColumnHeader from '../../table-component/DataTableColumnHeader';
 import { formatRupiah } from '@/helpers/formatRupiah';
+import { showImageAPI } from '@/helpers/showImageAPI';
+import { Badge } from '@/components/ui/badge';
 
 export function fetchTasksTableColumnDefs(
     isPending: boolean,
@@ -53,38 +55,31 @@ export function fetchTasksTableColumnDefs(
             enableHiding: false
         },
         {
-            accessorKey: 'featured_image',
-            header: '',
-            cell: ({ row }) => {
-                const featuredImage = row.getValue(
-                    'featured_image'
-                ) as FeaturedImage;
-                return (
-                    <div className=" flex items-center h-12 border rounded border-input aspect-square overflow-hidden">
-                        <img
-                            className="object-cover"
-                            src={`${import.meta.env.VITE_DEVELOPE_API_IMG}/${
-                                featuredImage.image
-                            }`}
-                            alt="Featured Image"
-                            loading="lazy"
-                        />
-                    </div>
-                );
-            }
-        },
-        {
             accessorKey: 'name',
             header: ({ column }) => (
                 <DataTableColumnHeader
                     column={column}
                     querySorting="sf"
-                    title="Name"
+                    title="NAME"
                 />
             ),
-            cell: ({ row }) => (
-                <div className="max-w-[300px]">{row.getValue('name')}</div>
-            )
+            cell: ({ row }) => {
+                const userImage = row.original.featured_image.image;
+                return (
+                    <div className="flex gap-4 w-full items-center">
+                        <div className="h-full w-14 rounded border border-slate-300">
+                            <img
+                                className="object-cover"
+                                src={showImageAPI(userImage)}
+                                alt="image of product"
+                            />
+                        </div>
+                        <span className="whitespace-nowrap font-medium">
+                            {row.getValue('name')}
+                        </span>
+                    </div>
+                );
+            }
         },
         {
             accessorKey: 'price',
@@ -92,14 +87,14 @@ export function fetchTasksTableColumnDefs(
                 <DataTableColumnHeader
                     column={column}
                     querySorting="sf"
-                    title="Price"
+                    title="PRICE"
                 />
             ),
             cell: ({ row }) => {
                 const price = parseFloat(row.getValue('price'));
 
                 return (
-                    <div className="font-medium flex gap-1">
+                    <div className=" flex gap-1">
                         <span>Rp</span>
                         {formatRupiah(price)}
                     </div>
@@ -108,14 +103,17 @@ export function fetchTasksTableColumnDefs(
         },
         {
             accessorKey: 'category_id',
-            header: () => <div>Category</div>,
+            header: () => <div>CATEGORY</div>,
             cell: ({ row }) => {
                 return (
                     <div>
                         {categoryProduct?.data?.map((category) => {
-                            return row.getValue('category_id') === category.id
-                                ? category.name
-                                : null;
+                            return row.getValue('category_id') ===
+                                category.id ? (
+                                <Badge variant={'outline'}>
+                                    {category.name}
+                                </Badge>
+                            ) : null;
                         })}
                     </div>
                 );
@@ -125,40 +123,42 @@ export function fetchTasksTableColumnDefs(
             accessorKey: 'is_available',
             header: ({ column }) => {
                 return (
-                    <Button
-                        className="px-0 hover:bg-transparent py-0 h-fit"
-                        variant="ghost"
-                        onClick={() =>
-                            column.toggleSorting(column.getIsSorted() === 'asc')
-                        }
-                    >
-                        Avalible
-                        <ChevronsUpDown className="ml-2 h-4 w-4" />
-                    </Button>
+                    <DataTableColumnHeader
+                        column={column}
+                        querySorting="sf"
+                        title="STATUS"
+                    />
                 );
             },
             cell: ({ row }) => {
                 return row.getValue('is_available') ? (
-                    <div className="text-teal-700 "> Available</div>
+                    <Badge className="text-teal-600 bg-slate-100 hover:bg-slate-100 hover:text-teal-600">
+                        Available
+                    </Badge>
                 ) : (
-                    <div className="text-rose-700">Not Available</div>
+                    <Badge variant={'destructive'}>Not Available</Badge>
                 );
-            }
+            },
+            enableSorting: false
         },
         {
             id: 'actions',
             enableHiding: false,
+            header: '',
             cell: ({ row }) => {
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button className="p-0 h-fit" variant="ghost">
+                            <Button
+                                role="actions"
+                                className="rounded-full h-fit p-2"
+                                variant="ghost"
+                            >
                                 <span className="sr-only">Open menu</span>
-                                <MoreHorizontal className="h-4 w-4" />
+                                <MoreVertical className="h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem>Detail Product</DropdownMenuItem>
                             <DropdownMenuItem>Update Product</DropdownMenuItem>
                             <Separator />

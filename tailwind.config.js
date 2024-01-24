@@ -29,6 +29,12 @@ module.exports = {
                     '0 0px 65px rgba(255, 255,255, 0.2)'
                 ]
             },
+            boxShadow: {
+                border: '0px 4px 10px 0px rgba(0, 0, 0, 0.3)',
+                'border-sm': '0px 4px 10px -2px rgba(0, 0, 0, 0.3)',
+                'border-md': '0px 4px 10px 2px rgba(0, 0, 0, 0.3)',
+                'border-xl': '0px 4px 10px 4px rgba(0, 0, 0, 0.3)'
+            },
             colors: {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',

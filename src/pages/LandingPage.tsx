@@ -183,7 +183,7 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            {/* Klik see more  */}
+            {/* Klik see more infinity fetching data  */}
             <section className="w-full px-4 md:px-6 xl:px-16">
                 <FeaturedProducts />
             </section>

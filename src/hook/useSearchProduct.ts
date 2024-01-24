@@ -37,7 +37,7 @@ const useSearchProduct = () => {
 
         const url = `${
             import.meta.env.VITE_DEVELOPE_API
-        }/product?${searchQuery}`;
+        }/product?${searchQuery}&per_page=20`;
 
         const fetchData = async (url: string) => {
             try {

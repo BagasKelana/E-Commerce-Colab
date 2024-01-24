@@ -2,11 +2,8 @@ import * as React from 'react';
 import {
     ColumnDef,
     ColumnFiltersState,
-    VisibilityState,
     flexRender,
     getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
     useReactTable
 } from '@tanstack/react-table';
 import {
@@ -17,15 +14,17 @@ import {
     TableHeader,
     TableRow
 } from '@/components/ui/table';
-import FilterProductTable from './FilterProductTable';
+
 import DataTablePagination from '../../table-component/DataTabelPagination';
+import DataLoader from '@/components/DataLoader';
+import FilterProductTable from './FilterProductTable';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
     isLoading: boolean;
-    totalProduct: number | null;
-    nextPagination: string | null;
+    totalProduct?: number | null;
+    nextPagination?: string | null;
 }
 
 export default function DataTable<TData, TValue>({
@@ -35,24 +34,15 @@ export default function DataTable<TData, TValue>({
     totalProduct,
     nextPagination
 }: DataTableProps<TData, TValue>) {
-    const [columnFilters, setColumnFilters] =
-        React.useState<ColumnFiltersState>([]);
-    const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({});
+    React.useState<ColumnFiltersState>([]);
+
     const [rowSelection, setRowSelection] = React.useState({});
     const table = useReactTable({
         data,
         columns,
-        onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-
-        getFilteredRowModel: getFilteredRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         state: {
-            columnFilters,
-            columnVisibility,
             rowSelection
         }
     });
@@ -60,117 +50,86 @@ export default function DataTable<TData, TValue>({
     const renderTableHeader = () => {
         return table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                    if (header.id === 'name') {
-                        return (
-                            <TableHead className="w-[30%]" key={header.id}>
-                                {header.isPlaceholder
-                                    ? null
-                                    : flexRender(
-                                          header.column.columnDef.header,
-                                          header.getContext()
-                                      )}
-                            </TableHead>
-                        );
-                    }
-                    if (header.id === 'is_available') {
-                        return (
-                            <TableHead className="w-[15%] " key={header.id}>
-                                {header.isPlaceholder
-                                    ? null
-                                    : flexRender(
-                                          header.column.columnDef.header,
-                                          header.getContext()
-                                      )}
-                            </TableHead>
-                        );
-                    }
-                    if (header.id === 'select' || header.id === 'actions') {
-                        return (
-                            <TableHead className="w-[5%] " key={header.id}>
-                                {header.isPlaceholder
-                                    ? null
-                                    : flexRender(
-                                          header.column.columnDef.header,
-                                          header.getContext()
-                                      )}
-                            </TableHead>
-                        );
-                    }
-                    if (header.id === 'featured_image') {
-                        return (
-                            <TableHead className="w-[8%]" key={header.id}>
-                                {header.isPlaceholder
-                                    ? null
-                                    : flexRender(
-                                          header.column.columnDef.header,
-                                          header.getContext()
-                                      )}
-                            </TableHead>
-                        );
-                    }
-                    return (
-                        <TableHead className="" key={header.id}>
-                            {header.isPlaceholder
-                                ? null
-                                : flexRender(
-                                      header.column.columnDef.header,
-                                      header.getContext()
-                                  )}
-                        </TableHead>
-                    );
-                })}
+                {headerGroup.headers.map((header) => (
+                    <TableHead className="py-5" key={header.id}>
+                        {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                              )}
+                    </TableHead>
+                ))}
             </TableRow>
         ));
     };
 
     return (
         <>
-            <FilterProductTable isLoading={isLoading} />
             <div className="w-full">
-                <div className="rounded-md border border-x-0 px-8 bg-white">
-                    <Table>
-                        <TableHeader>{renderTableHeader()}</TableHeader>
-                        <TableBody>
-                            {table.getRowModel().rows?.length ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        data-state={
-                                            row.getIsSelected() && 'selected'
-                                        }
-                                    >
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext()
-                                                )}
+                <div className="shadow-border shadow-slate-400/30 rounded-xl overflow-hidden">
+                    <div className="border-none bg-white  pt-2 ">
+                        <FilterProductTable isLoading={isLoading} />
+                        <DataLoader spinner isLoading={isLoading}>
+                            <Table>
+                                <TableHeader>{renderTableHeader()}</TableHeader>
+
+                                <TableBody>
+                                    {table.getRowModel().rows?.length ? (
+                                        table.getRowModel().rows.map((row) => {
+                                            console.log(row.id);
+                                            return (
+                                                <TableRow
+                                                    key={row.id}
+                                                    data-state={
+                                                        row.getIsSelected() &&
+                                                        'selected'
+                                                    }
+                                                >
+                                                    {row
+                                                        .getVisibleCells()
+                                                        .map((cell) => {
+                                                            return (
+                                                                <TableCell
+                                                                    key={
+                                                                        cell.id
+                                                                    }
+                                                                >
+                                                                    {flexRender(
+                                                                        cell
+                                                                            .column
+                                                                            .columnDef
+                                                                            .cell,
+                                                                        cell.getContext()
+                                                                    )}
+                                                                </TableCell>
+                                                            );
+                                                        })}
+                                                </TableRow>
+                                            );
+                                        })
+                                    ) : (
+                                        <TableRow>
+                                            <TableCell
+                                                colSpan={columns.length}
+                                                className="h-24 text-center"
+                                            >
+                                                No results.
                                             </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell
-                                        colSpan={columns.length}
-                                        className="h-24 text-center"
-                                    >
-                                        No results.
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                    Filter
-                </div>
-                <div className="flex items-center justify-end space-x-2 py-4 px-8 bg-white">
-                    <DataTablePagination
-                        nextPagination={nextPagination}
-                        table={table}
-                        totalItem={totalProduct}
-                        key={3492840238402834}
-                    />
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </DataLoader>
+                    </div>
+                    <div className="flex items-center justify-end space-x-2 pt-2 pb-6 bg-white px-8 ">
+                        <DataTablePagination
+                            nextPagination={nextPagination}
+                            table={table}
+                            totalItem={totalProduct}
+                            key={3492840238402834}
+                        />
+                    </div>
                 </div>
             </div>
         </>

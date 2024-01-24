@@ -51,7 +51,7 @@ export default function RoutesApp() {
             </Route>
             <Route element={<DashboardPage />}>
                 <Route
-                    path="/dashboard-admin/product"
+                    path="/dashboard-admin/products"
                     element={<ProductsAdmin />}
                 />
                 <Route

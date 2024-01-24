@@ -116,7 +116,7 @@ export function UserMenu() {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup className="">
                     {currentUser?.role === 'admin' && (
-                        <Link to={'/dashboard-admin/product'}>
+                        <Link to={'/dashboard-admin/products'}>
                             <DropdownMenuItem>
                                 <LayoutDashboard className="mr-2 h-4 w-4 stroke-1" />
                                 <span className="text-black/80">
