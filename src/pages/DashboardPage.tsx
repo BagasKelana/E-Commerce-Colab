@@ -27,20 +27,21 @@ const navSideItems = [
 const DashboardPage = () => {
     return (
         <div className="w-full h-full relative">
-            <aside className="hidden md:flex w-[254px] min-h-screen h-full fixed top-0 -left-0 border-r border-slate-300 bg-white ">
-                <div className="flex flex-col w-full gap-4 mt-8">
+            <div></div>
+            <aside className="hidden md:flex w-[254px] min-h-screen h-full fixed top-0 -left-0  bg-slate-100 ">
+                <div className="flex flex-col w-full gap-2 mt-8">
                     {navSideItems.map(
                         (item, index) =>
                             index > 0 && (
                                 <NavLink
                                     className={({ isActive }) =>
                                         isActive
-                                            ? 'bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-e-3xl mr-4'
-                                            : 'bg-slate-100 text-black rounded-e-3xl mr-4'
+                                            ? 'bg-gradient-to-r from-teal-600 to-teal-700 text-white rounded-e-3xl mr-4 '
+                                            : 'bg-slate-100 text-black/80 rounded-e-3xl mr-4 hover:bg-gradient-to-r from-slate-200/30 to-slate-200'
                                     }
                                     to={item.to}
                                 >
-                                    <div className="w-full flex gap-2 pl-4 py-2">
+                                    <div className="w-full flex gap-2 pl-4 py-2 ">
                                         {<item.icon />} {item.title}
                                     </div>
                                 </NavLink>
