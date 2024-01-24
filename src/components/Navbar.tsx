@@ -13,11 +13,18 @@ const Navbar = () => {
     const { currentUser } = useSelector((state: RootState) => state.user);
     const { data } = useContext(ProductCategoriesContext);
 
-    const formattedName = currentUser?.name
-        .split('')
-        .map((value, index) => (index === 0 ? value.toUpperCase() : value))
-        .join('')
-        .substring(0, 6);
+    const nameLength = currentUser?.name.length ?? 0;
+
+    const formattedName =
+        nameLength > 6
+            ? currentUser?.name
+                  .split('')
+                  .map((value, index) =>
+                      index === 0 ? value.toUpperCase() : value
+                  )
+                  .join('')
+                  .substring(0, 6)
+            : currentUser?.name;
 
     const ariaLabel = `View profile for ${currentUser?.name}`;
 
@@ -136,7 +143,7 @@ const SearchBar = () => {
         }
     };
     return (
-        <div className="group w-full max-w-xs md:max-w-full 2xl:max-w-3xl rounded-md flex items-center justify-between bg-white border border-input transition-all ease-in-out duration-200 mr-2 ">
+        <div className="overflow-hidden group w-full max-w-xs md:max-w-full 2xl:max-w-3xl rounded-md flex items-center justify-between bg-white border border-input transition-all ease-in-out duration-200 mr-2 ">
             <label htmlFor="categories" className="sr-only">
                 Categories
             </label>
