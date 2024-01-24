@@ -9,9 +9,9 @@ const useNavScroll = (): NavScrollHook => {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 123) {
+            if (window.scrollY > 200) {
                 setIsSticky(true);
-            } else if (window.scrollY < 122) {
+            } else if (window.scrollY < 200) {
                 setIsSticky(false);
             }
         };
