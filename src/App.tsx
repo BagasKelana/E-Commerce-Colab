@@ -14,6 +14,8 @@ import UserOrder from './pages/UserOrder';
 import AuthRoute from './components/PrivateRoute/AuthRoute';
 import Cart from './pages/Cart/Cart';
 import UserChangePassword from './components/user-page/UserChangePassword';
+import SuccessPage from './pages/SuccessPage';
+
 
 export default function App() {
     return (
@@ -38,6 +40,7 @@ export default function App() {
             </Route> */}
 
             <Route path="/cart" element={<Cart />} />
+            <Route path='/checkout/success-page' element={<SuccessPage/>} />
 
             <Route element={<UserPrivateRoute />}>
                 <Route path="/user" element={<UserRedirect />} />
