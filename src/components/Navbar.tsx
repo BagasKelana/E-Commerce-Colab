@@ -12,7 +12,6 @@ import { ProductCategoriesContext } from '@/ProductCategories';
 const Navbar = () => {
     const { currentUser } = useSelector((state: RootState) => state.user);
     const { data } = useContext(ProductCategoriesContext);
-    console.log(data);
 
     const nameLength = currentUser?.name.length ?? 0;
 
@@ -30,7 +29,7 @@ const Navbar = () => {
     const ariaLabel = `View profile for ${currentUser?.name}`;
 
     return (
-        <header className="bg-gradient-to-l from-teal-700 to-teal-800 min-w-full w-screen top-0 fixed z-[50] md:h-[110px]">
+        <header className="bg-teal-800 min-w-full w-screen top-0 fixed z-[50] md:h-[110px] shadow shadow-black/30">
             <div className="container mx-auto px-4 md:px-8 pt-4 pb-4 md:pt-8 md:pb-0 flex items-center justify-between md:justify-start">
                 <div className="flex-shrink-0 hidden md:flex mr-8 ">
                     <Link to="/">
@@ -50,7 +49,7 @@ const Navbar = () => {
                                 aria-label="Shopping Cart with 20 items"
                             >
                                 <div
-                                    className="absolute -top-0 right-0 z-10 text-lime-700 bg-white text-xs font-semibold p-0.5 rounded-full"
+                                    className="absolute -top-0 right-0 z-10 text-teal-700 bg-white text-xs font-semibold p-0.5 rounded-full"
                                     aria-hidden="true"
                                 >
                                     20
@@ -152,18 +151,12 @@ const SearchBar = () => {
                 className="bg-transparent uppercase font-medium text-sm p-0 mx-0 group:focus-within:p-2 group-focus-within:mx-2 hidden lg:block group-focus-within:max-w-[150px] max-w-[0px]  scale-y-100 group-focus-within:scale-x-100 scale-x-0 origin-left transition-all duration-300 ease-in-out"
                 name="categories"
                 id="categories"
-            >
-                <option value="" disabled>
-                    Select a category
-                </option>
-                <option value="category1">Category 1</option>
-                <option value="category2">Category 2</option>
-            </select>
+            ></select>
             <Input
                 value={term}
                 onChange={handleOnChange}
                 onKeyDown={handleOnKeyDown}
-                className="focus-visible:ring-0 border border-l-input border-r-0 border-y-0 md:rounded-none text-xs md:text-base bg-white"
+                className="focus-visible:ring-0 ring-0 hover:ring-0 md:rounded-none text-xs md:text-base bg-white"
                 type="text"
                 placeholder="Cari product disini..."
             />
