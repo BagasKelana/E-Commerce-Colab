@@ -54,7 +54,7 @@ const UserChangePasswordForm = () => {
     const handleOnSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const response: AxiosResponse = await axios.post(
-                'https://roughy-loyal-daily.ngrok-free.app/api/change-password',
+                '/api/change-password',
 
                 values,
                 {

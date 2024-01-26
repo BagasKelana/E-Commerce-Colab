@@ -35,15 +35,17 @@ const useSearchProduct = () => {
         const controller = new AbortController();
         const { signal } = controller;
 
-        const url = `${
-            import.meta.env.VITE_DEVELOPE_API
-        }/product?${searchQuery}&per_page=20`;
+        const url = `/api/product?${searchQuery}&per_page=20`;
 
         const fetchData = async (url: string) => {
             try {
                 setIsLoading(true);
                 const res: AxiosResponse | null = await axios.get(url, {
-                    signal
+                    signal,
+                    headers: {
+                        //untuk menghindari ngrok browser warning
+                        'ngrok-skip-browser-warning': 'any_value'
+                    }
                 });
 
                 if (res?.data) {

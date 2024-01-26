@@ -12,7 +12,7 @@ import { ProductCategoriesContext } from '@/ProductCategories';
 import { ColumnDef } from '@tanstack/react-table';
 import { Toaster } from 'sonner';
 import useFetchDataTable from '@/hook/useFetchDataTable';
-import FilterProductTable from './table/FilterProductTable';
+
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 export default function ProductAdmin() {

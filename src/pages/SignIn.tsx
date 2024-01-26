@@ -60,7 +60,7 @@ export default function SignIn() {
         try {
             dispatch(signInStart());
             const response: AxiosResponse = await axios(
-                'https://roughy-loyal-daily.ngrok-free.app/api/login',
+                '/api/login',
                 {
                     method: 'POST',
                     data: values

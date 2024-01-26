@@ -7,7 +7,7 @@ import DataLoader from '../DataLoader';
 
 const FeaturedProducts = () => {
     const { data, loading, error } = useFetch<FetchAllProductfeatured>(
-        `${import.meta.env.VITE_DEVELOPE_API}/product/featured?limit=12`,
+        `/api/product/featured?limit=12`,
         null
     );
     const featuredProducts = data?.data;

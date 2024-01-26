@@ -24,7 +24,7 @@ import { showImageAPI } from '@/helpers/showImageAPI';
 export function fetchTasksTableColumnDefs(
     isPending: boolean,
     startTransition: React.TransitionStartFunction,
-    setReFetch: React.Dispatch<React.SetStateAction<boolean>>,
+    reFetchData: () => void,
     token?: string
 ): ColumnDef<CategoryAdmin, unknown>[] {
     console.log(isPending, startTransition);
@@ -171,7 +171,7 @@ export function fetchTasksTableColumnDefs(
                                         {
                                             loading: 'Deleting...',
                                             success: () => {
-                                                setReFetch(true);
+                                                reFetchData();
                                                 return 'Category deleted successfully.';
                                             },
                                             error: (err: unknown) =>
