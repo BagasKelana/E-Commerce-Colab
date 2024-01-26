@@ -25,12 +25,9 @@ const LandingPage = () => {
                 className="w-full px-4 md:px-6 xl:px-16 py-4 "
             >
                 <div className="w-full h-[1200px] sm:h-[1800px] md:h-[600px] xl:h-[800px] ">
-                    <div className="w-full h-full grid grid-cols-1 md:grid-cols-4 grid-flow-row md:grid-rows-2 gap-2 place-items-center justify-items-center">
+                    <div className="w-full h-full grid grid-cols-1 md:grid-cols-4 grid-flow-row md:grid-rows-2 gap-4 place-items-center justify-items-center">
                         {/* Image 1 */}
-                        <div
-                            id="bg-playgame"
-                            className="md:col-span-2 w-full h-full bg-[url('/images/landing/playgame.jpg')] bg-cover bg-center"
-                        >
+                        <div className="md:col-span-2 w-full h-full bg-[url('/images/landing/playgame.jpg')] bg-cover bg-center rounded-md overflow-hidden">
                             <div className="w-full h-full bg-gradient-to-tl from-rose-700/30 to-sky-700/30 flex items-center justify-center">
                                 <div className=" w-3/4 text-white text-center flex flex-col">
                                     <h1 className="text-2xl lg:text-4xl font-semibold">
@@ -44,7 +41,7 @@ const LandingPage = () => {
                             </div>
                         </div>
                         {/* headphone */}
-                        <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden">
+                        <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden rounded-md">
                             <div className="w-full top-[50%] md:top-0 absolute -translate-y-[50%] md:translate-y-0 md:static">
                                 <img
                                     className="object-cover scale-50 md:scale-110 md:absolute md:top-[30%] xl:top-[20%]  right-0 md:animate-up-down"
@@ -54,7 +51,7 @@ const LandingPage = () => {
                             </div>
                         </div>
                         {/* PC */}
-                        <div className="w-full h-full flex relative bg-gradient-radial overflow-hidden from-slate-300 to-slate-200">
+                        <div className="w-full h-full flex relative bg-gradient-radial overflow-hidden from-slate-300 to-slate-200 rounded-md">
                             <div className="absolute top-[50%] -translate-y-[50%] right-0 ">
                                 <img
                                     className="object-cover scale-50 md:scale-110"
@@ -64,7 +61,7 @@ const LandingPage = () => {
                             </div>
                         </div>
                         {/* Monitor */}
-                        <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden">
+                        <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden rounded-md">
                             <div className="absolute top-[50%] -translate-y-[50%] right-0  w-full">
                                 <img
                                     className="object-cover scale-50 md:scale-100"
@@ -76,9 +73,9 @@ const LandingPage = () => {
                         {/* Image 2 */}
                         <div
                             id="bg-playgame"
-                            className="row-start-2 md:row-start-auto md:col-span-2 w-full h-full bg-[url('/images/landing/playgame2.jpg')] bg-cover bg-center"
+                            className="row-start-2 md:row-start-auto md:col-span-2 w-full h-full bg-[url('/images/landing/playgame2.jpg')] bg-cover bg-center rounded-md overflow-hidden"
                         >
-                            <div className="w-full h-full bg-gradient-to-tl from-rose-700/30 to-sky-700/30 flex items-center justify-center">
+                            <div className="w-full h-full bg-gradient-to-tl from-rose-700/30 to-sky-700/30 flex items-center justify-center ">
                                 <div className=" w-3/4 text-white text-center flex flex-col">
                                     <h1 className="text-2xl lg:text-4xl font-semibold">
                                         Unlock the Extraordinary
@@ -90,7 +87,7 @@ const LandingPage = () => {
                             </div>
                         </div>
                         {/* Keyboard */}
-                        <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden">
+                        <div className="w-full h-full flex relative bg-gradient-radial from-slate-300 to-slate-200 overflow-hidden rounded-md">
                             <div className="absolute top-[50%] -translate-y-[50%] right-0 w-full">
                                 <img
                                     className="object-cover scale-50 md:-scale-x-100 md:scale-y-100 md:animate-ligh-on"
@@ -113,7 +110,7 @@ const LandingPage = () => {
             </section>
             {/* Di bawah ini masih bisa di improve  */}
             <section className="w-full px-4 md:px-6 xl:px-16 bg-slate-50 py-4 border-y border-input">
-                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2 place-items-center ">
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 place-items-center ">
                     {/* Headphone */}
                     <div className="w-full h-[180px] bg-gradient-to-l from-slate-300 to-slate-200 rounded relative overflow-hidden shadow shadow-slate-400">
                         <div>
