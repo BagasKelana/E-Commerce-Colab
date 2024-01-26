@@ -26,10 +26,9 @@ export default function HumburgerMenu() {
                                 alt="user avatar"
                                 src={
                                     currentUser?.image
-                                        ? `${
-                                              import.meta.env
-                                                  .VITE_DEVELOPE_API_IMG
-                                          }/${currentUser.image}`
+                                        ? `${import.meta.env.VITE_API_IMG}/${
+                                              currentUser.image
+                                          }`
                                         : '/images/profile_3135715.png'
                                 }
                             />

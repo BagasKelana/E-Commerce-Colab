@@ -10,21 +10,25 @@ export const deleteItem = async (
             'ORDER' | 'PRODUCT' | 'CATEGORY' | 'USER',
             string
         > = {
-            ORDER: import.meta.env.VITE_ADMIN_DELETE_ORDER,
-            PRODUCT: import.meta.env.VITE_ADMIN_DELETE_PRODUCT,
-            CATEGORY: import.meta.env.VITE_ADMIN_DELETE_CATEGORY,
-            USER: import.meta.env.VITE_ADMIN_DELETE_USER
+            ORDER: 'order',
+            PRODUCT: 'product',
+            CATEGORY: 'category',
+            USER: 'user'
         };
 
         if (!itemTypeMap[itemType]) {
             throw new Error('Invalid itemType');
         }
 
-        const url = `${itemTypeMap[itemType]}/${id}`;
+        const url = `/admin/${itemTypeMap[itemType]}/${id}`;
         console.log(url);
 
         await axios.delete(url, {
-            headers: { Authorization: 'Bearer ' + token }
+            headers: {
+                Authorization: 'Bearer ' + token,
+                // Untuk mengatur dan mengirim header yang Anda inginkan
+                'ngrok-skip-browser-warning': 'any_value'
+            }
         });
     } catch (err) {
         console.log(err);

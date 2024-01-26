@@ -14,10 +14,10 @@ export const ProductCategoriesContext = createContext<ProductCategoriesType>({
 });
 
 const ProductCategories = ({ children }: { children: React.ReactNode }) => {
-    const { data, loading, error } = useFetch<FetchAllCategory>(
-        `${import.meta.env.VITE_DEVELOPE_API}/category`,
-        null
-    );
+    const url = `/api/category`;
+
+    console.log(url);
+    const { data, loading, error } = useFetch<FetchAllCategory>(url, null);
 
     return (
         <ProductCategoriesContext.Provider value={{ data, loading, error }}>

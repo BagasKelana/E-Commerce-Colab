@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 const ProductDetailsPage = () => {
     const { slug } = useParams();
 
-    const url = `${import.meta.env.VITE_USER_PRODUCT_DETAIL}/${slug}`;
+    const url = `/api/product/${slug}`;
     const { data } = useFetch<DetailProductProps>(url, null);
     const product = data?.data;
     const [imageIndex, setImageIndex] = useState(0);

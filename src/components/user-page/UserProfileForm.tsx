@@ -78,7 +78,7 @@ const UserProfileForm = () => {
         try {
             dispatch(dispatch(signInStart()));
             const response: AxiosResponse = await axios.post(
-                'https://roughy-loyal-daily.ngrok-free.app/api/profile',
+                '/api/profile',
                 formData,
                 {
                     headers: {
@@ -107,7 +107,7 @@ const UserProfileForm = () => {
     const urlImage = userProfile?.[0]
         ? URL.createObjectURL(userProfile?.[0])
         : currentUser?.image
-        ? `${import.meta.env.VITE_DEVELOPE_API_IMG}/${currentUser?.image}`
+        ? `${import.meta.env.VITE_API_IMG}/${currentUser?.image}`
         : '/images/profile_3135715.png';
 
     return (

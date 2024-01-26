@@ -12,6 +12,7 @@ import { ProductCategoriesContext } from '@/ProductCategories';
 const Navbar = () => {
     const { currentUser } = useSelector((state: RootState) => state.user);
     const { data } = useContext(ProductCategoriesContext);
+    console.log(data);
 
     const nameLength = currentUser?.name.length ?? 0;
 
@@ -110,7 +111,7 @@ const Navbar = () => {
                 </nav>
             </div>
             <div className="w-full px-8 py-2 hidden md:flex items-center justify-center space-x-5 text-slate-200 text-sm">
-                {data?.data.map((category, index) => (
+                {data?.data?.map((category, index) => (
                     <div key={index}>{category.name}</div>
                 ))}
             </div>

@@ -65,13 +65,10 @@ export default function SignIn() {
         try {
             setLoading(true);
             setError(null);
-            const response: AxiosResponse = await axios(
-                'https://roughy-loyal-daily.ngrok-free.app/api/register',
-                {
-                    method: 'POST',
-                    data: values
-                }
-            );
+            const response: AxiosResponse = await axios('/api/register', {
+                method: 'POST',
+                data: values
+            });
             console.log(response);
             const data = await response.data;
             if (data.meta.code !== 200) {
