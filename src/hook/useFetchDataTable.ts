@@ -99,7 +99,7 @@ const useFetchDataTable = <T>(
             console.log(url, axiosConfig);
 
             const res: AxiosResponse | null = await axios.get(
-                `${url}?${searchQuery}`,
+                `/admin/${url}?${searchQuery}`,
                 axiosConfig
             );
 

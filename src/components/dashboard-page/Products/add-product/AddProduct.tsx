@@ -4,10 +4,12 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import CategoriesBox from './CategoriesBox';
 import { Textarea } from '@/components/ui/textarea';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Card, CardContent } from '@/components/ui/card';
 import ToggleBox from './ToggleBox';
 import { Image } from 'lucide-react';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
 
 export interface formInputProps {
     name: string;
@@ -20,6 +22,10 @@ export interface formInputProps {
 
 const AddProduct = () => {
     const [selectedImages, setSelectedImages] = useState<File[] | null>(null);
+    const { currentUser } = useSelector((state: RootState) => state.user);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<AxiosError | null>(null);
+    console.log(error);
 
     const [formInput, setFormInput] = useState<formInputProps>({
         name: '',
@@ -95,6 +101,7 @@ const AddProduct = () => {
                 formInput.price &&
                 formInput.category_id
             ) {
+                setIsLoading(true);
                 formData.append('name', formInput.name);
                 formData.append('description', formInput.description);
                 formData.append('price', String(formInput.price));
@@ -106,25 +113,23 @@ const AddProduct = () => {
                     formData.append('image[]', selectedImages[index]);
                 }
 
-                const response = await axios<AxiosResponse>(
-                    `${import.meta.env.VITE_ADMIN_API}`,
-                    {
-                        method: 'POST',
-                        data: formData,
-                        headers: {
-                            Authorization: `Bearer ${
-                                import.meta.env.VITE_ADMIN_TOKEN
-                            }`
-                        }
+                const response = await axios<AxiosResponse>(`/admin/product`, {
+                    method: 'POST',
+                    data: formData,
+                    headers: {
+                        Authorization: `Bearer ${currentUser?.token}`
                     }
-                );
+                });
 
                 console.log(response.data);
             } else {
                 console.log('harus diisi');
             }
-        } catch (error) {
-            console.log(error);
+        } catch (error: unknown) {
+            const err = error as AxiosError;
+            setError(err);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -241,6 +246,7 @@ const AddProduct = () => {
                                 </div>
                             </div>
                             <Button
+                                isLoading={isLoading}
                                 className="w-full mt-8 rounded"
                                 variant={'primery'}
                                 type="submit"
