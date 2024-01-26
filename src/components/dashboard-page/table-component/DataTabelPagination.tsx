@@ -3,9 +3,9 @@ import { Table } from '@tanstack/react-table';
 import { useSearchParams } from 'react-router-dom';
 
 type TabelPaginationProps<TData> = {
-    totalItem: number | null;
+    totalItem?: number | null;
     table: Table<TData>;
-    nextPagination: string | null;
+    nextPagination?: string | null;
 };
 
 function DataTablePagination<TData>({
