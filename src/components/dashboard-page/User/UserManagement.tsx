@@ -17,6 +17,8 @@ export default function UserManagement() {
     const { data, isLoading, error, reFetchData } =
         useFetchDataTable<FetchAllUserAdmin>('USER', null, currentUser?.token);
 
+    console.log(error);
+
     const user = data?.data ?? null;
 
     const [isPending, startTransition] = useTransition();
