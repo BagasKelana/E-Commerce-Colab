@@ -60,8 +60,7 @@ export default function AddCategory({ isDisabled }: { isDisabled: boolean }) {
                 formData.append('image', imageFile);
             }
 
-            const url =
-                'https://roughy-loyal-daily.ngrok-free.app/api/admin/category';
+            const url = '/admin/category';
 
             const response: AxiosResponse = await axios.post(url, formData, {
                 headers: { Authorization: 'Bearer ' + currentUser?.token }

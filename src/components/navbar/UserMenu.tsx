@@ -5,8 +5,7 @@ import {
     ShieldCheck,
     ShoppingBag,
     ShoppingCart,
-    User,
-    UserCheck2
+    User
 } from 'lucide-react';
 import {
     DropdownMenu,
@@ -56,9 +55,9 @@ export function UserMenu() {
             <DropdownMenuContent
                 hideWhenDetached={true}
                 align="end"
-                className="w-56 h-fit py-2 z-[100] shadow shadow-slate-500 rounded bg-white "
+                className="w-56 h-fit py-2 z-[100] shadow-border-sm shadow-slate-400/30 rounded bg-white "
                 sideOffset={10}
-                alignOffset={-30}
+                alignOffset={-50}
             >
                 <DropdownMenuLabel>
                     <div className="w-full px-4 py-2 flex gap-2">
@@ -79,8 +78,7 @@ export function UserMenu() {
                                     {currentUser.role}
                                 </span>
                             ) : (
-                                <span className="whitespace-nowrap text-black/80 flex gap-1 items-center font-normal">
-                                    <UserCheck2 className="w-4 h-4 stroke-1" />
+                                <span className="whitespace-nowrap text-black flex gap-1 items-center font-normal">
                                     {currentUser?.role}
                                 </span>
                             )}
@@ -95,43 +93,43 @@ export function UserMenu() {
                                 'cursor-pointer',
                                 currentUser?.role === 'admin'
                                     ? 'text-teal-700'
-                                    : 'text-black/80'
+                                    : 'text-black'
                             )}
                         >
                             <User
                                 className={
                                     currentUser?.role === 'admin'
                                         ? 'mr-2 h-4 w-4'
-                                        : 'mr-2 h-4 w-4 stroke-1'
+                                        : 'mr-2 h-4 w-4 stroke-[1.3]'
                                 }
                             />
                             <span>Profile</span>
                         </DropdownMenuItem>
                     </Link>
                     <DropdownMenuItem>
-                        <Settings className="mr-2 h-4 w-4 stroke-1" />
-                        <span className="text-black/80">Settings</span>
+                        <Settings className="mr-2 h-4 w-4 stroke-[1.3]" />
+                        <span className="text-black">Settings</span>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup className="">
                     {currentUser?.role === 'admin' && (
-                        <Link to={'/dashboard-admin/product'}>
+                        <Link to={'/dashboard-admin/products'}>
                             <DropdownMenuItem>
-                                <LayoutDashboard className="mr-2 h-4 w-4 stroke-1" />
-                                <span className="text-black/80">
+                                <LayoutDashboard className="mr-2 h-4 w-4 stroke-[1.3]" />
+                                <span className="text-black">
                                     Dashboard Admin
                                 </span>
                             </DropdownMenuItem>
                         </Link>
                     )}
                     <DropdownMenuItem>
-                        <ShoppingCart className="mr-2 h-4 w-4 stroke-1" />
-                        <span className="text-black/80">My Cart</span>
+                        <ShoppingCart className="mr-2 h-4 w-4 stroke-[1.3]" />
+                        <span className="text-black">My Cart</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <ShoppingBag className="mr-2 h-4 w-4 stroke-1" />
-                        <span className="text-black/80">My Orders</span>
+                        <ShoppingBag className="mr-2 h-4 w-4 stroke-[1.3]" />
+                        <span className="text-black">My Orders</span>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />

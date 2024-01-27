@@ -18,10 +18,10 @@ const useFetchDataTable = <T>(
         'ORDER' | 'PRODUCT' | 'CATEGORY' | 'USER',
         string
     > = {
-        ORDER: import.meta.env.VITE_ADMIN_GET_ALL_ORDER,
-        PRODUCT: import.meta.env.VITE_ADMIN_GET_ALL_PRODUCT,
-        CATEGORY: import.meta.env.VITE_ADMIN_GET_ALL_CATEGORY,
-        USER: import.meta.env.VITE_ADMIN_GET_ALL_USER
+        ORDER: 'order',
+        PRODUCT: 'product',
+        CATEGORY: 'category',
+        USER: 'user'
     };
 
     const url = fetchTypeMap[fetchData];
@@ -41,13 +41,19 @@ const useFetchDataTable = <T>(
 
                 const axiosConfig = {
                     signal,
-                    headers: userToken || {}
+                    headers: {
+                        ...userToken,
+                        //untuk menghindari ngrok browser warning
+                        'ngrok-skip-browser-warning': 'any_value'
+                    }
                 };
 
-                console.log(url, axiosConfig);
+                if (!userToken) {
+                    throw new Error('Unauthorized. User Token Required');
+                }
 
                 const res: AxiosResponse | null = await axios.get(
-                    `${url}?${searchQuery}`,
+                    `/admin/${url}?${searchQuery}`,
                     axiosConfig
                 );
 
@@ -78,14 +84,22 @@ const useFetchDataTable = <T>(
         try {
             setIsLoading(true);
             const userToken = token ? { Authorization: 'Bearer ' + token } : '';
+
+            if (!userToken) {
+                throw new Error('Unauthorized. User Token Required');
+            }
             const axiosConfig = {
-                headers: userToken || {}
+                headers: {
+                    ...userToken,
+                    //untuk menghindari ngrok browser warning
+                    'ngrok-skip-browser-warning': 'any_value'
+                }
             };
 
             console.log(url, axiosConfig);
 
             const res: AxiosResponse | null = await axios.get(
-                `${url}?${searchQuery}`,
+                `/admin/${url}?${searchQuery}`,
                 axiosConfig
             );
 

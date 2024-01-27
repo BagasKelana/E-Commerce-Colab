@@ -8,24 +8,21 @@ import {
 } from '@/fetch';
 
 import { useContext, useMemo, useTransition } from 'react';
-
 import { ProductCategoriesContext } from '@/ProductCategories';
 import { ColumnDef } from '@tanstack/react-table';
 import { Toaster } from 'sonner';
 import useFetchDataTable from '@/hook/useFetchDataTable';
 
+import ErrorBoundary from '@/components/ErrorBoundary';
+
 export default function ProductAdmin() {
     const { currentUser } = useSelector((state: RootState) => state.user);
     const { data: categoryProduct } = useContext(ProductCategoriesContext);
 
-    const {
-        data: productData,
-        isLoading,
-        error: errorProduct,
-        reFetchData
-    } = useFetchDataTable<ProductType>('PRODUCT', null, currentUser?.token);
+    const { data, isLoading, error, reFetchData } =
+        useFetchDataTable<ProductType>('PRODUCT', null, currentUser?.token);
 
-    console.log(productData?.data);
+    const products = data?.data ?? null;
 
     const [isPending, startTransition] = useTransition();
 
@@ -43,23 +40,17 @@ export default function ProductAdmin() {
     );
 
     return (
-        <>
-            {errorProduct ? (
-                <div>Maaf Terjadi Kendala</div>
-            ) : (
-                <div className="w-full ">
-                    {productData?.data?.data && (
-                        <DataTable
-                            isLoading={isLoading}
-                            columns={columns}
-                            data={productData?.data?.data}
-                            totalProduct={productData?.data.total}
-                            nextPagination={productData?.data.next_page_url}
-                        />
-                    )}
-                    <Toaster />
-                </div>
-            )}
-        </>
+        <div className="flex flex-col px-4 py-6  gap-6">
+            <ErrorBoundary errorMessages={error?.message}>
+                <DataTable
+                    isLoading={isLoading}
+                    columns={columns}
+                    data={products?.data ?? []}
+                    totalProduct={products?.total}
+                    nextPagination={products?.next_page_url}
+                />
+                <Toaster />
+            </ErrorBoundary>
+        </div>
     );
 }

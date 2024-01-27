@@ -13,16 +13,23 @@ const Navbar = () => {
     const { currentUser } = useSelector((state: RootState) => state.user);
     const { data } = useContext(ProductCategoriesContext);
 
-    const formattedName = currentUser?.name
-        .split('')
-        .map((value, index) => (index === 0 ? value.toUpperCase() : value))
-        .join('')
-        .substring(0, 6);
+    const nameLength = currentUser?.name.length ?? 0;
+
+    const formattedName =
+        nameLength > 6
+            ? currentUser?.name
+                  .split('')
+                  .map((value, index) =>
+                      index === 0 ? value.toUpperCase() : value
+                  )
+                  .join('')
+                  .substring(0, 6)
+            : currentUser?.name;
 
     const ariaLabel = `View profile for ${currentUser?.name}`;
 
     return (
-        <header className="bg-gradient-to-l from-teal-700 to-teal-800 min-w-full w-screen top-0 fixed z-[50] md:h-[110px]">
+        <header className="bg-teal-800 min-w-full w-screen top-0 fixed z-[50] md:h-[110px] shadow shadow-black/30">
             <div className="container mx-auto px-4 md:px-8 pt-4 pb-4 md:pt-8 md:pb-0 flex items-center justify-between md:justify-start">
                 <div className="flex-shrink-0 hidden md:flex mr-8 ">
                     <Link to="/">
@@ -42,7 +49,7 @@ const Navbar = () => {
                                 aria-label="Shopping Cart with 20 items"
                             >
                                 <div
-                                    className="absolute -top-0 right-0 z-10 text-lime-700 bg-white text-xs font-semibold p-0.5 rounded-full"
+                                    className="absolute -top-0 right-0 z-10 text-teal-700 bg-white text-xs font-semibold p-0.5 rounded-full"
                                     aria-hidden="true"
                                 >
                                     20
@@ -103,7 +110,7 @@ const Navbar = () => {
                 </nav>
             </div>
             <div className="w-full px-8 py-2 hidden md:flex items-center justify-center space-x-5 text-slate-200 text-sm">
-                {data?.data.map((category, index) => (
+                {data?.data?.map((category, index) => (
                     <div key={index}>{category.name}</div>
                 ))}
             </div>
@@ -136,7 +143,7 @@ const SearchBar = () => {
         }
     };
     return (
-        <div className="group w-full max-w-xs md:max-w-full 2xl:max-w-3xl rounded-md flex items-center justify-between bg-white border border-input transition-all ease-in-out duration-200 mr-2 ">
+        <div className="overflow-hidden group w-full max-w-xs md:max-w-full 2xl:max-w-3xl rounded-md flex items-center justify-between bg-white border border-input transition-all ease-in-out duration-200 mr-2 ">
             <label htmlFor="categories" className="sr-only">
                 Categories
             </label>
@@ -144,18 +151,12 @@ const SearchBar = () => {
                 className="bg-transparent uppercase font-medium text-sm p-0 mx-0 group:focus-within:p-2 group-focus-within:mx-2 hidden lg:block group-focus-within:max-w-[150px] max-w-[0px]  scale-y-100 group-focus-within:scale-x-100 scale-x-0 origin-left transition-all duration-300 ease-in-out"
                 name="categories"
                 id="categories"
-            >
-                <option value="" disabled>
-                    Select a category
-                </option>
-                <option value="category1">Category 1</option>
-                <option value="category2">Category 2</option>
-            </select>
+            ></select>
             <Input
                 value={term}
                 onChange={handleOnChange}
                 onKeyDown={handleOnKeyDown}
-                className="focus-visible:ring-0 border border-l-input border-r-0 border-y-0 md:rounded-none text-xs md:text-base bg-white"
+                className="focus-visible:ring-0 ring-0 hover:ring-0 md:rounded-none text-xs md:text-base bg-white"
                 type="text"
                 placeholder="Cari product disini..."
             />
