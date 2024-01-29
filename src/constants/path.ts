@@ -1,0 +1,20 @@
+export const path = {
+  HOME: '/',
+  PRODUCT: '/product',
+  PRODUCT_DETAIL: '/product/:slug',
+  SIGN_IN: '/signin',
+  SIGN_UP: '/signup',
+  CART: '/cart',
+  USER: '/user',
+  USER_PROFILE: '/user/profile',
+  USER_MY_ORDER: '/user/my-order',
+  USER_MY_ORDER_DETAIL: '/user/my-order/detail/:id',
+  USER_CHANGE_PASSWORD: '/user/change-password',
+  ADMIN_PRODUCTS: '/dashboard-admin/products',
+  ADMIN_ADD_PRODUCT: '/dashboard-admin/add-product',
+  ADMIN_UPDATE_PRODUCT: '/dashboard-admin/update-product',
+  ADMIN_USERS: '/dashboard-admin/users',
+  ADMIN_USERS_UPDATE: '/dashboard-admin/users/update/:id',
+  ADMIN_CATEGORIES: '/dashboard-admin/categories',
+  ADMIN_ORDERS: '/dashboard-admin/orders'
+};

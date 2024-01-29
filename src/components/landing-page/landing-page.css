@@ -1,8 +1,0 @@
-.slick-list {
-    overflow: hidden;
-    @apply rounded-none md:rounded-2xl;
-}
-
-.dots-list > li {
-    @apply flex justify-center items-center m-0  md:mx-2;
-}
