@@ -1,29 +1,29 @@
 import { createContext } from 'react';
+
 import useFetch, { FetchAllCategory, FetchErrorType } from './hook/useFetch';
 
 type ProductCategoriesType = {
-    data: FetchAllCategory | null;
-    loading: boolean;
-    error: FetchErrorType;
+  data: FetchAllCategory | null;
+  loading: boolean;
+  error: FetchErrorType;
 };
 
 export const ProductCategoriesContext = createContext<ProductCategoriesType>({
-    data: null,
-    loading: true,
-    error: null
+  data: null,
+  loading: true,
+  error: null
 });
 
 const ProductCategories = ({ children }: { children: React.ReactNode }) => {
-    const url = `/api/category`;
+  const url = `${import.meta.env.VITE_DEVELOPE_API}/category`;
 
-    console.log(url);
-    const { data, loading, error } = useFetch<FetchAllCategory>(url, null);
+  const { data, loading, error } = useFetch<FetchAllCategory>(url, null);
 
-    return (
-        <ProductCategoriesContext.Provider value={{ data, loading, error }}>
-            {children}
-        </ProductCategoriesContext.Provider>
-    );
+  return (
+    <ProductCategoriesContext.Provider value={{ data, loading, error }}>
+      {children}
+    </ProductCategoriesContext.Provider>
+  );
 };
 
 export default ProductCategories;
